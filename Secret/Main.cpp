@@ -1,6 +1,5 @@
 
-
-void initRenderThread();
+#include "InitRenderThread.h"
 
 int main()
 {
