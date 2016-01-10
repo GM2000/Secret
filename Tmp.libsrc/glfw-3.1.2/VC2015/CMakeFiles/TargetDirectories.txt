@@ -1,0 +1,4 @@
+E:/Secret/Secret/Tmp.libsrc/glfw-3.1.2/VC2015/CMakeFiles/uninstall.dir
+E:/Secret/Secret/Tmp.libsrc/glfw-3.1.2/VC2015/CMakeFiles/ALL_BUILD.dir
+E:/Secret/Secret/Tmp.libsrc/glfw-3.1.2/VC2015/CMakeFiles/ZERO_CHECK.dir
+E:/Secret/Secret/Tmp.libsrc/glfw-3.1.2/VC2015/src/CMakeFiles/glfw.dir
