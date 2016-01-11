@@ -1,5 +1,6 @@
 
-#include "InitGLWindow.h"
+#include <iostream>
+#include "Render.h"
 
 GLFWwindow *Window;
 
@@ -23,6 +24,15 @@ bool initGLWindow()
 
 	//初始化Opengl环境
 	glfwMakeContextCurrent(Window);
+
+	//初始化glew
+	GLenum Error = glewInit();
+
+	if (Error != GLEW_OK)
+	{
+		//出错
+		std::cerr << "[ERROR]Couldn't not init glew,error code: " << Error;
+	}
 
 	return true;
 }

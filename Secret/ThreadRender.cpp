@@ -1,20 +1,24 @@
 
-#include "ThreadRender.h"
-#include "InitGLWindow.h"
+#include "Render.h"
+#include <mutex>
+#include "Init.h"
 
-bool IsThreadEnable = false;
+bool IsThreadStart = false;
 
 void threadRender()
 {
-	if (IsThreadEnable)
+	//检查是否启动线程
+	if (IsThreadStart)
 	{
 		return;
 	}
-
-	IsThreadEnable = true;
+	IsThreadStart = true;
 
 	//加载并初始化窗口
 	initGLWindow();
+
+	//加载shader
+	initShader();
 
 	//渲染主循环
 	while (!glfwWindowShouldClose(Window))
@@ -30,6 +34,4 @@ void threadRender()
 
 	//退出
 	glfwTerminate();
-
-	IsThreadEnable = false;
 }

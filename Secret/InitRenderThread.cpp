@@ -1,12 +1,12 @@
 
 #include <thread>
-#include "ThreadRender.h"
+#include "Thread.h"
 
 void initRenderThread()
 {
 	//创建线程
 	std::thread RenderThread(threadRender);
 
-	//开启
+	//创建线程并开启
 	RenderThread.detach();
 }

@@ -1,5 +1,5 @@
 
-#include "InitRenderThread.h"
+#include "Init.h"
 
 int main()
 {
