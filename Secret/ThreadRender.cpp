@@ -1,9 +1,10 @@
 
-#include "Render.h"
+#include "Secret.h"
 #include <mutex>
 #include "Init.h"
 
 bool IsThreadStart = false;
+void refreshRenderData();
 
 void threadRender()
 {
@@ -24,6 +25,9 @@ void threadRender()
 	while (!glfwWindowShouldClose(Window))
 	{
 		//äÖÈ¾
+
+		//Ë¢ĞÂäÖÈ¾×é
+		refreshRenderData();
 
 		//»º³åÇø
 		glfwSwapBuffers(Window);
