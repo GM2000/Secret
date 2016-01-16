@@ -2,19 +2,18 @@
 #include "Init.h"
 #include "Render.h"
 
-void addRenderGroup(renderGroup* RenderGroup);
+void addRefreshRenderGroup(renderGroup* RenderGroup);
 
 int main()
 {
 	initRenderThread();
+
 	renderGroup Test;
-	GLfloat Data[]{ -1.0,-1.0,0.0,1.0,-1.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.5,1.0,0.0,0.0,-1.0,0.0,0.0,-1.0,0.0,0.0,-1.0 ,
-		-1.0,-1.0,0.0,1.0,-1.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.5,1.0,0.0,0.0,-1.0,0.0,0.0,-1.0,0.0,0.0,-1.0 };
+	GLfloat Data[]{ -1.0,-1.0,0.0,1.0,-1.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.5,1.0,0.0,0.0,-1.0,0.0,0.0,-1.0,0.0,0.0,-1.0 };
 
-	Test.addTriangles(Data,2);
-
-	while (true)
+	while (!glfwWindowShouldClose(Window))
 	{
-		addRenderGroup(&Test);
+		Test.addTriangles(Data, 2);
+		addRefreshRenderGroup(&Test);
 	}
 }

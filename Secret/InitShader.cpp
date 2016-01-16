@@ -1,8 +1,7 @@
 
 #include "Secret.h"
+#include "Shader.h"
 #include <iostream>
-
-GLuint NormalShaderID = 0;
 
 typedef struct
 {
@@ -138,5 +137,5 @@ void initShader()
 		{ GL_FRAGMENT_SHADER, "res\\GLSL\\Normail3D.frag" },
 		{ GL_NONE, NULL } };
 
-	NormalShaderID = loadShader(NormalShader);
+	NormalShader::NormalShaderID = loadShader(NormalShader);
 }

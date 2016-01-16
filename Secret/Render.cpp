@@ -8,7 +8,7 @@ std::mutex RefreshRenderGroupLock;
 std::list<renderGroup*> RefreshRenderGroup;
 
 //所有渲染的VAO列表
-std::vector<int> VertexArrayObject;
+std::vector<vao> VertexArrayObject;
 
 //渲染线程
 void refreshRenderData()
@@ -32,14 +32,27 @@ void refreshRenderData()
 		RefreshRenderGroupLock.unlock();
 
 		//开始刷新
-		GetRenderGroup->Lock.lock();
+		GetRenderGroup->lock();
 
-		GetRenderGroup->Lock.unlock();
+		if (GetRenderGroup->VertexArrayID == 0)
+		{
+			glGenVertexArrays(1, &GetRenderGroup->VertexArrayID);
+			VertexArrayObject.push_back(vao(GetRenderGroup->VertexArrayID, GetRenderGroup->Size));
+		}
+		glBindVertexArray(GetRenderGroup->VertexArrayID);
+
+		glBindBuffer(GL_ARRAY_BUFFER, 1);
+		glBufferData(GL_ARRAY_BUFFER, GetRenderGroup->VertexData.size() * sizeof(GLfloat), &GetRenderGroup->VertexData.at(0), GL_STATIC_DRAW);
+
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+		glEnableVertexAttribArray(0);
+
+		GetRenderGroup->unLock();
 	}
 }
 
 //渲染数据处理线程
-void addRenderGroup(renderGroup* RenderGroup)
+void addRefreshRenderGroup(renderGroup* RenderGroup)
 {
 	//添加需要刷新的渲染组
 	RefreshRenderGroupLock.lock();
@@ -47,4 +60,10 @@ void addRenderGroup(renderGroup* RenderGroup)
 	RefreshRenderGroup.push_back(RenderGroup);
 
 	RefreshRenderGroupLock.unlock();
+}
+
+vao::vao(GLuint ArrayID, GLuint Size)
+{
+	VAOArray = ArrayID;
+	VAOSize = Size;
 }

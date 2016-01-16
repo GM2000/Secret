@@ -5,9 +5,7 @@
 /*加载三角形，其中GLfloat*需要输入的是三角形的顶点，纹理，法线的数据，排列方式为 （顶点*9，纹理*6，法线*9）*Count，Count为三角形个数*/
 void renderGroup::addTriangles(GLfloat* Data, int Count)
 {
-	//锁住
-	Lock.lock();
-
+	lock();
 	//解析数据
 	for (int TriangleCount = 0; TriangleCount < Count; TriangleCount++)
 	{
@@ -23,15 +21,14 @@ void renderGroup::addTriangles(GLfloat* Data, int Count)
 		{
 			NormailData.push_back(Data[TriangleCount * 24 + NormailLoc + 15]);
 		}
+		Size += 3;
 	}
-	//解锁
-	Lock.unlock();
+	unLock();
 }
 //删除三角形(废弃)
 void renderGroup::delTriangles(int* TrianglesLoc, int Count)
 {
-	//锁住
-	Lock.lock();
+	lock();
 
 	for (int TriangleCount = 0; TriangleCount < Count; TriangleCount++)
 	{
@@ -48,7 +45,15 @@ void renderGroup::delTriangles(int* TrianglesLoc, int Count)
 		{
 			TextureDataIt = TextureData.erase(TextureDataIt);
 		}
+		Size -= 3;
 	}
-	//解锁
+	unLock();
+}
+void renderGroup::lock()
+{
+	Lock.lock();
+}
+void renderGroup::unLock()
+{
 	Lock.unlock();
 }

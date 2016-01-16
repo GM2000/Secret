@@ -2,4 +2,9 @@
 
 #include "Render.h"
 
-extern GLuint NormalShaderID;
+namespace NormalShader
+{
+	extern GLuint NormalShaderID;
+
+	extern GLuint LocPosition;
+}
