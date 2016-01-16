@@ -23,6 +23,8 @@ void renderGroup::addTriangles(GLfloat* Data, int Count)
 		}
 		Size += 3;
 	}
+	HasChange = true;
+
 	unLock();
 }
 //É¾³ýÈý½ÇÐÎ(·ÏÆú)
@@ -47,6 +49,8 @@ void renderGroup::delTriangles(int* TrianglesLoc, int Count)
 		}
 		Size -= 3;
 	}
+	HasChange = true;
+
 	unLock();
 }
 void renderGroup::lock()
