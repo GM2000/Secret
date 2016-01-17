@@ -2,7 +2,7 @@
 #include "Secret.h"
 #include <mutex>
 #include "Init.h"
-#include "Render.h"
+#include "Shader.h"
 
 std::mutex RenderThreadInitLock;
 
@@ -32,12 +32,15 @@ void threadRender()
 	//‰÷»æ÷˜—≠ª∑
 	while (!glfwWindowShouldClose(Window))
 	{
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//‰÷»æ
 		RefreshRenderGroupLock.lock();
 
 		std::vector<vao> VertexArrayObjectCopy = VertexArrayObject;
 
 		RefreshRenderGroupLock.unlock();
+
+		glUseProgram(NormalShader::NormalShaderID);
 
 		for (unsigned int i = 0; i < VertexArrayObjectCopy.size(); i++)
 		{
