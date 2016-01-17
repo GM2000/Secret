@@ -57,7 +57,7 @@ int main()
 			0.0, 0.0, -1.0,
 			0.0, 0.0, -1.0,
 		};
-		Test.addTriangles(NewData, 1, location(0.0, 0.0, 0.0));
+		Test.addTriangles(NewData, 1, location((rand() % 10) / 10.0-0.5, 0.0, 0.0));
 		addRefreshRenderGroup(&Test);
 	}
 }
