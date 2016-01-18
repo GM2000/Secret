@@ -3,10 +3,21 @@
 #include "Render.h"
 #include "Location.h"
 
+#ifdef _DEBUG
+#define _CRTDBG_MAP_ALLOC
+#include<stdlib.h>
+#include<crtdbg.h>
+#endif
+
 void addRefreshRenderGroup(renderGroup* RenderGroup);
 
 int main(int argc,char *argv[])
 {
+
+#ifdef _DEBUG
+	_CrtDumpMemoryLeaks();
+#endif
+
 	if (!initThread(argc, argv))
 	{
 		return -1;
@@ -43,6 +54,11 @@ int main(int argc,char *argv[])
 
 		while (glfwGetTime() - StartTime < 0.001);
 
+		//Çå¿Õ
+		Test.lock();
+		Test.clear();
+		Test.unLock();
+
 		GLfloat NewData[]{
 			-1.0,-1.0, 0.0,
 			1.0,-1.0, 0.0,
@@ -60,7 +76,7 @@ int main(int argc,char *argv[])
 			0.0, 0.0, -1.0,
 			0.0, 0.0, -1.0,
 		};
-		Test.addTriangles(NewData, 1, location(0.0, 0.0, -3.0));
+		Test.addTriangles(NewData, 1, location(0.0, 0.0, (rand() % 1000) / -1000.0 - 1.0));
 		addRefreshRenderGroup(&Test);
 	}
 }

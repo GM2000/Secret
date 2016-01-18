@@ -1,6 +1,7 @@
 
 #include "Render.h"
 #include <iterator>
+#include <iostream>
 
 /*加载三角形，其中GLfloat*需要输入的是三角形的顶点，纹理，法线,颜色的数据，排列方式为 （顶点*9，纹理*6，颜色*12，法线*9）*Count，Count为三角形个数*/
 void renderGroup::addTriangles(GLfloat* Data, int Count)
@@ -27,8 +28,6 @@ void renderGroup::addTriangles(GLfloat* Data, int Count)
 		}
 		Size += 3;
 	}
-	HasChange = true;
-
 	unLock();
 }
 void renderGroup::addTriangles(GLfloat* Data, int Count,location Loc)
@@ -57,13 +56,15 @@ void renderGroup::addTriangles(GLfloat* Data, int Count,location Loc)
 		}
 		Size += 3;
 	}
-	HasChange = true;
-
 	unLock();
 }
-void renderGroup::unRefresh()
+void renderGroup::unNeedRefresh()
 {
 	HasChange = false;
+}
+void renderGroup::NeedRefresh()
+{
+	HasChange = true;
 }
 bool renderGroup::hasChange()
 {
@@ -74,7 +75,12 @@ void renderGroup::clear()
 	VertexData.clear();
 	TextureData.clear();
 	ColorData.clear();
-
+#ifdef _DEBUG
+	if (HasChange)
+	{
+		std::cerr << "[Warning]:Drop a change of RenderGroup." << std::endl;
+	}
+#endif
 	HasChange = false;
 }
 

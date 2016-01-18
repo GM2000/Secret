@@ -53,9 +53,7 @@ void refreshRenderData()
 			glEnableVertexAttribArray(0);
 			glEnableVertexAttribArray(1);
 
-			GetRenderGroup->unRefresh();
-
-			GetRenderGroup->clear();
+			GetRenderGroup->unNeedRefresh();
 		}
 		GetRenderGroup->unLock();
 	}

@@ -45,8 +45,11 @@ public:
 
 	//清空
 	void clear();
+
 	//取消更改
-	void unRefresh();
+	void unNeedRefresh();
+	//更改
+	void NeedRefresh();
 	//有变化?
 	bool hasChange();
 

@@ -11,6 +11,7 @@ void addRefreshRenderGroup(renderGroup* RenderGroup)
 	//添加需要刷新的渲染组
 	RefreshRenderGroupLock.lock();
 
+	RenderGroup->NeedRefresh();
 	RefreshRenderGroup.push_back(RenderGroup);
 
 	RefreshRenderGroupLock.unlock();
