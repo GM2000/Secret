@@ -6,6 +6,9 @@
 #include <list>
 #include <mutex>
 
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 //所有渲染的VAO列表
 class vao
 {
@@ -20,6 +23,9 @@ class renderGroup
 {
 	//锁
 	std::mutex Lock;
+
+	//是否有改变
+	bool HasChange = false;
 public:
 	//数据
 	std::vector<GLfloat> VertexData;
@@ -28,9 +34,6 @@ public:
 	std::vector<GLfloat> NormailData;
 
 	GLuint Size = 0;
-
-	//是否有改变
-	bool HasChange = false;
 
 	//VAO的位置
 	GLuint VertexArrayID = 0;
@@ -42,6 +45,10 @@ public:
 
 	//清空
 	void clear();
+	//取消更改
+	void unRefresh();
+	//有变化?
+	bool hasChange();
 
 	//并发
 	void lock();

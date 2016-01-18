@@ -3,6 +3,8 @@
 #include "Shader.h"
 #include <iostream>
 
+void windowsResizeCallback(GLFWwindow*, int, int);
+
 typedef struct
 {
 	GLenum       Type;
@@ -94,6 +96,8 @@ GLuint loadShader(shaderInfo* Shaders)
 		delete[] log;
 		return 0;
 	}
+	glUseProgram(Program);
+
 	return Program;
 }
 
@@ -132,10 +136,18 @@ const char* readShader(const char* FileName)
 
 void initShader()
 {
-	shaderInfo NormalShader[] = {
+	shaderInfo NormalShaderInfo[] = {
 		{ GL_VERTEX_SHADER, "res\\GLSL\\Normail3D.vert" },
 		{ GL_FRAGMENT_SHADER, "res\\GLSL\\Normail3D.frag" },
 		{ GL_NONE, NULL } };
 
-	NormalShader::NormalShaderID = loadShader(NormalShader);
+	NormalShader::NormalShaderID = loadShader(NormalShaderInfo);
+	NormalShader::LocProject = glGetUniformLocation(NormalShader::NormalShaderID, "uni_projection");
+
+	//…Ë÷√ ”ø⁄
+	int WindowWidth;
+	int WindowHeight;
+
+	glfwGetWindowSize(Window, &WindowWidth, &WindowHeight);
+	windowsResizeCallback(Window, WindowWidth, WindowHeight);
 }

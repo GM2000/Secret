@@ -30,7 +30,7 @@ void refreshRenderData()
 		GetRenderGroup->lock();
 
 		//是否有变化？
-		if (GetRenderGroup->HasChange)
+		if (GetRenderGroup->hasChange())
 		{
 			//有
 			if (GetRenderGroup->VertexArrayID == 0)
@@ -53,7 +53,7 @@ void refreshRenderData()
 			glEnableVertexAttribArray(0);
 			glEnableVertexAttribArray(1);
 
-			GetRenderGroup->HasChange = false;
+			GetRenderGroup->unRefresh();
 
 			GetRenderGroup->clear();
 		}

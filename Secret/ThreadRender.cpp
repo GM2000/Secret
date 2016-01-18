@@ -1,15 +1,15 @@
 
-#include "Secret.h"
-#include <mutex>
 #include "Init.h"
+#include "Render.h"
 #include "Shader.h"
 
 std::mutex RenderThreadInitLock;
 
 bool IsRenderThreadStart = false;
 void refreshRenderData();
+void render();
 
-void threadRender()
+void threadRender(int Width,int Height,bool FullScreen)
 {
 	//检查是否启动线程
 	if (IsRenderThreadStart)
@@ -17,7 +17,7 @@ void threadRender()
 		return;
 	}
 	//加载并初始化窗口
-	initGLWindow();
+	initGLWindow(Width,Height, FullScreen);
 
 	//加载shader
 	initShader();
@@ -32,21 +32,9 @@ void threadRender()
 	//渲染主循环
 	while (!glfwWindowShouldClose(Window))
 	{
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//渲染
-		RefreshRenderGroupLock.lock();
+		render();
 
-		std::vector<vao> VertexArrayObjectCopy = VertexArrayObject;
-
-		RefreshRenderGroupLock.unlock();
-
-		glUseProgram(NormalShader::NormalShaderID);
-
-		for (unsigned int i = 0; i < VertexArrayObjectCopy.size(); i++)
-		{
-			glBindVertexArray(VertexArrayObjectCopy[i].VAOArray);
-			glDrawArrays(GL_TRIANGLES, 0, VertexArrayObjectCopy[i].VAOSize);
-		}
 		//刷新渲染组
 		refreshRenderData();
 

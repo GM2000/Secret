@@ -61,6 +61,14 @@ void renderGroup::addTriangles(GLfloat* Data, int Count,location Loc)
 
 	unLock();
 }
+void renderGroup::unRefresh()
+{
+	HasChange = false;
+}
+bool renderGroup::hasChange()
+{
+	return HasChange;
+}
 void renderGroup::clear()
 {
 	VertexData.clear();
