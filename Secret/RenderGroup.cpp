@@ -3,58 +3,58 @@
 #include <iterator>
 #include <iostream>
 
-/*加载三角形，其中GLfloat*需要输入的是三角形的顶点，纹理，法线,颜色的数据，排列方式为 （顶点*9，纹理*6，颜色*12，法线*9）*Count，Count为三角形个数*/
-void renderGroup::addTriangles(GLfloat* Data, int Count)
+/*加载三角形，其中GLfloat*需要输入的是三角形的顶点，纹理，法线,颜色的数据，排列方式为 （顶点*12，纹理*8，颜色*16，法线*12）*Count，Count为三角形个数*/
+void renderGroup::addQuads(GLfloat* Data, int Count)
 {
 	lock();
 	//解析数据
 	for (int TriangleCount = 0; TriangleCount < Count; TriangleCount++)
 	{
-		for (int VertexLoc = 0; VertexLoc < 9; VertexLoc++)
+		for (int VertexLoc = 0; VertexLoc < 12; VertexLoc++)
 		{
-			VertexData.push_back(Data[TriangleCount * 34 + VertexLoc]);
+			VertexData.push_back(Data[TriangleCount * 48 + VertexLoc]);
 		}
-		for (int TextureLoc = 0; TextureLoc < 6; TextureLoc++)
+		for (int TextureLoc = 0; TextureLoc < 8; TextureLoc++)
 		{
-			TextureData.push_back(Data[TriangleCount * 34 + TextureLoc + 9]);
+			TextureData.push_back(Data[TriangleCount * 48 + TextureLoc + 12]);
 		}
-		for (int ColorLoc = 0; ColorLoc < 12; ColorLoc++)
+		for (int ColorLoc = 0; ColorLoc < 16; ColorLoc++)
 		{
-			ColorData.push_back(Data[TriangleCount * 34 + ColorLoc + 15]);
+			ColorData.push_back(Data[TriangleCount * 48 + ColorLoc + 20]);
 		}
-		for (int NormailLoc = 0; NormailLoc < 9; NormailLoc++)
+		for (int NormailLoc = 0; NormailLoc < 12; NormailLoc++)
 		{
-			NormailData.push_back(Data[TriangleCount * 34 + NormailLoc + 25]);
+			NormailData.push_back(Data[TriangleCount * 48 + NormailLoc + 36]);
 		}
-		Size += 3;
+		Size += 4;
 	}
 	unLock();
 }
-void renderGroup::addTriangles(GLfloat* Data, int Count,location Loc)
+void renderGroup::addQuads(GLfloat* Data, int Count,location Loc)
 {
 	lock();
 	//解析数据
 	for (int TriangleCount = 0; TriangleCount < Count; TriangleCount++)
 	{
-		for (int VertexLoc = 0; VertexLoc < 3; VertexLoc++)
+		for (int VertexLoc = 0; VertexLoc < 4; VertexLoc++)
 		{
-			VertexData.push_back(Data[TriangleCount * 34 + VertexLoc * 3 + 0] + Loc.x());
-			VertexData.push_back(Data[TriangleCount * 34 + VertexLoc * 3 + 1] + Loc.y());
-			VertexData.push_back(Data[TriangleCount * 34 + VertexLoc * 3 + 2] + Loc.z());
+			VertexData.push_back(Data[TriangleCount * 48 + VertexLoc * 3 + 0] + Loc.x());
+			VertexData.push_back(Data[TriangleCount * 48 + VertexLoc * 3 + 1] + Loc.y());
+			VertexData.push_back(Data[TriangleCount * 48 + VertexLoc * 3 + 2] + Loc.z());
 		}
-		for (int TextureLoc = 0; TextureLoc < 6; TextureLoc++)
+		for (int TextureLoc = 0; TextureLoc < 8; TextureLoc++)
 		{
-			TextureData.push_back(Data[TriangleCount * 34 + TextureLoc + 9]);
+			TextureData.push_back(Data[TriangleCount * 48 + TextureLoc + 12]);
 		}
-		for (int ColorLoc = 0; ColorLoc < 12; ColorLoc++)
+		for (int ColorLoc = 0; ColorLoc < 16; ColorLoc++)
 		{
-			ColorData.push_back(Data[TriangleCount * 34 + ColorLoc + 15]);
+			ColorData.push_back(Data[TriangleCount * 48 + ColorLoc + 20]);
 		}
-		for (int NormailLoc = 0; NormailLoc < 9; NormailLoc++)
+		for (int NormailLoc = 0; NormailLoc < 12; NormailLoc++)
 		{
-			NormailData.push_back(Data[TriangleCount * 34 + NormailLoc + 25]);
+			NormailData.push_back(Data[TriangleCount * 48 + NormailLoc + 36]);
 		}
-		Size += 3;
+		Size += 4;
 	}
 	unLock();
 }
