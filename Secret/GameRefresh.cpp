@@ -1,5 +1,6 @@
 
 #include "Shader.h"
+#include "Callback.h"
 #include <math.h>
 
 const double PI = 3.141592653589793238462;
@@ -8,6 +9,8 @@ double LastRefreshTime = glfwGetTime();
 
 namespace camera
 {
+	float Speed = 1;
+
 	float XRot;
 	float YRot;
 
@@ -19,9 +22,11 @@ int MouseSpeed = 50;
 void gameRefresh()
 {
 	//Па»ъ
-	bool HasChange = false;
-
 	double FromLastTime = glfwGetTime() - LastRefreshTime;
+
+	LastRefreshTime = glfwGetTime();
+
+	bool HasChange = false;
 
 	double MouseXMove;
 	double MouseYMove;
@@ -35,10 +40,10 @@ void gameRefresh()
 	MouseCenterX = WindowWidth * 0.5f;
 	MouseCenterY = WindowHeight	* 0.5f;
 
-	MouseXMove = X - MouseCenterX;
-	MouseYMove = Y - MouseCenterY;
+	MouseXMove = mouse::X - MouseCenterX;
+	MouseYMove = mouse::Y - MouseCenterY;
 
-	if (MouseYMove<0)
+	if (MouseYMove < 0)
 	{
 		MouseYMove = -MouseYMove;
 		camera::XRot -= (float)(asin(MouseYMove * 0.0001) * MouseSpeed * FromLastTime * 50.0);
@@ -70,7 +75,7 @@ void gameRefresh()
 	{
 		camera::YRot = camera::YRot - 2 * PI;
 	}
-	else if (camera::YRot <0)
+	else if (camera::YRot < 0)
 	{
 		camera::YRot = camera::YRot + 2 * PI;
 	}
@@ -81,7 +86,30 @@ void gameRefresh()
 		HasChange = true;
 	}
 
-	glUniformMatrix4fv(NormalShader::LocRotate, 1, GL_TRUE, glm::value_ptr(glm::rotate_slow(glm::mat4(), camera::XRot, glm::vec3(1.0f, 0.0f, 0.0f)) * glm::rotate_slow(glm::mat4(), camera::YRot, glm::vec3(0.0f, 1.0f, 0.0f))));
+	if (Keys[GLFW_KEY_W])
+	{
+		HasChange = true;
+		camera::Loc.move((float)(sin(camera::YRot) * camera::Speed * FromLastTime), 0, 0);
+		camera::Loc.move(0, 0, (float)(cos(camera::YRot) * camera::Speed * FromLastTime));
+	}
+	if (Keys[GLFW_KEY_S])
+	{
+		HasChange = true;
+		camera::Loc.move((float)(sin(camera::YRot) * camera::Speed * FromLastTime), 0, 0);
+		camera::Loc.move(0, 0, (float)(cos(camera::YRot) * camera::Speed * FromLastTime));
+	}
+	if (Keys[GLFW_KEY_A])
+	{
+		HasChange = true;
+		camera::Loc.move((float)(cos(camera::YRot) * camera::Speed * FromLastTime), 0, 0);
+		camera::Loc.move(0, 0, (float)(sin(camera::YRot) * camera::Speed * FromLastTime));
+	}
+	if (Keys[GLFW_KEY_D])
+	{
+		HasChange = true;
+		camera::Loc.move((float)(cos((camera::YRot)) * camera::Speed * FromLastTime), 0, 0);
+		camera::Loc.move(0, 0, (float)(sin((camera::YRot)) * camera::Speed * FromLastTime));
+	}
 
-	LastRefreshTime = glfwGetTime();
+	glUniformMatrix4fv(NormalShader::LocRotate, 1, GL_TRUE, glm::value_ptr(glm::rotate_slow(glm::mat4(), camera::XRot, glm::vec3(1.0f, 0.0f, 0.0f)) * glm::rotate_slow(glm::mat4(), camera::YRot, glm::vec3(0.0f, 1.0f, 0.0f))));
 }

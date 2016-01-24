@@ -2,9 +2,9 @@
 
 struct location
 {
-	
 	//构造函数
 	location(float X, float Y, float Z);
+
 	//储存所在Chunk坐标
 	int ChunkX = 0;
 	int ChunkZ = 0;
@@ -21,6 +21,8 @@ struct location
 	//Z坐标
 	float z();
 
-	//移动
+	//移动到
 	void moveTo(float X, float Y, float Z);
+	//移动指定距离
+	void move(float X, float Y, float Z);
 };

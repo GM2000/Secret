@@ -26,6 +26,8 @@ int main(int argc,char *argv[])
 
 	renderGroup Test;
 
+	location TTT(0, 0, 0);
+
 	for (int i = 0; i < 1; i++)
 	{
 		Test.addQuads(&blockRender().at(0), 1, location(i / 1000.0f, 0.0, -1));
