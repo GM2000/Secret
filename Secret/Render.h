@@ -63,3 +63,12 @@ extern std::mutex RefreshRenderGroupLock;
 
 extern std::vector<vao> VertexArrayObject;
 extern std::list<renderGroup*> RefreshRenderGroup;
+
+//添加需要刷新的RenderGroup
+void addRefreshRenderGroup(renderGroup* RenderGroup);
+
+//刷新渲染组
+void refreshRenderData();
+
+//渲染主函数
+void render();

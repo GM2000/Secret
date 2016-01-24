@@ -2,13 +2,11 @@
 #include "Init.h"
 #include "Render.h"
 #include "Shader.h"
-#include "Game.h"
+#include "Refresh.h"
 
 std::mutex RenderThreadInitLock;
 
 bool IsRenderThreadStart = false;
-void refreshRenderData();
-void render();
 
 void threadRender(int Width,int Height,bool FullScreen)
 {
@@ -48,8 +46,8 @@ void threadRender(int Width,int Height,bool FullScreen)
 		//返回用户事件
 		glfwPollEvents();
 
-		//刷新游戏
-		gameRefresh();
+		//刷新相机
+		camera::refreshUniform();
 	}
 
 	//退出

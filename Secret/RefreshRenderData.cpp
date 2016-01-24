@@ -29,7 +29,7 @@ void refreshRenderData()
 		GetRenderGroup->lock();
 
 		//是否有变化？
-		if (GetRenderGroup->hasChange())
+		if (GetRenderGroup->hasChange() && GetRenderGroup->Size > 0)
 		{
 			//有
 			if (GetRenderGroup->VertexArrayID == 0)

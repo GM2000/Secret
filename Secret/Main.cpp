@@ -10,7 +10,7 @@
 #include<crtdbg.h>
 #endif
 
-void addRefreshRenderGroup(renderGroup* RenderGroup);
+#include <Windows.h>
 
 int main(int argc,char *argv[])
 {
@@ -47,6 +47,7 @@ int main(int argc,char *argv[])
 
 		while (glfwGetTime() - StartTime < 0.001);
 
+		Sleep(1);
 
 		//Çå¿Õ
 		//Test.lock();

@@ -47,6 +47,9 @@ bool initGLWindow(int Width,int Height,bool FullScreen)
 	//初始化glew
 	GLenum Error = glewInit();
 
+	//隐藏鼠标
+	glfwSetInputMode(Window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
 	if (Error != GLEW_OK)
 	{
 		//出错

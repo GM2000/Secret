@@ -3,6 +3,13 @@
 #include "Thread.h"
 #include "Secret.h"
 
+void initRefreshThread()
+{
+	std::thread RenderThread(threadRefresh);
+
+	//创建线程并开启
+	RenderThread.detach();
+}
 void initRenderThread(int Width,int Height,int FullScreen)
 {
 	//创建线程
@@ -36,13 +43,12 @@ bool initThread(int argc, char *argv[])
 	if (argc == 4)
 	{
 		initRenderThread(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
-
-		return true;
 	}
 	else 
 	{
 		initRenderThread(0, 0, 0);
-
-		return true;
 	}
+	initRefreshThread();
+
+	return true;
 }

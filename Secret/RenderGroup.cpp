@@ -74,12 +74,8 @@ void renderGroup::clear()
 	VertexData.clear();
 	TextureData.clear();
 	ColorData.clear();
-#ifdef _DEBUG
-	if (HasChange)
-	{
-		std::cerr << "[Warning]:Drop a change of RenderGroup." << std::endl;
-	}
-#endif
+	Size = 0;
+
 	HasChange = false;
 }
 
