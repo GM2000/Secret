@@ -22,9 +22,10 @@ int MouseSpeed = 50;
 void gameRefresh()
 {
 	//相机
-	double FromLastTime = glfwGetTime() - LastRefreshTime;
+	double NowTime = glfwGetTime();
+	double FromLastTime = NowTime - LastRefreshTime;
 
-	LastRefreshTime = glfwGetTime();
+	LastRefreshTime = NowTime;
 
 	bool HasChange = false;
 
@@ -46,19 +47,19 @@ void gameRefresh()
 	if (MouseYMove < 0)
 	{
 		MouseYMove = -MouseYMove;
-		camera::XRot -= (float)(asin(MouseYMove * 0.0001) * MouseSpeed * FromLastTime * 50.0);
+		camera::XRot -= (float)(asin(MouseYMove * 0.0001) * MouseSpeed * 500.0) * FromLastTime;
 	}
 	else {
-		camera::XRot += (float)(asin(MouseYMove * 0.0001) * MouseSpeed * FromLastTime * 50.0);
+		camera::XRot += (float)(asin(MouseYMove * 0.0001) * MouseSpeed * 500.0) * FromLastTime;
 	}
 
 	if (MouseXMove<0)
 	{
 		MouseXMove = -MouseXMove;
-		camera::YRot -= (float)(asin(MouseXMove * 0.0001) * MouseSpeed * FromLastTime * 50.0);
+		camera::YRot -= (float)(asin(MouseXMove * 0.0001) * MouseSpeed * 500.0) * FromLastTime;
 	}
 	else {
-		camera::YRot += (float)(asin(MouseXMove * 0.0001) * MouseSpeed * FromLastTime * 50.0);
+		camera::YRot += (float)(asin(MouseXMove * 0.0001) * MouseSpeed * 500.0) * FromLastTime;
 	}
 	//是否太大了？
 	if (camera::XRot > PI * 0.5)
