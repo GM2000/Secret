@@ -1,6 +1,5 @@
 
 #include "Render.h"
-#include <iostream>
 
 //所有渲染的VAO列表
 std::vector<vao> VertexArrayObject;

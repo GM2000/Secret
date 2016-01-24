@@ -11,3 +11,6 @@ void initShader();
 
 //初始化Callback
 void initCallback();
+
+//初始化Callback
+void initCallback();

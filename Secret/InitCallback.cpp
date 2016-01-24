@@ -1,10 +1,11 @@
 
 #include "Secret.h"
 
-void mouseCallback(int, int, int, int);
+void mouseCallback(GLFWwindow* window, double, double);
 void windowsResizeCallback(GLFWwindow*, int, int);
 
 void initCallback()
 {
 	glfwSetWindowSizeCallback(Window, windowsResizeCallback);
+	glfwSetCursorPosCallback(Window, mouseCallback);
 }

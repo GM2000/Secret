@@ -1,7 +1,6 @@
 
 #include "Render.h"
 #include <iterator>
-#include <iostream>
 
 /*加载三角形，其中GLfloat*需要输入的是三角形的顶点，纹理，法线,颜色的数据，排列方式为 （顶点*12，纹理*8，颜色*16，法线*12）*Count，Count为三角形个数*/
 void renderGroup::addQuads(GLfloat* Data, int Count)

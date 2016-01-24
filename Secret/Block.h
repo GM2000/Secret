@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Render.h"
+#include "Secret.h"
 #include <vector>
 
 std::vector<GLfloat> blockRender();

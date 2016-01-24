@@ -29,6 +29,9 @@ void threadRender(int Width,int Height,bool FullScreen)
 
 	RenderThreadInitLock.unlock();
 
+	//…Ë÷√Callback
+	initCallback();
+
 	//‰÷»æ÷˜—≠ª∑
 	while (!glfwWindowShouldClose(Window))
 	{
