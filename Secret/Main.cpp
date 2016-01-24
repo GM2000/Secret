@@ -28,7 +28,11 @@ int main(int argc,char *argv[])
 
 	for (int i = 0; i < 1; i++)
 	{
-		Test.addQuads(&blockRender().at(0), 1, location(i/1000.0f, 0.0, 0.0));
+		Test.addQuads(&blockRender().at(0), 1, location(i / 1000.0f, 0.0, -1));
+		Test.addQuads(&blockRender().at(0), 1, location(i / 1000.0f, 2.0, -1));
+		Test.addQuads(&blockRender().at(0), 1, location(i / 1000.0f, 4.0, -1));
+		Test.addQuads(&blockRender().at(0), 1, location(i / 1000.0f, 6.0, -1));
+		Test.addQuads(&blockRender().at(0), 1, location(i / 1000.0f, 8.0, -1));
 	}
 	addRefreshRenderGroup(&Test);
 

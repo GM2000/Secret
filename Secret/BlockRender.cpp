@@ -7,7 +7,7 @@ std::vector<GLfloat> blockRender()
 	std::vector<GLfloat> Data{
 		-1.0,-1.0, 0.0,
 		1.0,-1.0, 0.0,
-		0.0, 1.0, 0.0,
+		1.0, 1.0, 0.0,
 		-1.0, 1.0, 0.0,
 
 		0.0, 0.0,

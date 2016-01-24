@@ -2,6 +2,7 @@
 #include "Init.h"
 #include "Render.h"
 #include "Shader.h"
+#include "Game.h"
 
 std::mutex RenderThreadInitLock;
 
@@ -46,6 +47,9 @@ void threadRender(int Width,int Height,bool FullScreen)
 
 		//返回用户事件
 		glfwPollEvents();
+
+		//刷新游戏
+		gameRefresh();
 	}
 
 	//退出

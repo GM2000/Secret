@@ -1,7 +1,7 @@
 
 #include "Secret.h"
 
-void mouseCallback(GLFWwindow* window, double, double);
+void mouseCallback(GLFWwindow* Window, double, double);
 void windowsResizeCallback(GLFWwindow*, int, int);
 
 void initCallback()

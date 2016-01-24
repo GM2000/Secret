@@ -1,19 +1,9 @@
 
-#include  "Shader.h"
-#include <math.h>
+#include "Shader.h"
 
-const double PI = 3.141592653589793238462;
-
-double LastRefreshTime = glfwGetTime();
-
-namespace mouse
+//渲染线程中的mouseCallback，主要负责摄像机的旋转
+void mouseCallback(GLFWwindow* Window, double  X, double  Y)
 {
-	int X = 0;
-	int Y = 0;
-}
+	
 
-void mouseCallback(GLFWwindow* window, double  X, double  Y)
-{
-	mouse::X = X;
-	mouse::Y = Y;
 }
