@@ -5,5 +5,5 @@
 extern std::mutex RenderThreadInitLock;
 extern bool IsRenderThreadStart;
 
-void	threadRefresh();
-void	threadRender(int Width, int Height, bool FullScreen);
+void threadRefresh();
+void threadRender(int Width, int Height, bool FullScreen);

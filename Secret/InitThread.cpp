@@ -5,10 +5,10 @@
 
 void initRefreshThread()
 {
-	std::thread RenderThread(threadRefresh);
+	std::thread RefreshThread(threadRefresh);
 
 	//创建线程并开启
-	RenderThread.detach();
+	RefreshThread.detach();
 }
 void initRenderThread(int Width,int Height,int FullScreen)
 {

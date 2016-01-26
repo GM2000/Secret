@@ -15,6 +15,7 @@ namespace NormalShader
 
 	extern GLuint LocProject;
 	extern GLuint LocRotate;
+	extern GLuint LocTranslate;
 }
 
 GLuint loadShader(shaderInfo* Shaders);

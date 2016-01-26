@@ -16,6 +16,7 @@ void initShader()
 	NormalShader::NormalShaderID = loadShader(NormalShaderInfo);
 	NormalShader::LocProject = glGetUniformLocation(NormalShader::NormalShaderID, "uni_projection");
 	NormalShader::LocRotate = glGetUniformLocation(NormalShader::NormalShaderID, "uni_rotate");
+	NormalShader::LocTranslate = glGetUniformLocation(NormalShader::NormalShaderID, "uni_translate");
 
 	//…Ë÷√ ”ø⁄
 	int WindowWidth;

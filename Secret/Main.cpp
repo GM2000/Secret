@@ -43,18 +43,6 @@ int main(int argc,char *argv[])
 
 	while (!glfwWindowShouldClose(Window))
 	{
-		double StartTime = glfwGetTime();
-
-		while (glfwGetTime() - StartTime < 0.001);
-
-		Sleep(1);
-
-		//Çå¿Õ
-		//Test.lock();
-		//Test.clear();
-		//Test.unLock();
-
-		//Test.addTriangles(NewData, 1, location(0.0, 0.0, -2.0));
-		//addRefreshRenderGroup(&Test);
+		Sleep(1000);
 	}
 }

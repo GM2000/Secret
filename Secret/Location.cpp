@@ -1,26 +1,26 @@
 
 #include "Location.h"
 
-float location::x()
+double location::x()
 {
 	return ChunkX * 16 + InX;
 }
 
-float location::y()
+double location::y()
 {
 	return InY;
 }
 
-float location::z()
+double location::z()
 {
 	return ChunkZ * 16 + InZ;
 }
 
-location::location(float X, float Y, float Z)
+location::location(double X, double Y, double Z)
 {
 	moveTo(X, Y, Z);
 }
-void location::moveTo(float X, float Y, float Z)
+void location::moveTo(double X, double Y, double Z)
 {
 	ChunkX = (int)X / 16;
 
@@ -39,17 +39,23 @@ void location::moveTo(float X, float Y, float Z)
 	InY = Y;
 	InZ = Z - 16 * ChunkZ;
 }
-void location::move(float X, float Y, float Z)
+void location::move(double X, double Y, double Z)
 {
 	if (X != 0)
 	{
-		ChunkX += (int)X / 16;
+		InX += X;
 
-		if (X < 0)
+		ChunkX += (int)InX / 16;
+
+		if (InX < 0)
 		{
 			ChunkX--;
+			InX -= ((int)InX / 16 - 1) * 16;
 		}
-		InX += X - 16 * ChunkX;
+		else
+		{
+			InX -= (int)InX / 16 * 16;
+		}
 	}
 	if (Y != 0)
 	{
@@ -57,12 +63,18 @@ void location::move(float X, float Y, float Z)
 	}
 	if (Z != 0)
 	{
-		ChunkZ += (int)Z / 16;
+		InZ += Z;
 
-		if (Z < 0)
+		ChunkZ += (int)InZ / 16;
+
+		if (InZ < 0)
 		{
 			ChunkZ--;
+			InZ -= ((int)InZ / 16 - 1) * 16;
 		}
-		InZ += Z - 16 * ChunkZ;
+		else
+		{
+			InZ -= (int)InZ / 16 * 16;
+		}
 	}
 }

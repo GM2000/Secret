@@ -3,8 +3,8 @@
 
 namespace mouse
 {
-	int X = 0;
-	int Y = 0;
+	double X = 0;
+	double Y = 0;
 }
 
 //渲染线程中的mouseCallback，主要负责摄像机的旋转

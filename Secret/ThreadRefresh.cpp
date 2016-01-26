@@ -1,15 +1,23 @@
 
+#include <windows.h>
+
 #include "Secret.h"
-#include <Windows.h>
 #include "Refresh.h"
 
 void threadRefresh()
 {
+	double LastTime = glfwGetTime();
+
 	while (true)
 	{
-		Sleep(10);
+		double NowTime = glfwGetTime();
+
+		while (NowTime - LastTime < 0.3)
+			NowTime = glfwGetTime();
 
 		//Ë¢ÐÂÓÎÏ·
 		gameRefresh();
+
+		Sleep(1);
 	}
 }

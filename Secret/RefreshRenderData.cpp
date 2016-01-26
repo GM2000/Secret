@@ -18,42 +18,43 @@ void refreshRenderData()
 			return;
 
 		//获取一个需要刷新的渲染组指针
-		RefreshRenderGroupLock.lock();
-
-		renderGroup* GetRenderGroup = *RefreshRenderGroup.rbegin();
-		RefreshRenderGroup.pop_front();
-
-		RefreshRenderGroupLock.unlock();
-
-		//开始刷新
-		GetRenderGroup->lock();
-
-		//是否有变化？
-		if (GetRenderGroup->hasChange() && GetRenderGroup->Size > 0)
+		if (RefreshRenderGroupLock.try_lock())
 		{
-			//有
-			if (GetRenderGroup->VertexArrayID == 0)
+			renderGroup* GetRenderGroup = *RefreshRenderGroup.rbegin();
+			RefreshRenderGroup.pop_front();
+
+			RefreshRenderGroupLock.unlock();
+
+			//开始刷新
+			GetRenderGroup->lock();
+
+			//是否有变化？
+			if (GetRenderGroup->hasChange() && GetRenderGroup->Size > 0)
 			{
-				glGenVertexArrays(1, &GetRenderGroup->VertexArrayID);
-				VertexArrayObject.push_back(vao(GetRenderGroup->VertexArrayID, GetRenderGroup->Size));
+				//有
+				if (GetRenderGroup->VertexArrayID == 0)
+				{
+					glGenVertexArrays(1, &GetRenderGroup->VertexArrayID);
+					VertexArrayObject.push_back(vao(GetRenderGroup->VertexArrayID, GetRenderGroup->Size));
+				}
+				glBindVertexArray(GetRenderGroup->VertexArrayID);
+
+				glBindBuffer(GL_ARRAY_BUFFER, 1);
+				glBufferData(GL_ARRAY_BUFFER, GetRenderGroup->VertexData.size() * sizeof(GLfloat), &GetRenderGroup->VertexData.at(0), GL_STATIC_DRAW);
+
+				glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+				glBindBuffer(GL_ARRAY_BUFFER, 2);
+				glBufferData(GL_ARRAY_BUFFER, GetRenderGroup->ColorData.size() * sizeof(GLfloat), &GetRenderGroup->ColorData.at(0), GL_STATIC_DRAW);
+
+				glVertexAttribPointer(1, 4, GL_FLOAT, GL_TRUE, 0, NULL);
+
+				glEnableVertexAttribArray(0);
+				glEnableVertexAttribArray(1);
+
+				GetRenderGroup->unNeedRefresh();
 			}
-			glBindVertexArray(GetRenderGroup->VertexArrayID);
-
-			glBindBuffer(GL_ARRAY_BUFFER, 1);
-			glBufferData(GL_ARRAY_BUFFER, GetRenderGroup->VertexData.size() * sizeof(GLfloat), &GetRenderGroup->VertexData.at(0), GL_STATIC_DRAW);
-
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-
-			glBindBuffer(GL_ARRAY_BUFFER, 2);
-			glBufferData(GL_ARRAY_BUFFER, GetRenderGroup->ColorData.size() * sizeof(GLfloat), &GetRenderGroup->ColorData.at(0), GL_STATIC_DRAW);
-
-			glVertexAttribPointer(1, 4, GL_FLOAT, GL_TRUE, 0, NULL);
-
-			glEnableVertexAttribArray(0);
-			glEnableVertexAttribArray(1);
-
-			GetRenderGroup->unNeedRefresh();
+			GetRenderGroup->unLock();
 		}
-		GetRenderGroup->unLock();
 	}
 }

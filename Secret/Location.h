@@ -3,26 +3,26 @@
 struct location
 {
 	//构造函数
-	location(float X, float Y, float Z);
+	location(double X, double Y, double Z);
 
 	//储存所在Chunk坐标
 	int ChunkX = 0;
 	int ChunkZ = 0;
 
 	//记录相对于Chunk的坐标
-	float InX = 0;
-	float InY = 0;
-	float InZ = 0;
+	double InX = 0;
+	double InY = 0;
+	double InZ = 0;
 
 	//X坐标
-	float x();
+	double x();
 	//Y坐标
-	float y();
+	double y();
 	//Z坐标
-	float z();
+	double z();
 
 	//移动到
-	void moveTo(float X, float Y, float Z);
+	void moveTo(double X, double Y, double Z);
 	//移动指定距离
-	void move(float X, float Y, float Z);
+	void move(double X, double Y, double Z);
 };

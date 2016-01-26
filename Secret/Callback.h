@@ -2,8 +2,8 @@
 
 namespace mouse
 {
-	extern int X;
-	extern int Y;
+	extern double X;
+	extern double Y;
 }
 
 extern bool Keys[512];
