@@ -3,6 +3,7 @@
 #include "Render.h"
 #include "Shader.h"
 #include "Refresh.h"
+#include "Camera.h"
 
 std::mutex RenderThreadInitLock;
 
