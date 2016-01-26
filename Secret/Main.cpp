@@ -1,4 +1,6 @@
 
+#include <Windows.h>
+
 #include "Init.h"
 #include "Block.h"
 #include "Location.h"
@@ -9,8 +11,6 @@
 #include<stdlib.h>
 #include<crtdbg.h>
 #endif
-
-#include <Windows.h>
 
 int main(int argc,char *argv[])
 {
@@ -43,6 +43,6 @@ int main(int argc,char *argv[])
 
 	while (!glfwWindowShouldClose(Window))
 	{
-		Sleep(1000);
+		Sleep(1);
 	}
 }
