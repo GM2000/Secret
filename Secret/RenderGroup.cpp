@@ -27,6 +27,8 @@ void renderGroup::addQuads(GLfloat* Data, int Count)
 		}
 		Size += 4;
 	}
+	HasChange = false;
+
 	unLock();
 }
 void renderGroup::addQuads(GLfloat* Data, int Count,location Loc)
@@ -55,6 +57,8 @@ void renderGroup::addQuads(GLfloat* Data, int Count,location Loc)
 		}
 		Size += 4;
 	}
+	HasChange = false;
+
 	unLock();
 }
 void renderGroup::unNeedRefresh()
@@ -85,6 +89,8 @@ void renderGroup::cut(renderGroup *RenderGroup)
 
 	Size = RenderGroup->Size;
 	RenderGroup->Size = 0;
+
+	HasChange = false;
 
 	unLock();
 }

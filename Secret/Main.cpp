@@ -34,7 +34,7 @@ int main(int argc,char *argv[])
 		{
 			for (int k = 0; k < 150; k++)
 			{
-				Test.addQuads(&blockRender().at(0), 1, location(j * 2, k * 2, -1));
+				Test.addQuads(&blockRender().at(0), 1, location(j * 2, k * 2, rand() % 10 - 5));
 			}
 		}
 		VAO.cut(&Test);
