@@ -28,24 +28,18 @@ int main(int argc,char *argv[])
 	renderGroup VAO;
 	location TTT(0, 0, 0);
 
-	for (int i = 0; i < 1; i++)
+	while (!glfwWindowShouldClose(Window))
 	{
-		Test.addQuads(&blockRender().at(0), 1, location(i / 1000.0f, 0.0, -1));
-		Test.addQuads(&blockRender().at(0), 1, location(i / 1000.0f, 2.0, -1));
-		Test.addQuads(&blockRender().at(0), 1, location(i / 1000.0f, 4.0, -1));
-		Test.addQuads(&blockRender().at(0), 1, location(i / 1000.0f, 6.0, -1));
-		Test.addQuads(&blockRender().at(0), 1, location(i / 1000.0f, 8.0, -1));
-	}
-	for (int i = 0; i < 1; i++)
-	{
+		for (int j = 0; j < 150; j++)
+		{
+			for (int k = 0; k < 150; k++)
+			{
+				Test.addQuads(&blockRender().at(0), 1, location(j * 2, k * 2, -1));
+			}
+		}
 		VAO.cut(&Test);
 
 		addRefreshRenderGroup(&VAO);
-	}
-
-
-	while (!glfwWindowShouldClose(Window))
-	{
 		Sleep(1);
 	}
 }

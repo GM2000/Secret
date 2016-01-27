@@ -73,6 +73,11 @@ void renderGroup::cut(renderGroup *RenderGroup)
 {
 	lock();
 
+	VertexData.clear();
+	TextureData.clear();
+	ColorData.clear();
+	NormailData.clear();
+
 	RenderGroup->VertexData.swap(VertexData);
 	RenderGroup->TextureData.swap(TextureData);
 	RenderGroup->ColorData.swap(ColorData);
