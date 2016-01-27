@@ -69,14 +69,34 @@ bool renderGroup::hasChange()
 {
 	return HasChange;
 }
+void renderGroup::cut(renderGroup *RenderGroup)
+{
+	lock();
+
+	RenderGroup->VertexData.swap(VertexData);
+	RenderGroup->TextureData.swap(TextureData);
+	RenderGroup->ColorData.swap(ColorData);
+	RenderGroup->NormailData.swap(NormailData);
+
+	Size = RenderGroup->Size;
+	RenderGroup->Size = 0;
+
+	unLock();
+}
 void renderGroup::clear()
 {
+	lock();
+
 	VertexData.clear();
 	TextureData.clear();
 	ColorData.clear();
+	NormailData.clear();
+
 	Size = 0;
 
 	HasChange = false;
+
+	unLock();
 }
 
 void renderGroup::lock()

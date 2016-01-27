@@ -25,7 +25,7 @@ int main(int argc,char *argv[])
 	}
 
 	renderGroup Test;
-
+	renderGroup VAO;
 	location TTT(0, 0, 0);
 
 	for (int i = 0; i < 1; i++)
@@ -36,10 +36,13 @@ int main(int argc,char *argv[])
 		Test.addQuads(&blockRender().at(0), 1, location(i / 1000.0f, 6.0, -1));
 		Test.addQuads(&blockRender().at(0), 1, location(i / 1000.0f, 8.0, -1));
 	}
-	addRefreshRenderGroup(&Test);
+	for (int i = 0; i < 1; i++)
+	{
+		VAO.cut(&Test);
 
-	float R1 = 0, R2 = 0, R3 = 0, G1 = 0, G2 = 0, G3 = 0, B1 = 0, B2 = 0, B3 = 0;
-	int R1b = 1, R2b = 1, R3b = 1, G1b = 1, G2b = 1, G3b = 1, B1b = 1, B2b = 1, B3b = 1;
+		addRefreshRenderGroup(&VAO);
+	}
+
 
 	while (!glfwWindowShouldClose(Window))
 	{

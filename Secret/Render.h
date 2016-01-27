@@ -45,6 +45,8 @@ public:
 
 	//清空
 	void clear();
+	//剪切
+	void cut(renderGroup*);
 
 	//取消更改
 	void unNeedRefresh();
