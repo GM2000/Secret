@@ -18,5 +18,14 @@
     <ClCompile Include="LoadPNG.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="SaveAImg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadAImg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
