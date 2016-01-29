@@ -32,6 +32,9 @@ void threadRender(int Width,int Height,bool FullScreen)
 	//设置Callback
 	initCallback();
 
+	//加载所有纹理
+	initTextures();
+
 	//渲染主循环
 	while (!glfwWindowShouldClose(Window))
 	{

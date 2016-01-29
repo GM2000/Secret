@@ -39,9 +39,9 @@ void renderGroup::addQuads(GLfloat* Data, int Count,location Loc)
 	{
 		for (int VertexLoc = 0; VertexLoc < 4; VertexLoc++)
 		{
-			VertexData.push_back(Data[TriangleCount * 44 + VertexLoc * 3 + 0] + Loc.x());
-			VertexData.push_back(Data[TriangleCount * 44 + VertexLoc * 3 + 1] + Loc.y());
-			VertexData.push_back(Data[TriangleCount * 44 + VertexLoc * 3 + 2] + Loc.z());
+			VertexData.push_back(Data[TriangleCount * 44 + VertexLoc * 3 + 0] + (float)Loc.x());
+			VertexData.push_back(Data[TriangleCount * 44 + VertexLoc * 3 + 1] + (float)Loc.y());
+			VertexData.push_back(Data[TriangleCount * 44 + VertexLoc * 3 + 2] + (float)Loc.z());
 		}
 		for (int TextureLoc = 0; TextureLoc < 8; TextureLoc++)
 		{

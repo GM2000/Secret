@@ -34,7 +34,7 @@ bool saveAImg(Image ImageData, const char* AImgName)
 	fwrite((void*)&GetWidth, sizeof(unsigned int), 1, AImgFile);
 
 	//Ð´ÈëÊý×é
-	fwrite((void*)ImageData.ImageData, sizeof(unsigned char), GetHeight * GetWidth, AImgFile);
+	fwrite(ImageData.ImageData, sizeof(unsigned char) * GetHeight * GetWidth * 4, 1, AImgFile);
 
 	fclose(AImgFile);
 

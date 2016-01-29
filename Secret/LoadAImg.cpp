@@ -2,7 +2,7 @@
 #include "Texture.h"
 #include <iostream>
 
-bool loadAImg(const char* AImgName,Image* Out)
+bool loadAImg(const char* AImgName, image* Out)
 {
 	FILE* AImgFile;
 
@@ -32,10 +32,10 @@ bool loadAImg(const char* AImgName,Image* Out)
 
 
 	//改变容器大小
-	Out->ImageData = new unsigned char[Out->Height * Out->Width];
+	Out->ImageData = (unsigned char*)malloc(Out->Height * Out->Width * 4);
 
 	//读取图片数据
-	fread((void*)Out->ImageData, sizeof(unsigned char), Out->Height * Out->Width, AImgFile);
+	fread(Out->ImageData, sizeof(unsigned char) * Out->Height * Out->Width * 4, 1, AImgFile);
 
 	//OK！
 	fclose(AImgFile);

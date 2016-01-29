@@ -38,10 +38,10 @@ Image loadAImg(const char* AImgName)
 
 
 	//改变容器大小
-	AImg.ImageData = new unsigned char[AImg.Height * AImg.Width];
+	AImg.ImageData = new unsigned char[AImg.Height * AImg.Width * 4];
 
 	//读取图片数据
-	fread((void*)AImg.ImageData, sizeof(unsigned char), AImg.Height * AImg.Width, AImgFile);
+	fread(AImg.ImageData, sizeof(unsigned char) * AImg.Height * AImg.Width, 1, AImgFile);
 
 	//OK！
 	fclose(AImgFile);

@@ -14,5 +14,6 @@ out vec2 vt_tespos;
 void  main()  
 {  
 	vt_color = in_color;
+	vt_tespos = in_texpos;
 	gl_Position = in_position * uni_translate * uni_rotate  * uni_projection;  
 }  

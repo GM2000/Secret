@@ -55,7 +55,7 @@ Image loadPNG(const char* PNGName)
 	{
 		std::cout << "[Error]Could not find the alpha channel" << std::endl;
 	}
-	PNG.ImageData = new unsigned char[pic_height * pic_width * channels];
+	PNG.ImageData = (unsigned char*)malloc(pic_height * pic_width * channels);
 
 	PNG.Height = pic_height;
 	PNG.Width = pic_width;

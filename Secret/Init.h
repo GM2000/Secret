@@ -14,3 +14,6 @@ void initCallback();
 
 //初始化Callback
 void initCallback();
+
+//初始化所有纹理
+bool initTextures();

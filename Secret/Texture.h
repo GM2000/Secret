@@ -1,6 +1,9 @@
 #pragma once
 
-struct Image
+#include "Secret.h"
+#include <vector>
+
+struct image
 {
 	unsigned char* ImageData;
 
@@ -8,4 +11,7 @@ struct Image
 	unsigned int Height;
 };
 
-bool loadAImg(const char* AImgName, Image* Out);
+extern std::vector<GLuint> TextureList;
+
+bool loadAImg(const char* AImgName, image* Out);
+unsigned int loadGLTexture(const char* AImgName);
