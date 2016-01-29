@@ -9,11 +9,11 @@ layout(location = 1) in  vec3 in_color;
 layout(location = 2) in  vec2 in_texpos;
 
 out vec3 vt_color;
-out vec2 vt_tespos;
+out vec2 vt_texpos;
 
 void  main()  
 {  
 	vt_color = in_color;
-	vt_tespos = in_texpos;
+	vt_texpos = in_texpos;
 	gl_Position = in_position * uni_translate * uni_rotate  * uni_projection;  
 }  
