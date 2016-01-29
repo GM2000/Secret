@@ -47,7 +47,7 @@ void refreshRenderData()
 				glBindBuffer(GL_ARRAY_BUFFER, 2);
 				glBufferData(GL_ARRAY_BUFFER, GetRenderGroup->ColorData.size() * sizeof(GLfloat), &GetRenderGroup->ColorData.at(0), GL_STATIC_DRAW);
 
-				glVertexAttribPointer(1, 4, GL_FLOAT, GL_TRUE, 0, NULL);
+				glVertexAttribPointer(1, 3, GL_FLOAT, GL_TRUE, 0, NULL);
 
 				glEnableVertexAttribArray(0);
 				glEnableVertexAttribArray(1);

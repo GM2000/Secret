@@ -5,12 +5,14 @@ uniform mat4 uni_rotate;
 uniform mat4 uni_translate;
 
 layout(location = 0) in  vec4 in_position;
-layout(location = 1) in  vec4 in_color;
+layout(location = 1) in  vec3 in_color;
+layout(location = 2) in  vec2 in_texpos;
 
-out vec4 out_color;
+out vec3 vt_color;
+out vec2 vt_tespos;
 
 void  main()  
 {  
-	out_color = in_color;
+	vt_color = in_color;
 	gl_Position = in_position * uni_translate * uni_rotate  * uni_projection;  
 }  
