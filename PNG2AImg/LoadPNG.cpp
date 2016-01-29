@@ -5,7 +5,16 @@
 #include <iostream>
 #include <vector>
 
-std::vector<unsigned char> loadPNG(const char* PNGName)
+struct Image
+{
+	unsigned char* ImageData;
+
+	unsigned int Width;
+	unsigned int Height;
+};
+Image PNG;
+
+Image loadPNG(const char* PNGName)
 {
 	FILE* PNGFile;
 
@@ -36,8 +45,8 @@ std::vector<unsigned char> loadPNG(const char* PNGName)
 	png_init_io(png_ptr, PNGFile);
 	png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_EXPAND, 0);
 
-	int pic_width = png_get_image_width(png_ptr, info_ptr);
-	int pic_height = png_get_image_height(png_ptr, info_ptr);
+	unsigned int pic_width = png_get_image_width(png_ptr, info_ptr);
+	unsigned int pic_height = png_get_image_height(png_ptr, info_ptr);
 
 	int color_type = png_get_color_type(png_ptr, info_ptr);
 	int channels = png_get_channels(png_ptr, info_ptr);
@@ -46,9 +55,10 @@ std::vector<unsigned char> loadPNG(const char* PNGName)
 	{
 		std::cout << "[Error]Could not find the alpha channel" << std::endl;
 	}
-	std::vector<unsigned char> PNGData;
+	PNG.ImageData = new unsigned char[pic_height * pic_width * channels];
 
-	PNGData.resize(sizeof(unsigned char)*pic_height * pic_width * channels);
+	PNG.Height = pic_height;
+	PNG.Width = pic_width;
 
 	png_bytep* row_pointers = png_get_rows(png_ptr, info_ptr);
 
@@ -58,7 +68,7 @@ std::vector<unsigned char> loadPNG(const char* PNGName)
 		{
 			for (int k = 0; k < channels; k++)
 			{
-				PNGData[i*pic_width*channels + j*channels + k] = row_pointers[i][j*channels + k];
+				PNG.ImageData[i*pic_width*channels + j*channels + k] = row_pointers[i][j*channels + k];
 			}
 		}
 	}
@@ -66,5 +76,5 @@ std::vector<unsigned char> loadPNG(const char* PNGName)
 	png_destroy_read_struct(&png_ptr, &info_ptr, 0);
 	fclose(PNGFile);
 
-	return PNGData;
+	return PNG;
 }

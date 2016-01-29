@@ -4,10 +4,17 @@
 #include <vector>
 #include <iostream>
 
-std::vector<unsigned char> loadAImg(const char* AImgName)
+struct Image
 {
-	std::vector<unsigned char> ImageData;
+	unsigned char* ImageData;
 
+	unsigned int Width;
+	unsigned int Height;
+};
+Image AImg;
+
+Image loadAImg(const char* AImgName)
+{
 	FILE* AImgFile;
 
 	if (!(AImgFile = fopen(AImgName, "rb")))
@@ -19,23 +26,25 @@ std::vector<unsigned char> loadAImg(const char* AImgName)
 
 	fread((void*)FileTitle, sizeof(FileTitle), 1, AImgFile);
 
-	if (FileTitle[0] != 151);
+	if (FileTitle[0] != 151)
 	{
 		std::cout << "[ERROR]Isn't is AImg." << std::endl;
 	}
-	//读取文件大小
-	size_t Size;
 
-	fread((void*)&Size, sizeof(size_t), 1, AImgFile);
+	//读取文件大小
+	fread((void*)&AImg.Height, sizeof(unsigned int), 1, AImgFile);
+
+	fread((void*)&AImg.Width, sizeof(unsigned int), 1, AImgFile);
+
 
 	//改变容器大小
-	ImageData.resize(Size);
+	AImg.ImageData = new unsigned char[AImg.Height * AImg.Width];
 
 	//读取图片数据
-	fread((void*)&ImageData.at(0), sizeof(unsigned char), Size, AImgFile);
+	fread((void*)AImg.ImageData, sizeof(unsigned char), AImg.Height * AImg.Width, AImgFile);
 
 	//OK！
 	fclose(AImgFile);
 
-	return ImageData;
+	return AImg;
 }

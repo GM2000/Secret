@@ -4,7 +4,15 @@
 #include <vector>
 #include <iostream>
 
-bool saveAImg(std::vector<unsigned char> ImageData, const char* AImgName)
+struct Image
+{
+	unsigned char* ImageData;
+
+	unsigned int Width;
+	unsigned int Height;
+};
+
+bool saveAImg(Image ImageData, const char* AImgName)
 {
 	FILE* AImgFile;
 
@@ -18,12 +26,17 @@ bool saveAImg(std::vector<unsigned char> ImageData, const char* AImgName)
 
 	fwrite((void*)AImgTitle, sizeof(AImgTitle), 1, AImgFile);
 
-	//写入数组大小
-	size_t GetSize = ImageData.size();
-	fwrite((void*)&GetSize, sizeof(size_t), 1, AImgFile);
+	//写入图像尺寸
+	unsigned int GetHeight = ImageData.Height;
+	fwrite((void*)&GetHeight, sizeof(unsigned int), 1, AImgFile);
+
+	unsigned int GetWidth = ImageData.Width;
+	fwrite((void*)&GetWidth, sizeof(unsigned int), 1, AImgFile);
 
 	//写入数组
-	fwrite((void*)&ImageData.at(0), sizeof(unsigned char), GetSize, AImgFile);
+	fwrite((void*)ImageData.ImageData, sizeof(unsigned char), GetHeight * GetWidth, AImgFile);
 
 	fclose(AImgFile);
+
+	return true;
 }

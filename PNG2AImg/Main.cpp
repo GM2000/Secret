@@ -4,9 +4,16 @@
 #include <windows.h>
 #include <iostream>
 
-bool saveAImg(std::vector<unsigned char>, const char* AImgName);
-std::vector<unsigned char> loadAImg(const char* AImgName);
-std::vector<unsigned char> loadPNG(const char* PNGName);
+struct Image
+{
+	unsigned char* ImageData;
+
+	unsigned int Width;
+	unsigned int Height;
+};
+bool saveAImg(Image, const char* AImgName);
+Image loadAImg(const char* AImgName);
+Image loadPNG(const char* PNGName);
 
 int main(int argc, char *argv[])
 {
@@ -16,7 +23,7 @@ int main(int argc, char *argv[])
 
 	std::cout << "[INFO]:Loading PNG" << std::endl;
 
-	std::vector<unsigned char> PNG = loadPNG(argv[1]);
+	Image PNG = loadPNG(argv[1]);
 
 	std::cout << "[INFO]:Save to AImg" << std::endl;
 
@@ -24,13 +31,13 @@ int main(int argc, char *argv[])
 
 	std::cout << "[INFO]:Load new AImg" << std::endl;
 
-	std::vector<unsigned char> AImg = loadAImg(NewFileName.c_str());
+	Image AImg = loadAImg(NewFileName.c_str());
 
 	std::cout << "[INFO]:Checking" << std::endl;
 
-	for (int i = 0; i < AImg.size(); i++)
+	for (int i = 0; i < AImg.Height * AImg.Width; i++)
 	{
-		if (PNG[i] != AImg[i])
+		if (PNG.ImageData[i] != AImg.ImageData[i])
 		{
 			std::cout << "[ERROR]:Find a wrong data" << std::endl;
 		}
