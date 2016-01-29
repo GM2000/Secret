@@ -34,12 +34,14 @@ int main(int argc,char *argv[])
 		{
 			for (int k = 0; k < 150; k++)
 			{
-				Test.addQuads(&blockRender().at(0), 1, location(j * 2, k * 2, rand() % 10 - 5));
+				Test.addQuads(&blockRender().at(0), 1, location(2 * j - 75, 2 * k - 75, rand() % 10 - 100));
 			}
 		}
+		Test.addQuads(&blockRender().at(0), 1, location(0, 0, -1));
 		VAO.cut(&Test);
 
 		addRefreshRenderGroup(&VAO);
+
 		Sleep(1);
 	}
 }

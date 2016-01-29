@@ -56,5 +56,8 @@ bool initGLWindow(int Width,int Height,bool FullScreen)
 		std::cerr << "[ERROR]Couldn't not init glew,error code: " << Error;
 	}
 
+	//配置OpenGL
+	glEnable(GL_DEPTH_TEST);
+
 	return true;
 }

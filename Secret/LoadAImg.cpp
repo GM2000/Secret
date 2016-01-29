@@ -35,7 +35,7 @@ bool loadAImg(const char* AImgName, image* Out)
 	Out->ImageData = (unsigned char*)malloc(Out->Height * Out->Width * 4);
 
 	//¶ÁÈ¡Í¼Æ¬Êý¾Ý
-	fread(Out->ImageData, sizeof(unsigned char) * Out->Height * Out->Width * 4, 1, AImgFile);
+	fread(Out->ImageData, sizeof(unsigned char), Out->Height * Out->Width * 4, AImgFile);
 
 	//OK£¡
 	fclose(AImgFile);

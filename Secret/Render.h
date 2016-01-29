@@ -33,6 +33,9 @@ public:
 	std::vector<GLfloat> ColorData;
 	std::vector<GLfloat> NormailData;
 
+	//Buffer
+	GLuint Buffer[3];
+	//大小
 	GLuint Size = 0;
 
 	//VAO的位置

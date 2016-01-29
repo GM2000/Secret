@@ -12,7 +12,7 @@ void threadRefresh()
 	{
 		double NowTime = glfwGetTime();
 
-		while (NowTime - LastTime < 0.3)
+		while (NowTime - LastTime < 0.1)
 			NowTime = glfwGetTime();
 
 		//Ë¢ÐÂÓÎÏ·

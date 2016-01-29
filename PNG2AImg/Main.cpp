@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 
 	std::cout << "[INFO]:Checking" << std::endl;
 
-	for (int i = 0; i < AImg.Height * AImg.Width; i++)
+	for (int i = 0; i < AImg.Height * AImg.Width * 4; i++)
 	{
 		if (PNG.ImageData[i] != AImg.ImageData[i])
 		{
