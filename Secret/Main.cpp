@@ -12,6 +12,8 @@
 #include<crtdbg.h>
 #endif
 
+extern bool IsRenderThreadStart;
+
 int main(int argc,char *argv[])
 {
 
@@ -31,13 +33,13 @@ int main(int argc,char *argv[])
 	renderGroup VAO;
 	location TTT(0, 0, 0);
 
-	while (!glfwWindowShouldClose(Window))
+	while (IsRenderThreadStart)
 	{
 		for (int j = 0; j < 150; j++)
 		{
 			for (int k = 0; k < 150; k++)
 			{
-				Test.addQuads(&getBlock(rand() % 4).renderBlock(0).at(0), 1, location(2 * j - 75, 2 * k - 75, -100));
+				Test.addQuads(&getBlock(rand() % 4).renderBlock(0).at(0), 1, location(2 * j - 75, 2 * k - 75, rand() % 100 - 100));
 			}
 		}
 		//»æÖÆ0

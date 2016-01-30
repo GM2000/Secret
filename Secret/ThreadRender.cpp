@@ -56,4 +56,6 @@ void threadRender(int Width,int Height,bool FullScreen)
 
 	//ÍË³ö
 	glfwTerminate();
+
+	IsRenderThreadStart = false;
 }
