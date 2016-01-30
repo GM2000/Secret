@@ -37,7 +37,7 @@ int main(int argc,char *argv[])
 		{
 			for (int k = 0; k < 150; k++)
 			{
-				Test.addQuads(&getBlock(rand() % 4).renderBlock(0).at(0), 1, location(2 * j - 75, 2 * k - 75, rand() % 10 - 100));
+				Test.addQuads(&getBlock(rand() % 4).renderBlock(0).at(0), 1, location(2 * j - 75, 2 * k - 75, -100));
 			}
 		}
 		//»æÖÆ0
