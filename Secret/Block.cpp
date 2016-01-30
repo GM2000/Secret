@@ -33,14 +33,14 @@ unsigned short addBlock(block AddBlock)
 
 	return Block.size() - 1;
 }
-std::vector<GLfloat> block::renderBlock(unsigned short Brocken)
+std::vector<GLfloat> block::renderBlock(unsigned short Brocken, unsigned char Face)
 {
 	std::vector<GLfloat> blockRenderData;
 
 	unsigned int BlockData = blockData::createBlockData(BlockID, Brocken);
 
-	blockShapeRenderer(&blockRenderData, BlockData);
-	blockTextureRenderer(&blockRenderData, BlockData);
+	blockShapeRenderer(&blockRenderData, BlockData, Face);
+	blockTextureRenderer(&blockRenderData, BlockData, Face);
 
 	//…Ë÷√—’…´
 	blockRenderData.push_back(0.0); blockRenderData.push_back(0.0); blockRenderData.push_back(0.0);
@@ -48,7 +48,7 @@ std::vector<GLfloat> block::renderBlock(unsigned short Brocken)
 	blockRenderData.push_back(0.0); blockRenderData.push_back(0.0); blockRenderData.push_back(0.0);
 	blockRenderData.push_back(0.0); blockRenderData.push_back(0.0); blockRenderData.push_back(0.0);
 
-	blockNormailRenderer(&blockRenderData, 0);
+	blockNormailRenderer(&blockRenderData, 0, Face);
 
 	return blockRenderData;
 }

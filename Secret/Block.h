@@ -11,9 +11,9 @@
 #include "Secret.h"
 #include <vector>
 
-typedef void(*templateBlockShapeRenderer)(std::vector<GLfloat>*,int);
-typedef void(*templateBlockTextureRenderer)(std::vector<GLfloat>*, int);
-typedef void(*templateBlockNormailRenderer)(std::vector<GLfloat>*, int);
+typedef void(*templateBlockShapeRenderer)(std::vector<GLfloat>*,int, unsigned char);
+typedef void(*templateBlockTextureRenderer)(std::vector<GLfloat>*, int, unsigned char);
+typedef void(*templateBlockNormailRenderer)(std::vector<GLfloat>*, int, unsigned char);
 
 struct block
 {
@@ -21,7 +21,7 @@ struct block
 
 	block(block, int);
 
-	std::vector<GLfloat> renderBlock(unsigned short);
+	std::vector<GLfloat> renderBlock(unsigned short, unsigned char);
 
 	unsigned short int Texture[7];
 private:
