@@ -6,7 +6,7 @@
 
 const double PI = 3.141592653589793238462;
 
-int MouseSpeed = 50;
+int MouseSpeed = 100;
 
 void gameRefresh()
 {

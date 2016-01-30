@@ -24,6 +24,9 @@ int main(int argc,char *argv[])
 		return -1;
 	}
 
+	//加载Block
+	initBlock();
+
 	renderGroup Test;
 	renderGroup VAO;
 	location TTT(0, 0, 0);
@@ -34,10 +37,18 @@ int main(int argc,char *argv[])
 		{
 			for (int k = 0; k < 150; k++)
 			{
-				Test.addQuads(&blockRender().at(0), 1, location(2 * j - 75, 2 * k - 75, rand() % 10 - 100));
+				Test.addQuads(&getBlock(rand() % 4).renderBlock(0).at(0), 1, location(2 * j - 75, 2 * k - 75, rand() % 10 - 100));
 			}
 		}
-		Test.addQuads(&blockRender().at(0), 1, location(0, 0, -1));
+		//绘制0
+		Test.addQuads(&getBlock(0).renderBlock(0).at(0), 1, location(0, 0, -1));
+		//绘制1
+		Test.addQuads(&getBlock(1).renderBlock(0).at(0), 1, location(1, 0, -1));
+		//绘制2
+		Test.addQuads(&getBlock(2).renderBlock(0).at(0), 1, location(0, 1, -1));
+		//绘制3
+		Test.addQuads(&getBlock(3).renderBlock(0).at(0), 1, location(1, 1, -1));
+
 		VAO.cut(&Test);
 
 		addRefreshRenderGroup(&VAO);

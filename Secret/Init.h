@@ -17,3 +17,6 @@ void initCallback();
 
 //初始化所有纹理
 bool initTextures();
+
+//初始化所有Block
+void initBlock();
