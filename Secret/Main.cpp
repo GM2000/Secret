@@ -33,31 +33,35 @@ int main(int argc,char *argv[])
 	renderGroup VAO;
 	location TTT(0, 0, 0);
 
+	for (int j = 0; j < 150; j++)
+	{
+		for (int k = 0; k < 150; k++)
+		{
+			int BlockID = rand() % 2;
+			int BlockZ = rand() % 100 - 100;
+
+			Test.addQuads(&getBlock(BlockID).renderBlock(0, 0).at(0), 1, location(2 * j - 75, 2 * k - 75, BlockZ));
+			Test.addQuads(&getBlock(BlockID).renderBlock(0, 1).at(0), 1, location(2 * j - 75, 2 * k - 75, BlockZ));
+			Test.addQuads(&getBlock(BlockID).renderBlock(0, 2).at(0), 1, location(2 * j - 75, 2 * k - 75, BlockZ));
+			Test.addQuads(&getBlock(BlockID).renderBlock(0, 3).at(0), 1, location(2 * j - 75, 2 * k - 75, BlockZ));
+			Test.addQuads(&getBlock(BlockID).renderBlock(0, 4).at(0), 1, location(2 * j - 75, 2 * k - 75, BlockZ));
+			Test.addQuads(&getBlock(BlockID).renderBlock(0, 5).at(0), 1, location(2 * j - 75, 2 * k - 75, BlockZ));
+		}
+	}
+	//绘制草方块
+	Test.addQuads(&getBlock(2).renderBlock(0, 0).at(0), 1, location(0, 2, -1));
+	Test.addQuads(&getBlock(2).renderBlock(0, 1).at(0), 1, location(0, 2, -1));
+	Test.addQuads(&getBlock(2).renderBlock(0, 2).at(0), 1, location(0, 2, -1));
+	Test.addQuads(&getBlock(2).renderBlock(0, 3).at(0), 1, location(0, 2, -1));
+	Test.addQuads(&getBlock(2).renderBlock(0, 4).at(0), 1, location(0, 2, -1));
+	Test.addQuads(&getBlock(2).renderBlock(0, 5).at(0), 1, location(0, 2, -1));
+
+	VAO.cut(&Test);
+
+	addRefreshRenderGroup(&VAO);
+
 	while (IsRenderThreadStart)
 	{
-		for (int j = 0; j < 150; j++)
-		{
-			for (int k = 0; k < 150; k++)
-			{
-				Test.addQuads(&getBlock(rand() % 4).renderBlock(0,1).at(0), 1, location(2 * j - 75, 2 * k - 75, rand() % 100 - 100));
-			}
-		}
-		//绘制0
-		Test.addQuads(&getBlock(2).renderBlock(0, 1).at(0), 1, location(0, 2, -1));
-
-		Test.addQuads(&getBlock(2).renderBlock(0, 0).at(0), 1, location(0, 2, -1));
-
-		Test.addQuads(&getBlock(2).renderBlock(0,2).at(0), 1, location(0, 2, -1));
-		//绘制1
-		Test.addQuads(&getBlock(2).renderBlock(0,3).at(0), 1, location(0, 2, -1));
-		//绘制2
-		Test.addQuads(&getBlock(2).renderBlock(0,4).at(0), 1, location(0, 2, -1));
-		//绘制3
-		Test.addQuads(&getBlock(2).renderBlock(0,5).at(0), 1, location(0, 2, -1));
-
-		VAO.cut(&Test);
-
-		addRefreshRenderGroup(&VAO);
 
 		Sleep(1);
 	}
