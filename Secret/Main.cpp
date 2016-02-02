@@ -1,6 +1,7 @@
 
 #include <Windows.h>
 
+#include "Chunk.h"
 #include "Init.h"
 #include "Block.h"
 #include "Location.h"
@@ -33,8 +34,24 @@ int main(int argc,char *argv[])
 	renderGroup VAO;
 	location TTT(0, 0, 0);
 
+	std::vector<chunk> Map;
+
+	for (int k = 0; k < 10; k++)
+	{
+		Map.push_back(chunk());
+
+		for (int i = 0; i < 16; i++)
+		{
+			for (int j = 0; j < 16; j++)
+			{
+				Map[k].BlockData[i][0][j] = 65536;
+			}
+		}
+		Map[k].refreshVAO();
+	}
 	while (IsRenderThreadStart)
 	{
+		/*
 		for (int j = 0; j < 150; j++)
 		{
 			for (int k = 0; k < 150; k++)
@@ -61,7 +78,7 @@ int main(int argc,char *argv[])
 		VAO.cut(&Test);
 
 		addRefreshRenderGroup(&VAO);
-
+		*/
 		Sleep(1);
 	}
 }

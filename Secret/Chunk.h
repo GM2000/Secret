@@ -11,11 +11,11 @@ public:
 	chunk(const chunk &);
 
 	//Chunk×ø±ê
-	int ChunkX;
-	int ChunkZ;
+	int ChunkX = 0;
+	int ChunkZ = 0;
 
 	//blockÊı¾İ
-	unsigned int BlockData[16][256][16];
+	unsigned int BlockData[16][256][16]{0};
 
 	//äÖÈ¾
 	void refreshVAO();
