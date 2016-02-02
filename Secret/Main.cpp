@@ -39,7 +39,7 @@ int main(int argc,char *argv[])
 		{
 			for (int k = 0; k < 150; k++)
 			{
-				int BlockID = rand() % 2;
+				int BlockID = rand() % 4 + 1;
 				int BlockZ = rand() % 100 - 100;
 
 				Test.addQuads(&getBlock(BlockID).renderBlock(0, 0).at(0), 1, location(2 * j - 75, 2 * k - 75, BlockZ));

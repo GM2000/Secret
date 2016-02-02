@@ -17,13 +17,15 @@ typedef void(*templateBlockNormailRenderer)(std::vector<GLfloat>*, int, unsigned
 
 struct block
 {
-	block(templateBlockShapeRenderer, templateBlockTextureRenderer, templateBlockNormailRenderer,short, short, short, short, short, short, short);
+	block(templateBlockShapeRenderer, templateBlockTextureRenderer, templateBlockNormailRenderer, unsigned short *, bool);
 
 	block(block, int);
 
 	std::vector<GLfloat> renderBlock(unsigned short, unsigned char);
 
-	unsigned short int Texture[7];
+	unsigned short* Textures;
+
+	bool IsHide = false;
 private:
 	unsigned short int BlockID = 0;
 

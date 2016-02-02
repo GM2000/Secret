@@ -3,8 +3,13 @@
 #include <vector>
 
 //ÆÕÍ¨·½¿é
-void blockShapeNormal(std::vector<GLfloat> *GetVector,int BlockBrocken, unsigned char Face)
+void blockShapeNormal(std::vector<GLfloat> *GetVector,int BlockData, unsigned char Face)
 {
+	block GetBlock = getBlock(blockData::getBlockID(BlockData));
+
+	if (GetBlock.IsHide)
+		return;
+
 	switch (Face)
 	{
 	case TEXTURE_UP:

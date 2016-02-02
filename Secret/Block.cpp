@@ -3,19 +3,15 @@
 
 std::vector<block> Block;
 
-block::block(templateBlockShapeRenderer blockShapeRenderer, templateBlockTextureRenderer blockTextureRenderer, templateBlockNormailRenderer blockNormailRenderer, short T1, short T2, short T3, short T4, short T5, short T6, short T7)
+block::block(templateBlockShapeRenderer blockShapeRenderer, templateBlockTextureRenderer blockTextureRenderer, templateBlockNormailRenderer blockNormailRenderer, unsigned short *Textures, bool IsHide)
 {
 	block::blockShapeRenderer = blockShapeRenderer;
 	block::blockTextureRenderer = blockTextureRenderer;
 	block::blockNormailRenderer = blockNormailRenderer;
 
-	Texture[0] = T1;
-	Texture[1] = T2;
-	Texture[2] = T3;
-	Texture[3] = T4;
-	Texture[4] = T5;
-	Texture[5] = T6;
-	Texture[6] = T7;
+	block::Textures = Textures;
+
+	block::IsHide = IsHide;
 }
 block::block(block Block, int BlockID)
 {
@@ -31,7 +27,7 @@ unsigned short addBlock(block AddBlock)
 {
 	Block.push_back(block(AddBlock,Block.size()));
 
-	return Block.size() - 1;
+	return (unsigned short)Block.size() - 1;
 }
 std::vector<GLfloat> block::renderBlock(unsigned short Brocken, unsigned char Face)
 {

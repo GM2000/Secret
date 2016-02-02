@@ -4,10 +4,15 @@
 
 void blockTextureNormal(std::vector<GLfloat> *GetVector,int BlockData, unsigned char Face)
 {
-	unsigned short TextureID = getBlock(blockData::getBlockID(BlockData)).Texture[Face];
+	block GetBlock = getBlock(blockData::getBlockID(BlockData));
 
-	GetVector->push_back((TextureID - TextureID / 32 * 32) / 32.0); GetVector->push_back(TextureID / 32 / 32.0);
-	GetVector->push_back((TextureID - TextureID / 32 * 32) / 32.0); GetVector->push_back((TextureID / 32 + 1) / 32.0);
-	GetVector->push_back((TextureID - TextureID / 32 * 32 + 1) / 32.0); GetVector->push_back((TextureID / 32 + 1) / 32.0);
-	GetVector->push_back((TextureID - TextureID / 32 * 32 + 1) / 32.0); GetVector->push_back(TextureID / 32 / 32.0);
+	if (GetBlock.IsHide)
+		return;
+
+	unsigned short TextureID = GetBlock.Textures[Face];
+
+	GetVector->push_back((TextureID - TextureID / 32 * 32) / 32.0f); GetVector->push_back(TextureID / 32 / 32.0f);
+	GetVector->push_back((TextureID - TextureID / 32 * 32) / 32.0f); GetVector->push_back((TextureID / 32 + 1) / 32.0f);
+	GetVector->push_back((TextureID - TextureID / 32 * 32 + 1) / 32.0f); GetVector->push_back((TextureID / 32 + 1) / 32.0f);
+	GetVector->push_back((TextureID - TextureID / 32 * 32 + 1) / 32.0f); GetVector->push_back(TextureID / 32 / 32.0f);
 }
