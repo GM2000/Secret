@@ -2,19 +2,6 @@
 #include "Chunk.h"
 #include "Block.h"
 
-chunk::chunk(const chunk &GetChunk)
-{
-	for (int i = 0; i < 16; i++)
-	{
-		for (int j = 0; j < 256; j++)
-		{
-			for (int k = 0; k < 16; k++)
-			{
-				BlockData[i][j][k] = GetChunk.BlockData[i][j][k];
-			}
-		}
-	}
-}
 chunk::chunk()
 {
 	for (int i = 0; i < 16; i++)

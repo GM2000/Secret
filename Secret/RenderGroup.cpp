@@ -5,7 +5,6 @@
 /*加载三角形，其中GLfloat*需要输入的是三角形的顶点，纹理，法线,颜色的数据，排列方式为 （顶点*12，纹理*8，颜色*12，法线*12）*Count，Count为三角形个数*/
 void renderGroup::addQuads(GLfloat* Data, int Count)
 {
-	lock();
 	//解析数据
 	for (int TriangleCount = 0; TriangleCount < Count; TriangleCount++)
 	{
@@ -27,13 +26,9 @@ void renderGroup::addQuads(GLfloat* Data, int Count)
 		}
 		Size += 4;
 	}
-	HasChange = false;
-
-	unLock();
 }
 void renderGroup::addQuads(GLfloat* Data, int Count,location Loc)
 {
-	lock();
 	//解析数据
 	for (int TriangleCount = 0; TriangleCount < Count; TriangleCount++)
 	{
@@ -57,9 +52,6 @@ void renderGroup::addQuads(GLfloat* Data, int Count,location Loc)
 		}
 		Size += 4;
 	}
-	HasChange = false;
-
-	unLock();
 }
 void renderGroup::unNeedRefresh()
 {
@@ -75,7 +67,7 @@ bool renderGroup::hasChange()
 }
 void renderGroup::cut(renderGroup *RenderGroup)
 {
-	lock();
+	std::lock_guard<std::mutex> LockGuard(Lock);
 
 	VertexData.clear();
 	TextureData.clear();
@@ -89,32 +81,4 @@ void renderGroup::cut(renderGroup *RenderGroup)
 
 	Size = RenderGroup->Size;
 	RenderGroup->Size = 0;
-
-	HasChange = false;
-
-	unLock();
-}
-void renderGroup::clear()
-{
-	lock();
-
-	VertexData.clear();
-	TextureData.clear();
-	ColorData.clear();
-	NormailData.clear();
-
-	Size = 0;
-
-	HasChange = false;
-
-	unLock();
-}
-
-void renderGroup::lock()
-{
-	Lock.lock();
-}
-void renderGroup::unLock()
-{
-	Lock.unlock();
 }

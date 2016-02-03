@@ -9,10 +9,10 @@ std::list<renderGroup*> RefreshRenderGroup;
 void addRefreshRenderGroup(renderGroup* RenderGroup)
 {
 	//添加需要刷新的渲染组
-	RefreshRenderGroupLock.lock();
+	std::lock_guard<std::mutex> RefreshRenderGroupLockGuard(RefreshRenderGroupLock);
+
+	std::lock_guard<std::mutex> LockGuard(RenderGroup->Lock);
 
 	RenderGroup->NeedRefresh();
 	RefreshRenderGroup.push_back(RenderGroup);
-
-	RefreshRenderGroupLock.unlock();
 }

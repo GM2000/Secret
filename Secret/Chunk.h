@@ -8,7 +8,6 @@ class chunk
 public:
 	//构造函数
 	chunk();
-	chunk(const chunk &);
 
 	//Chunk坐标
 	int ChunkX = 0;

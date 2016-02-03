@@ -34,20 +34,23 @@ int main(int argc,char *argv[])
 	renderGroup VAO;
 	location TTT(0, 0, 0);
 
-	std::vector<chunk> Map;
+	std::vector<chunk> Map(100);
 
 	for (int k = 0; k < 10; k++)
 	{
-		Map.push_back(chunk());
-
-		for (int i = 0; i < 16; i++)
+		for (int l = 0; l < 10; l++)
 		{
-			for (int j = 0; j < 16; j++)
+			for (int i = 0; i < 16; i++)
 			{
-				Map[k].BlockData[i][0][j] = 65536;
+				for (int j = 0; j < 16; j++)
+				{
+					Map[k + l * 10].BlockData[i][0][j] = 65536;
+				}
 			}
+			Map[k + l * 10].ChunkX = k;
+			Map[k + l * 10].ChunkZ = l;
+			Map[k + l * 10].refreshVAO();
 		}
-		Map[k].refreshVAO();
 	}
 	while (IsRenderThreadStart)
 	{
