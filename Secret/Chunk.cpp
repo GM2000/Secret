@@ -19,13 +19,13 @@ unsigned int chunk::getBlockData(unsigned char BlockX, unsigned char BlockY, uns
 {
 	return BlockData[BlockX][BlockY][BlockZ];
 }
-void chunk::refreshVAO()
+void chunk::refreshVAO(unsigned char Y)
 {
 	renderGroup TmpRenderGroup;
 
 	for (int BlockX = 0; BlockX < 16; BlockX++)
 	{
-		for (int BlockY = 0; BlockY < 256; BlockY++)
+		for (int BlockY = 0; BlockY < (Y + 1) * 16; BlockY++)
 		{
 			for (int BlockZ = 0; BlockZ < 16; BlockZ++)
 			{
@@ -36,14 +36,14 @@ void chunk::refreshVAO()
 				{
 					std::vector<GLfloat> BlockRenderData = GetBlock.renderBlock(0, 0);
 
-					TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(BlockX + ChunkX * 16, BlockY - 100, BlockZ + ChunkZ * 16));
+					TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(BlockX + ChunkX * 16, BlockY - 5, BlockZ + ChunkZ * 16));
 				}
 			}
 		}
 	}
 	//¿½±´Êý¾Ý
-	ChunkVAO.cut(&TmpRenderGroup);
+	ChunkVAO[Y].cut(&TmpRenderGroup);
 
 	//Ë¢ÐÂ
-	addRefreshRenderGroup(&ChunkVAO);
+	addRefreshRenderGroup(&ChunkVAO[Y]);
 }

@@ -15,7 +15,7 @@
 
 extern bool IsRenderThreadStart;
 
-int main(int argc,char *argv[])
+int main(int argc, char *argv[])
 {
 
 #ifdef _DEBUG
@@ -34,54 +34,37 @@ int main(int argc,char *argv[])
 	renderGroup VAO;
 	location TTT(0, 0, 0);
 
-	std::vector<chunk> Map(100);
+	std::vector<chunk> Map(4096);
 
-	for (int k = 0; k < 10; k++)
+	for (int k = 0; k < 64; k++)
 	{
-		for (int l = 0; l < 10; l++)
+		for (int l = 0; l < 64; l++)
 		{
 			for (int i = 0; i < 16; i++)
 			{
 				for (int j = 0; j < 16; j++)
 				{
-					Map[k + l * 10].BlockData[i][0][j] = 65536;
+					Map[k + l * 64].BlockData[i][0][j] = blockData::createBlockData(rand() % 4, 0);
 				}
 			}
-			Map[k + l * 10].ChunkX = k;
-			Map[k + l * 10].ChunkZ = l;
-			Map[k + l * 10].refreshVAO();
+			Map[k + l * 64].ChunkX = k - 32;
+			Map[k + l * 64].ChunkZ = l - 32;
+
+			Map[k + l * 64].refreshVAO(0);
 		}
 	}
+
 	while (IsRenderThreadStart)
 	{
-		/*
-		for (int j = 0; j < 150; j++)
+		for (int i = 0; i < 16; i++)
 		{
-			for (int k = 0; k < 150; k++)
+			for (int j = 0; j < 16; j++)
 			{
-				int BlockID = rand() % 4 + 1;
-				int BlockZ = rand() % 100 - 100;
-
-				Test.addQuads(&getBlock(BlockID).renderBlock(0, 0).at(0), 1, location(2 * j - 75, 2 * k - 75, BlockZ));
-				Test.addQuads(&getBlock(BlockID).renderBlock(0, 1).at(0), 1, location(2 * j - 75, 2 * k - 75, BlockZ));
-				Test.addQuads(&getBlock(BlockID).renderBlock(0, 2).at(0), 1, location(2 * j - 75, 2 * k - 75, BlockZ));
-				Test.addQuads(&getBlock(BlockID).renderBlock(0, 3).at(0), 1, location(2 * j - 75, 2 * k - 75, BlockZ));
-				Test.addQuads(&getBlock(BlockID).renderBlock(0, 4).at(0), 1, location(2 * j - 75, 2 * k - 75, BlockZ));
-				Test.addQuads(&getBlock(BlockID).renderBlock(0, 5).at(0), 1, location(2 * j - 75, 2 * k - 75, BlockZ));
+				Map[32 + 32 * 64].BlockData[i][0][j] = blockData::createBlockData(rand() % 4, 0);
 			}
 		}
-		//»æÖÆ²Ý·½¿é
-		Test.addQuads(&getBlock(2).renderBlock(0, 0).at(0), 1, location(0, 2, -1));
-		Test.addQuads(&getBlock(2).renderBlock(0, 1).at(0), 1, location(0, 2, -1));
-		Test.addQuads(&getBlock(2).renderBlock(0, 2).at(0), 1, location(0, 2, -1));
-		Test.addQuads(&getBlock(2).renderBlock(0, 3).at(0), 1, location(0, 2, -1));
-		Test.addQuads(&getBlock(2).renderBlock(0, 4).at(0), 1, location(0, 2, -1));
-		Test.addQuads(&getBlock(2).renderBlock(0, 5).at(0), 1, location(0, 2, -1));
+		Map[32 + 32 * 64].refreshVAO(0);
 
-		VAO.cut(&Test);
-
-		addRefreshRenderGroup(&VAO);
-		*/
 		Sleep(1);
 	}
 }

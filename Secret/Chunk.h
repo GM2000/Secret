@@ -4,7 +4,7 @@
 
 class chunk
 {
-	renderGroup ChunkVAO;
+	renderGroup ChunkVAO[16];
 public:
 	//构造函数
 	chunk();
@@ -16,8 +16,8 @@ public:
 	//block数据
 	unsigned int BlockData[16][256][16]{0};
 
-	//渲染
-	void refreshVAO();
+	//渲染,为了加速渲染我把每个chunk的渲染数据分成了16份，Y的范围为0-15
+	void refreshVAO(unsigned char Y);
 
 	//获取Block
 	unsigned int getBlockData(unsigned char BlockX, unsigned char BlockY, unsigned char BlockZ);
