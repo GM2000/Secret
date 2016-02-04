@@ -48,8 +48,14 @@ int main(int argc, char *argv[])
 					if (k - 8 == 1 && l - 8 == 1)
 					{
 						Map[k + l * 16].BlockData[i][0][j] = blockData::createBlockData(2, 0);
-						Map[k + l * 16].BlockData[1][3][2] = blockData::createBlockData(2, 0);
-						Map[k + l * 16].BlockData[1][3][3] = blockData::createBlockData(2, 0);
+						Map[k + l * 16].BlockData[0][3][2] = blockData::createBlockData(2, 0);
+						Map[k + l * 16].BlockData[0][3][3] = blockData::createBlockData(2, 0);
+					}
+					else if(k - 8 == 2 && l - 8 == 1)
+					{
+						Map[k + l * 16].BlockData[i][0][j] = blockData::createBlockData(2, 0);
+						Map[k + l * 16].BlockData[15][3][2] = blockData::createBlockData(2, 0);
+						Map[k + l * 16].BlockData[15][3][3] = blockData::createBlockData(2, 0);
 					}
 					else
 					{
@@ -59,22 +65,19 @@ int main(int argc, char *argv[])
 			}
 			Map[k + l * 16].ChunkX = k - 8;
 			Map[k + l * 16].ChunkZ = l - 8;
-
-			Map[k + l * 16].refreshVAO(0);
 		}
 	}
 
-	for (int i = 0; i < 16; i++)
+	for (int i = 1; i < 15; i++)
 	{
-		for (int j = 0; j < 16; j++)
+		for (int j = 1; j < 15; j++)
 		{
-			Map[8 + 8 * 16].BlockData[i][0][j] = blockData::createBlockData(4, 0);
+			for (int k = 0; k < 15; k++)
+			{
+				Map[i + j * 16].refreshVAO(k, new chunk*[4]{ &Map[i + 1 + j * 16] ,&Map[i - 1 + j * 16] ,&Map[i + (j + 1) * 16] ,&Map[i + (j - 1) * 16] });
+			}
 		}
 	}
-	Map[8 + 8 * 16].BlockData[1][5][1] = blockData::createBlockData(3, 0);
-	Map[8 + 8 * 16].BlockData[2][5][1] = blockData::createBlockData(3, 0);
-
-	Map[8 + 8 * 16].refreshVAO(0);
 
 	while (IsRenderThreadStart)
 	{

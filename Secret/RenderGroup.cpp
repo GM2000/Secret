@@ -69,11 +69,6 @@ void renderGroup::cut(renderGroup *RenderGroup)
 {
 	std::lock_guard<std::mutex> LockGuard(Lock);
 
-	VertexData.clear();
-	TextureData.clear();
-	ColorData.clear();
-	NormailData.clear();
-
 	RenderGroup->VertexData.swap(VertexData);
 	RenderGroup->TextureData.swap(TextureData);
 	RenderGroup->ColorData.swap(ColorData);

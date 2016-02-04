@@ -41,7 +41,7 @@ unsigned int chunk::getBlockData(char BlockX, char BlockY, char BlockZ, chunk *N
 
 		BlockInChunk = NearChunk[1];
 	}
-	if (BlockZ > 15)
+	else if (BlockZ > 15)
 	{
 		//获取左方Chunk的方块
 		BlockZ -= 16;
@@ -62,11 +62,12 @@ unsigned int chunk::getBlockData(char BlockX, char BlockY, char BlockZ, chunk *N
 	return BlockInChunk->BlockData[BlockX][BlockY][BlockZ];
 }
 
-void chunk::refreshVAO(unsigned char Y)
+void chunk::refreshVAO(unsigned char Y,chunk* GetNearChunk[4])
 {
-	chunk* GetNearChunk[4] = { this,this,this,this };
-
 	renderGroup TmpRenderGroup;
+
+	if (Y > 15)
+		return;
 
 	for (unsigned char BlockX = 0; BlockX < 16; BlockX++)
 	{

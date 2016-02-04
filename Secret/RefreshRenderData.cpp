@@ -81,6 +81,11 @@ void refreshRenderData()
 				glEnableVertexAttribArray(2);
 
 				GetRenderGroup->unNeedRefresh();
+
+				std::vector<GLfloat>(GetRenderGroup->VertexData).swap(GetRenderGroup->VertexData);
+				std::vector<GLfloat>(GetRenderGroup->TextureData).swap(GetRenderGroup->TextureData);
+				std::vector<GLfloat>(GetRenderGroup->ColorData).swap(GetRenderGroup->ColorData);
+				std::vector<GLfloat>(GetRenderGroup->NormailData).swap(GetRenderGroup->NormailData);
 			}
 		}
 	}
