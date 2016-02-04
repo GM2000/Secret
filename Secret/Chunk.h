@@ -7,7 +7,7 @@ class chunk
 	renderGroup ChunkVAO[16];
 
 	//获取Block
-	unsigned int getBlockData(unsigned char BlockX, unsigned char BlockY, unsigned char BlockZ,chunk *NearChunk[4]);
+	unsigned int getBlockData(char BlockX, char BlockY, char BlockZ,chunk *NearChunk[4]);
 
 public:
 	//构造函数

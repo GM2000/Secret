@@ -23,12 +23,43 @@ unsigned int chunk::getBlockData(unsigned char BlockX, unsigned char BlockY, uns
 	return BlockData[BlockX][BlockY][BlockZ];
 }
 
-unsigned int chunk::getBlockData(unsigned char BlockX, unsigned char BlockY, unsigned char BlockZ, chunk *NearChunk[4])
+unsigned int chunk::getBlockData(char BlockX, char BlockY, char BlockZ, chunk *NearChunk[4])
 {
+	chunk *BlockInChunk = this;
+
+	if (BlockX > 15)
+	{
+		//获取前方Chunk的方块
+		BlockX -= 16;
+
+		BlockInChunk = NearChunk[0];
+	}
+	else if (BlockX < 0)
+	{
+		//获取后方Chunk的方块
+		BlockX += 16;
+
+		BlockInChunk = NearChunk[1];
+	}
+	if (BlockZ > 15)
+	{
+		//获取左方Chunk的方块
+		BlockZ -= 16;
+
+		BlockInChunk = NearChunk[2];
+	}
+	else if (BlockZ < 0)
+	{
+		//获取右方Chunk的方块
+		BlockZ += 16;
+
+		BlockInChunk = NearChunk[3];
+	}
+
 	if (BlockX > 15 || BlockX < 0 || BlockY>255 || BlockY < 0 || BlockZ>15 || BlockZ < 0)
 		return blockData::createBlockData(0, 0);
 
-	return BlockData[BlockX][BlockY][BlockZ];
+	return BlockInChunk->BlockData[BlockX][BlockY][BlockZ];
 }
 
 void chunk::refreshVAO(unsigned char Y)
