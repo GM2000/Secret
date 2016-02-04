@@ -3,7 +3,7 @@
 
 std::vector<block> Block;
 
-block::block(templateBlockShapeRenderer blockShapeRenderer, templateBlockTextureRenderer blockTextureRenderer, templateBlockNormailRenderer blockNormailRenderer, unsigned short *Textures, bool IsHide)
+block::block(templateBlockShapeRenderer blockShapeRenderer, templateBlockTextureRenderer blockTextureRenderer, templateBlockNormailRenderer blockNormailRenderer, unsigned short *Textures, bool IsHide, bool HasAlpha)
 {
 	block::blockShapeRenderer = blockShapeRenderer;
 	block::blockTextureRenderer = blockTextureRenderer;
@@ -12,6 +12,7 @@ block::block(templateBlockShapeRenderer blockShapeRenderer, templateBlockTexture
 	block::Textures = Textures;
 
 	block::IsHide = IsHide;
+	block::HasAlpha = HasAlpha;
 }
 block::block(block Block, int BlockID)
 {
@@ -29,6 +30,7 @@ unsigned short addBlock(block AddBlock)
 
 	return (unsigned short)Block.size() - 1;
 }
+//渲染方块，方块破损值，方块方向
 std::vector<GLfloat> block::renderBlock(unsigned short Brocken, unsigned char Face)
 {
 	std::vector<GLfloat> blockRenderData;

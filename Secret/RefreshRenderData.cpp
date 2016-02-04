@@ -28,9 +28,6 @@ void refreshRenderData()
 			renderGroup* GetRenderGroup = *RefreshRenderGroup.begin();
 			RefreshRenderGroup.pop_front();
 
-			//解锁
-			RefreshRenderGroupLock.unlock();
-
 			//开始刷新
 			std::lock_guard<std::mutex> GetRenderGroupLockGuard(GetRenderGroup->Lock);
 
@@ -41,8 +38,19 @@ void refreshRenderData()
 
 				VertexArrayObject.push_back(vao(GetRenderGroup->VertexArrayID, GetRenderGroup->Size));
 
+				//保存位置
+				GetRenderGroup->VertexRenderArrayCount = VertexArrayObject.size() - 1;
+
 				glGenBuffers(3, GetRenderGroup->Buffer);
 			}
+			else
+			{
+				//更新
+				VertexArrayObject[GetRenderGroup->VertexRenderArrayCount].VAOSize = GetRenderGroup->Size;
+			}
+
+			//解锁
+			RefreshRenderGroupLock.unlock();
 
 			//是否有变化？
 			if (GetRenderGroup->hasChange() && GetRenderGroup->Size > 0)

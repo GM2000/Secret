@@ -91,6 +91,16 @@ void gameRefresh()
 			camera::HasChange = true;
 			camera::Loc.move(-cos(camera::YRot) * camera::Speed, 0, -sin(camera::YRot) * camera::Speed);
 		}
+		if (Keys[GLFW_KEY_SPACE])
+		{
+			camera::HasChange = true;
+			camera::Loc.move(0, -0.03, 0);
+		}
+		if (Keys[GLFW_KEY_LEFT_SHIFT])
+		{
+			camera::HasChange = true;
+			camera::Loc.move(0, 0.03, 0);
+		}
 
 		camera::CameraLock.unlock();
 	}

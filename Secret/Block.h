@@ -17,15 +17,18 @@ typedef void(*templateBlockNormailRenderer)(std::vector<GLfloat>*, int, unsigned
 
 struct block
 {
-	block(templateBlockShapeRenderer, templateBlockTextureRenderer, templateBlockNormailRenderer, unsigned short *, bool);
+	//创建一个新的Block，纹理，是否隐藏，是否有透明
+	block(templateBlockShapeRenderer, templateBlockTextureRenderer, templateBlockNormailRenderer, unsigned short *, bool, bool);
 
 	block(block, int);
 
 	std::vector<GLfloat> renderBlock(unsigned short, unsigned char);
 
+	//方块属性
 	unsigned short* Textures;
 
 	bool IsHide = false;
+	bool HasAlpha = false;
 private:
 	unsigned short int BlockID = 0;
 

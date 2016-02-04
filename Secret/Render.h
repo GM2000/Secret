@@ -40,6 +40,8 @@ public:
 
 	//VAO的位置
 	GLuint VertexArrayID = 0;
+	//VAO在渲染队列中的位置
+	GLuint VertexRenderArrayCount = 0;
 
 	/*加载正方，其中GLfloat*需要输入的是三角形的顶点，纹理，法线的数据，排列方式为 （顶点*12，纹理*8，颜色*16，法线*12）*Count，Count为三角形个数*/
 	void addQuads(GLfloat*,int);
