@@ -94,12 +94,12 @@ void gameRefresh()
 		if (Keys[GLFW_KEY_SPACE])
 		{
 			camera::HasChange = true;
-			camera::Loc.move(0, -0.03, 0);
+			camera::Loc.move(0, 0.01, 0);
 		}
 		if (Keys[GLFW_KEY_LEFT_SHIFT])
 		{
 			camera::HasChange = true;
-			camera::Loc.move(0, 0.03, 0);
+			camera::Loc.move(0, -0.01, 0);
 		}
 
 		camera::CameraLock.unlock();

@@ -87,7 +87,7 @@ void chunk::refreshVAO(unsigned char Y,chunk* GetNearChunk[4])
 					{
 						std::vector<GLfloat> BlockRenderData = GetBlock.renderBlock(0, TEXTURE_UP);
 
-						TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(BlockX - (ChunkX + 1) * 16, BlockY, BlockZ - (ChunkZ + 1) * 16));
+						TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(( - ChunkX) * 16 - BlockX - 1, BlockY, ( - ChunkZ) * 16 - BlockZ - 1));
 					}
 					//绘制底部
 					GetNearBlock = getBlock(blockData::getBlockID(getBlockData(BlockX, BlockY - 1, BlockZ, GetNearChunk)));
@@ -96,47 +96,47 @@ void chunk::refreshVAO(unsigned char Y,chunk* GetNearChunk[4])
 					{
 						std::vector<GLfloat> BlockRenderData = GetBlock.renderBlock(0, TEXTURE_DOWN);
 
-						TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(BlockX - (ChunkX + 1) * 16, BlockY, BlockZ - (ChunkZ + 1) * 16));
+						TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(( - ChunkX) * 16 - BlockX - 1, BlockY, ( - ChunkZ) * 16 - BlockZ - 1));
 					}
 
 					//绘制左部
-					GetNearBlock = getBlock(blockData::getBlockID(getBlockData(BlockX - 1, BlockY, BlockZ, GetNearChunk)));
+					GetNearBlock = getBlock(blockData::getBlockID(getBlockData(BlockX + 1, BlockY, BlockZ, GetNearChunk)));
 
 					if (GetNearBlock.IsHide || GetNearBlock.HasAlpha)
 					{
 						std::vector<GLfloat> BlockRenderData = GetBlock.renderBlock(0, TEXTURE_LEFT);
 
-						TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(BlockX - (ChunkX + 1) * 16, BlockY, BlockZ - (ChunkZ + 1) * 16));
+						TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(( - ChunkX) * 16 - BlockX - 1, BlockY, ( - ChunkZ) * 16 - BlockZ - 1));
 					}
 
 					//绘制右部
-					GetNearBlock = getBlock(blockData::getBlockID(getBlockData(BlockX + 1, BlockY, BlockZ, GetNearChunk)));
+					GetNearBlock = getBlock(blockData::getBlockID(getBlockData(BlockX - 1, BlockY, BlockZ, GetNearChunk)));
 
 					if (GetNearBlock.IsHide || GetNearBlock.HasAlpha)
 					{
 						std::vector<GLfloat> BlockRenderData = GetBlock.renderBlock(0, TEXTURE_RIGHT);
 
-						TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(BlockX - (ChunkX + 1) * 16, BlockY, BlockZ - (ChunkZ + 1) * 16));
+						TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(( - ChunkX) * 16 - BlockX - 1, BlockY, ( - ChunkZ) * 16 - BlockZ - 1));
 					}
 
 					//绘制前部
-					GetNearBlock = getBlock(blockData::getBlockID(getBlockData(BlockX, BlockY, BlockZ + 1, GetNearChunk)));
+					GetNearBlock = getBlock(blockData::getBlockID(getBlockData(BlockX, BlockY, BlockZ - 1, GetNearChunk)));
 
 					if (GetNearBlock.IsHide || GetNearBlock.HasAlpha)
 					{
 						std::vector<GLfloat> BlockRenderData = GetBlock.renderBlock(0, TEXTURE_FROUNT);
 
-						TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(BlockX - (ChunkX + 1) * 16, BlockY, BlockZ - (ChunkZ + 1) * 16));
+						TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(( - ChunkX) * 16 - BlockX - 1, BlockY, ( - ChunkZ) * 16 - BlockZ - 1));
 					}
 
 					//绘制后部
-					GetNearBlock = getBlock(blockData::getBlockID(getBlockData(BlockX, BlockY, BlockZ - 1, GetNearChunk)));
+					GetNearBlock = getBlock(blockData::getBlockID(getBlockData(BlockX, BlockY, BlockZ + 1, GetNearChunk)));
 
 					if (GetNearBlock.IsHide || GetNearBlock.HasAlpha)
 					{
 						std::vector<GLfloat> BlockRenderData = GetBlock.renderBlock(0, TEXTURE_BACK);
 
-						TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(BlockX - (ChunkX + 1) * 16, BlockY, BlockZ - (ChunkZ + 1) * 16));
+						TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(( - ChunkX) * 16 - BlockX - 1, BlockY, ( - ChunkZ) * 16 - BlockZ - 1));
 					}
 				}
 			}

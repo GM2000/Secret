@@ -48,14 +48,15 @@ int main(int argc, char *argv[])
 					if (k - 8 == 1 && l - 8 == 1)
 					{
 						Map[k + l * 16].BlockData[i][0][j] = blockData::createBlockData(2, 0);
-						Map[k + l * 16].BlockData[0][3][2] = blockData::createBlockData(2, 0);
-						Map[k + l * 16].BlockData[0][3][3] = blockData::createBlockData(2, 0);
+						Map[k + l * 16].BlockData[15][3][2] = blockData::createBlockData(2, 0);
+						Map[k + l * 16].BlockData[15][3][3] = blockData::createBlockData(2, 0);
+						Map[k + l * 16].BlockData[15][4][3] = blockData::createBlockData(2, 0);
 					}
 					else if(k - 8 == 2 && l - 8 == 1)
 					{
 						Map[k + l * 16].BlockData[i][0][j] = blockData::createBlockData(2, 0);
-						Map[k + l * 16].BlockData[15][3][2] = blockData::createBlockData(2, 0);
-						Map[k + l * 16].BlockData[15][3][3] = blockData::createBlockData(2, 0);
+						Map[k + l * 16].BlockData[0][3][2] = blockData::createBlockData(2, 0);
+						Map[k + l * 16].BlockData[0][3][3] = blockData::createBlockData(2, 0);
 					}
 					else
 					{
@@ -74,7 +75,7 @@ int main(int argc, char *argv[])
 		{
 			for (int k = 0; k < 15; k++)
 			{
-				Map[i + j * 16].refreshVAO(k, new chunk*[4]{ &Map[i + 1 + j * 16] ,&Map[i - 1 + j * 16] ,&Map[i + (j + 1) * 16] ,&Map[i + (j - 1) * 16] });
+				Map[i + j * 16].refreshVAO(k, new chunk*[4]{ &Map[i + 1 + j * 16] ,&Map[i - 1 + j * 16],&Map[i + (j - 1) * 16] ,&Map[i + (j + 1) * 16] });
 			}
 		}
 	}
@@ -85,6 +86,17 @@ int main(int argc, char *argv[])
 		std::cout << camera::Loc.ChunkZ << std::endl;
 		std::cout << camera::Loc.InX << std::endl;
 		std::cout << camera::Loc.InZ << std::endl;
+
+		for (int i = 0; i < 256; i++)
+		{
+			if (Map[i].ChunkX == camera::Loc.ChunkX && Map[i].ChunkZ == camera::Loc.ChunkZ)
+			{
+				std::cout << Map[i].getBlockData(camera::Loc.InX, camera::Loc.InY, camera::Loc.InZ) << std::endl;
+
+				break;
+			}
+		}
+
 		Sleep(1000);
 	}
 }

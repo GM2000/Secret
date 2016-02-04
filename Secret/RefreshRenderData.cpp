@@ -82,10 +82,18 @@ void refreshRenderData()
 
 				GetRenderGroup->unNeedRefresh();
 
-				std::vector<GLfloat>(GetRenderGroup->VertexData).swap(GetRenderGroup->VertexData);
-				std::vector<GLfloat>(GetRenderGroup->TextureData).swap(GetRenderGroup->TextureData);
-				std::vector<GLfloat>(GetRenderGroup->ColorData).swap(GetRenderGroup->ColorData);
-				std::vector<GLfloat>(GetRenderGroup->NormailData).swap(GetRenderGroup->NormailData);
+				//Çå¿Õ
+				std::vector<GLfloat> Empty[4];
+
+				GetRenderGroup->VertexData.swap(Empty[0]);
+				GetRenderGroup->TextureData.swap(Empty[1]);
+				GetRenderGroup->ColorData.swap(Empty[2]);
+				GetRenderGroup->NormailData.swap(Empty[3]);
+
+				Empty[0].~vector();
+				Empty[1].~vector();
+				Empty[2].~vector();
+				Empty[3].~vector();
 			}
 		}
 	}
