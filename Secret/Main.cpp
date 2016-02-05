@@ -20,7 +20,7 @@ void freeBlock();
 
 //临时地形算法
 int seed = (rand() % 1000000);
-float persistence = 2.3f;
+float persistence = 4.7f;
 int Number_Of_Octaves = 3;
 
 float PerlinNoise_2D(float x, float y);
@@ -148,7 +148,12 @@ int main(int argc, char *argv[])
 				{
 					bool HasSetGrass = false;
 
-					for (int m = (PerlinNoise_2D(k * 16 + i, l * 16 + j) * 5 + 10) * 5; m > 0; m--)
+					int m = (PerlinNoise_2D(k * 16 + i, l * 16 + j) * 5 + 10) * 5;
+
+					if (m > 255)
+						m = 255;
+
+					for (m; m > 0; m--)
 					{
 						if (!HasSetGrass)
 						{
@@ -160,7 +165,6 @@ int main(int argc, char *argv[])
 							Map[k + l * MapSize].BlockData[i][m][j] = blockData::createBlockData(2, 0);
 						}
 					}
-					Map[k + l * MapSize].BlockData[i][255][j] = blockData::createBlockData(1, 0);
 				}
 			}
 			Map[k + l * MapSize].ChunkX = k - MapSize / 2;
