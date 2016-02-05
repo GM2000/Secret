@@ -3,78 +3,81 @@
 
 double location::x()
 {
-	return ChunkX * 16 + InX;
+	return X;
 }
 
 double location::y()
 {
-	return InY;
+	return Y;
 }
 
 double location::z()
 {
-	return ChunkZ * 16 + InZ;
+	return Z;
+}
+
+int location::chunkX()
+{
+	if (X < 0)
+	{
+		return (int)(X-1) >> 4;
+	}
+	return (int)X >> 4;
+}
+int location::chunkZ()
+{
+	if (Z < 0)
+	{
+		return (int)(Z - 1) >> 4;
+	}
+	return (int)Z >> 4;
+}
+
+double location::inX()
+{
+	return X - (chunkX() << 4);
+}
+
+double location::inY()
+{
+	return Y;
+}
+
+double location::inZ()
+{
+	return  Z - (chunkZ() << 4);
 }
 
 location::location(double X, double Y, double Z)
 {
 	moveTo(X, Y, Z);
 }
-void location::moveTo(double X, double Y, double Z)
-{
-	ChunkX = (int)X / 16;
-
-	if (X < 0)
-	{
-		ChunkX--;
-	}
-	ChunkZ = (int)Z / 16;
-
-	if (Z < 0)
-	{
-		ChunkZ--;
-	}
-
-	InX = X - 16 * ChunkX;
-	InY = Y;
-	InZ = Z - 16 * ChunkZ;
-}
 void location::move(double X, double Y, double Z)
 {
-	if (X != 0)
+	location::X += X;
+	location::Y += Y;
+	location::Z += Z;
+
+	if (chunkX() > 0)
 	{
-		InX += X;
-
-		ChunkX += (int)InX / 16;
-
-		if (InX < 0)
-		{
-			ChunkX--;
-			InX -= ((int)InX / 16 - 1) * 16;
-		}
-		else
-		{
-			InX -= (int)InX / 16 * 16;
-		}
+		location::X = 16;
 	}
-	if (Y != 0)
+	else if (chunkX() < 0)
 	{
-		InY += Y;
+		location::X = 0;
 	}
-	if (Z != 0)
+	if (chunkZ() > 0)
 	{
-		InZ += Z;
-
-		ChunkZ += (int)InZ / 16;
-
-		if (InZ < 0)
-		{
-			ChunkZ--;
-			InZ -= ((int)InZ / 16 - 1) * 16;
-		}
-		else
-		{
-			InZ -= (int)InZ / 16 * 16;
-		}
+		location::Z = 16;
 	}
+	else if (chunkZ() < 0)
+	{
+		location::Z = 0;
+	}
+}
+void location::moveTo(double X, double Y, double Z)
+{
+	location::X = X;
+	location::Y = Y;
+	location::Z = Z;
 }

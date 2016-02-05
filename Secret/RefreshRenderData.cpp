@@ -89,11 +89,6 @@ void refreshRenderData()
 				GetRenderGroup->TextureData.swap(Empty[1]);
 				GetRenderGroup->ColorData.swap(Empty[2]);
 				GetRenderGroup->NormailData.swap(Empty[3]);
-
-				Empty[0].~vector();
-				Empty[1].~vector();
-				Empty[2].~vector();
-				Empty[3].~vector();
 			}
 		}
 	}

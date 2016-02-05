@@ -5,14 +5,13 @@ struct location
 	//构造函数
 	location(double X, double Y, double Z);
 
-	//储存所在Chunk坐标
-	int ChunkX = 0;
-	int ChunkZ = 0;
+	//记录坐标
+	double X = 0;
+	double Y = 0;
+	double Z = 0;
 
-	//记录相对于Chunk的坐标
-	double InX = 0;
-	double InY = 0;
-	double InZ = 0;
+	int chunkX();
+	int chunkZ();
 
 	//X坐标
 	double x();
@@ -20,6 +19,13 @@ struct location
 	double y();
 	//Z坐标
 	double z();
+
+	//Chunk内X坐标
+	double inX();
+	//Chunk内Y坐标
+	double inY();
+	//Chunk内Z坐标
+	double inZ();
 
 	//移动到
 	void moveTo(double X, double Y, double Z);

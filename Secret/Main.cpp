@@ -23,6 +23,8 @@ int main(int argc, char *argv[])
 	_CrtDumpMemoryLeaks();
 #endif
 
+	camera::Loc.moveTo(2, 1, 2);
+
 	if (!initThread(argc, argv))
 	{
 		return -1;
@@ -69,6 +71,13 @@ int main(int argc, char *argv[])
 		}
 	}
 
+	for (int i = 0; i < 16; i++)
+	{
+		for (int j = 0; j < 16; j++)
+		{
+			Map[8 + 8 * 16].BlockData[i][0][j] = blockData::createBlockData(1,0);
+		}
+	}
 	for (int i = 1; i < 15; i++)
 	{
 		for (int j = 1; j < 15; j++)
@@ -82,16 +91,16 @@ int main(int argc, char *argv[])
 
 	while (IsRenderThreadStart)
 	{
-		std::cout << camera::Loc.ChunkX << std::endl;
-		std::cout << camera::Loc.ChunkZ << std::endl;
-		std::cout << camera::Loc.InX << std::endl;
-		std::cout << camera::Loc.InZ << std::endl;
+		std::cout << camera::Loc.chunkX() << std::endl;
+		std::cout << camera::Loc.chunkZ() << std::endl;
+		std::cout << camera::Loc.x() << std::endl;
+		std::cout << camera::Loc.z() << std::endl;
 
 		for (int i = 0; i < 256; i++)
 		{
-			if (Map[i].ChunkX == camera::Loc.ChunkX && Map[i].ChunkZ == camera::Loc.ChunkZ)
+			if (Map[i].ChunkX == camera::Loc.chunkX() && Map[i].ChunkZ == camera::Loc.chunkZ())
 			{
-				std::cout << Map[i].getBlockData(camera::Loc.InX, camera::Loc.InY, camera::Loc.InZ) << std::endl;
+				std::cout << Map[i].getBlockData(camera::Loc.inX(), camera::Loc.inY(), camera::Loc.inZ()) << std::endl;
 
 				break;
 			}
