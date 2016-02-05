@@ -187,7 +187,7 @@ int main(int argc, char *argv[])
 		std::cout << camera::Loc.x() << std::endl;
 		std::cout << camera::Loc.z() << std::endl;
 
-		for (int i = 0; i < 256; i++)
+		for (int i = 0; i < MapSize * MapSize; i++)
 		{
 			if (Map[i].ChunkX == camera::Loc.chunkX() && Map[i].ChunkZ == camera::Loc.chunkZ())
 			{
