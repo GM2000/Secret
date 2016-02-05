@@ -160,6 +160,7 @@ int main(int argc, char *argv[])
 							Map[k + l * MapSize].BlockData[i][m][j] = blockData::createBlockData(2, 0);
 						}
 					}
+					Map[k + l * MapSize].BlockData[i][255][j] = blockData::createBlockData(1, 0);
 				}
 			}
 			Map[k + l * MapSize].ChunkX = k - MapSize / 2;
@@ -171,7 +172,7 @@ int main(int argc, char *argv[])
 	{
 		for (int j = 1; j < MapSize - 1; j++)
 		{
-			for (int k = 0; k < 15; k++)
+			for (int k = 0; k < 16; k++)
 			{
 				chunk* NearChunk[4]{ &Map[i + 1 + j * MapSize] ,&Map[i - 1 + j * MapSize],&Map[i + (j + 1) * MapSize] ,&Map[i + (j - 1) * MapSize] };
 

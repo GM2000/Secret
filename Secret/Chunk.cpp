@@ -23,7 +23,7 @@ unsigned int chunk::getBlockData(unsigned char BlockX, unsigned char BlockY, uns
 	return BlockData[BlockX][BlockY][BlockZ];
 }
 
-unsigned int chunk::getBlockData(char BlockX, char BlockY, char BlockZ, chunk *NearChunk[4])
+unsigned int chunk::getBlockData(short BlockX, short BlockY, short BlockZ, chunk *NearChunk[4])
 {
 	chunk *BlockInChunk = this;
 
@@ -71,7 +71,7 @@ void chunk::refreshVAO(unsigned char Y,chunk* GetNearChunk[4])
 
 	for (unsigned char BlockX = 0; BlockX < 16; BlockX++)
 	{
-		for (unsigned char BlockY = Y * 16; BlockY < (Y + 1) * 16; BlockY++)
+		for (unsigned short BlockY = Y * 16; BlockY < (Y + 1) * 16; BlockY++)
 		{
 			for (unsigned char BlockZ = 0; BlockZ < 16; BlockZ++)
 			{
