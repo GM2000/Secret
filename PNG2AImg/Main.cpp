@@ -44,5 +44,7 @@ int main(int argc, char *argv[])
 	}
 	std::cout << "[INFO]:Complite" << std::endl;
 
+	free(AImg.ImageData);
+
 	while (true);
 }

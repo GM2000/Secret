@@ -7,7 +7,7 @@ namespace camera
 {
 	std::mutex CameraLock;
 
-	double Speed = 0.01;
+	double Speed = 0.1;
 
 	float XRot;
 	float YRot;

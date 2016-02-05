@@ -20,12 +20,16 @@ struct block
 	//创建一个新的Block，纹理，是否隐藏，是否有透明
 	block(templateBlockShapeRenderer, templateBlockTextureRenderer, templateBlockNormailRenderer, unsigned short *, bool, bool);
 
+	//创建一个新的Block，并提供ID
 	block(block, int);
+
+	//清空内存分配
+	void freeAlloc();
 
 	std::vector<GLfloat> renderBlock(unsigned short, unsigned char);
 
 	//方块属性
-	unsigned short* Textures;
+	unsigned short* Textures = NULL;
 
 	bool IsHide = false;
 	bool HasAlpha = false;

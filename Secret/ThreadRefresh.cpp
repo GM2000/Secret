@@ -4,11 +4,13 @@
 #include "Secret.h"
 #include "Refresh.h"
 
+extern bool IsRenderThreadStart;
+
 void threadRefresh()
 {
 	double LastTime = glfwGetTime();
 
-	while (true)
+	while (IsRenderThreadStart)
 	{
 		double NowTime = glfwGetTime();
 

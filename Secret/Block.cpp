@@ -20,6 +20,18 @@ block::block(block Block, int BlockID)
 
 	block::BlockID = BlockID;
 }
+void block::freeAlloc()
+{
+	delete[] Textures;
+}
+
+void freeBlock()
+{
+	for (int i = 0; i < Block.size(); i++)
+	{
+		Block[i].freeAlloc();
+	}
+}
 block getBlock(unsigned short BlockID)
 {
 	return Block.at(BlockID);

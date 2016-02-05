@@ -11,7 +11,7 @@ void refreshRenderData()
 	double StartTime = glfwGetTime();
 
 	//循环直到超时
-	while (glfwGetTime() - StartTime < 0.05)
+	while (glfwGetTime() - StartTime < 0.02)
 	{
 		//获取一个需要刷新的渲染组指针
 		if (RefreshRenderGroupLock.try_lock())
@@ -36,6 +36,8 @@ void refreshRenderData()
 			{
 				glGenVertexArrays(1, &GetRenderGroup->VertexArrayID);
 
+				glBindVertexArray(GetRenderGroup->VertexArrayID);
+
 				VertexArrayObject.push_back(vao(GetRenderGroup->VertexArrayID, GetRenderGroup->Size));
 
 				//保存位置
@@ -45,6 +47,9 @@ void refreshRenderData()
 			}
 			else
 			{
+				glBindVertexArray(GetRenderGroup->VertexArrayID);
+
+				glDeleteBuffers(3, GetRenderGroup->Buffer);
 				//更新
 				VertexArrayObject[GetRenderGroup->VertexRenderArrayCount].VAOSize = GetRenderGroup->Size;
 			}
@@ -55,8 +60,6 @@ void refreshRenderData()
 			//是否有变化？
 			if (GetRenderGroup->hasChange() && GetRenderGroup->Size > 0)
 			{
-				glBindVertexArray(GetRenderGroup->VertexArrayID);
-
 				//顶点
 				glBindBuffer(GL_ARRAY_BUFFER, GetRenderGroup->Buffer[0]);
 				glBufferData(GL_ARRAY_BUFFER, GetRenderGroup->VertexData.size() * sizeof(GLfloat), &GetRenderGroup->VertexData.at(0), GL_STATIC_DRAW);
