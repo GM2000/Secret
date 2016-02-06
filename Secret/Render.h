@@ -10,13 +10,13 @@
 #include <glm/gtc/type_ptr.hpp>
 
 //所有渲染的VAO列表
-class vao
+class vbo
 {
 public:
-	GLuint VAOArray = 0;
-	GLuint VAOSize = 0;
+	GLuint VBOBuffer[3] = {0,0,0};
+	GLuint VBOSize = 0;
 
-	vao(GLuint ArrayID, GLuint Size);
+	vbo(GLuint *BufferID, GLuint Size);
 };
 
 class renderGroup
@@ -62,7 +62,7 @@ public:
 //渲染组刷新列表锁
 extern std::mutex RefreshRenderGroupLock;
 
-extern std::vector<vao> VertexArrayObject;
+extern std::vector<vbo> VertexArrayObject;
 extern std::list<renderGroup*> RefreshRenderGroup;
 
 //添加需要刷新的RenderGroup

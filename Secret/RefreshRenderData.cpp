@@ -2,7 +2,7 @@
 #include "Render.h"
 
 //所有渲染的VAO列表
-std::vector<vao> VertexArrayObject;
+std::vector<vbo> VertexArrayObject;
 
 //渲染线程
 void refreshRenderData()
@@ -31,19 +31,19 @@ void refreshRenderData()
 			//开始刷新
 			std::lock_guard<std::mutex> GetRenderGroupLockGuard(GetRenderGroup->Lock);
 
-			//是否创建了VAO
+			//是否创建了VBO
 			if (GetRenderGroup->VertexArrayID == 0)
 			{
-				glGenVertexArrays(1, &GetRenderGroup->VertexArrayID);
+				GetRenderGroup->VertexArrayID = 1;
 
 				glBindVertexArray(GetRenderGroup->VertexArrayID);
-
-				VertexArrayObject.push_back(vao(GetRenderGroup->VertexArrayID, GetRenderGroup->Size));
 
 				//保存位置
 				GetRenderGroup->VertexRenderArrayCount = VertexArrayObject.size() - 1;
 
 				glGenBuffers(3, GetRenderGroup->Buffer);
+
+				VertexArrayObject.push_back(vbo(GetRenderGroup->Buffer, GetRenderGroup->Size));
 			}
 			else
 			{
@@ -51,7 +51,7 @@ void refreshRenderData()
 
 				glDeleteBuffers(3, GetRenderGroup->Buffer);
 				//更新
-				VertexArrayObject[GetRenderGroup->VertexRenderArrayCount].VAOSize = GetRenderGroup->Size;
+				VertexArrayObject[GetRenderGroup->VertexRenderArrayCount].VBOSize = GetRenderGroup->Size;
 			}
 
 			//解锁
