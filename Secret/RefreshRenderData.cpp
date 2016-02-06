@@ -43,13 +43,13 @@ void refreshRenderData()
 				//保存位置
 				GetRenderGroup->VertexRenderArrayCount = VertexArrayObject.size() - 1;
 
-				glGenBuffers(3, GetRenderGroup->Buffer);
+				glGenBuffers(4, GetRenderGroup->Buffer);
 			}
 			else
 			{
 				glBindVertexArray(GetRenderGroup->VertexArrayID);
 
-				glDeleteBuffers(3, GetRenderGroup->Buffer);
+				glDeleteBuffers(4, GetRenderGroup->Buffer);
 				//更新
 				VertexArrayObject[GetRenderGroup->VertexRenderArrayCount].VAOSize = GetRenderGroup->Size;
 			}
@@ -78,10 +78,17 @@ void refreshRenderData()
 
 				glVertexAttribPointer(2, 2, GL_FLOAT, GL_TRUE, 0, NULL);
 
+				//法线坐标
+				glBindBuffer(GL_ARRAY_BUFFER, GetRenderGroup->Buffer[3]);
+				glBufferData(GL_ARRAY_BUFFER, GetRenderGroup->NormailData.size() * sizeof(GLfloat), &GetRenderGroup->NormailData.at(0), GL_STATIC_DRAW);
+
+				glVertexAttribPointer(3, 3, GL_FLOAT, GL_TRUE, 0, NULL);
+
 				//激活
 				glEnableVertexAttribArray(0);
 				glEnableVertexAttribArray(1);
 				glEnableVertexAttribArray(2);
+				glEnableVertexAttribArray(3);
 
 				GetRenderGroup->unNeedRefresh();
 

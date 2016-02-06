@@ -58,7 +58,7 @@ std::vector<GLfloat> block::renderBlock(unsigned short Brocken, unsigned char Fa
 	blockRenderData.push_back(0.0); blockRenderData.push_back(0.0); blockRenderData.push_back(0.0);
 	blockRenderData.push_back(0.0); blockRenderData.push_back(0.0); blockRenderData.push_back(0.0);
 
-	blockNormailRenderer(&blockRenderData, 0, Face);
+	blockNormailRenderer(&blockRenderData, BlockData, Face);
 
 	return blockRenderData;
 }

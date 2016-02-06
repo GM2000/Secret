@@ -34,7 +34,7 @@ public:
 	std::vector<GLfloat> NormailData;
 
 	//Buffer
-	GLuint Buffer[3];
+	GLuint Buffer[4];
 	//ด๓ะก
 	GLuint Size = 0;
 
