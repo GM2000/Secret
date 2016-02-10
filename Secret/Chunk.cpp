@@ -15,11 +15,9 @@ chunk::chunk()
 		}
 	}
 }
+//请确认在范围内
 unsigned int chunk::getBlockData(unsigned char BlockX, unsigned char BlockY, unsigned char BlockZ)
 {
-	if (BlockX > 15 || BlockX < 0 || BlockY>255 || BlockY < 0 || BlockZ>15 || BlockZ < 0)
-		return blockData::createBlockData(0, 0);
-
 	return BlockData[BlockX][BlockY][BlockZ];
 }
 
@@ -57,7 +55,7 @@ unsigned int chunk::getBlockData(short BlockX, short BlockY, short BlockZ, chunk
 	}
 
 	if (BlockX > 15 || BlockX < 0 || BlockY>255 || BlockY < 0 || BlockZ>15 || BlockZ < 0)
-		return blockData::createBlockData(0, 0);
+		return blockData::createBlockData(0, 0, 0);
 
 	return BlockInChunk->BlockData[BlockX][BlockY][BlockZ];
 }
@@ -75,7 +73,7 @@ void chunk::refreshVAO(unsigned char Y,chunk* GetNearChunk[4])
 		{
 			for (unsigned char BlockZ = 0; BlockZ < 16; BlockZ++)
 			{
-				block GetBlock = getBlock(blockData::getBlockID(getBlockData(BlockX, BlockY, BlockZ)));
+				block GetBlock = getBlock(blockData::getBlockID(getBlockData(BlockX, (unsigned char)BlockY, BlockZ)));
 
 				//是否可见？
 				if (!GetBlock.IsHide)

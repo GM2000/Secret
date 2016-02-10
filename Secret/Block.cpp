@@ -27,7 +27,7 @@ void block::freeAlloc()
 
 void freeBlock()
 {
-	for (int i = 0; i < Block.size(); i++)
+	for (unsigned int i = 0; i < Block.size(); i++)
 	{
 		Block[i].freeAlloc();
 	}
@@ -47,7 +47,7 @@ std::vector<GLfloat> block::renderBlock(unsigned short Brocken, unsigned char Fa
 {
 	std::vector<GLfloat> blockRenderData;
 
-	unsigned int BlockData = blockData::createBlockData(BlockID, Brocken);
+	unsigned int BlockData = blockData::createBlockData(BlockID, Brocken, 0);
 
 	blockShapeRenderer(&blockRenderData, BlockData, Face);
 	blockTextureRenderer(&blockRenderData, BlockData, Face);

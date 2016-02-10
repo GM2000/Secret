@@ -134,56 +134,7 @@ int main(int argc, char *argv[])
 	renderGroup VAO;
 	location TTT(0, 0, 0);
 
-	int MapSize = 32;
-
-	std::vector<chunk> Map(MapSize * MapSize);
-
-	for (int k = 0; k < MapSize; k++)
-	{
-		for (int l = 0; l < MapSize; l++)
-		{
-			for (int i = 0; i < 16; i++)
-			{
-				for (int j = 0; j < 16; j++)
-				{
-					bool HasSetGrass = false;
-
-					int m = (PerlinNoise_2D(k * 16 + i, l * 16 + j) * 5 + 10) * 5;
-
-					if (m > 255)
-						m = 255;
-
-					for (m; m > 0; m--)
-					{
-						if (!HasSetGrass)
-						{
-							Map[k + l * MapSize].BlockData[i][m][j] = blockData::createBlockData(3, 0);
-							HasSetGrass = true;
-						}
-						else
-						{
-							Map[k + l * MapSize].BlockData[i][m][j] = blockData::createBlockData(2, 0);
-						}
-					}
-				}
-			}
-			Map[k + l * MapSize].ChunkX = k - MapSize / 2;
-			Map[k + l * MapSize].ChunkZ = l - MapSize / 2;
-		}
-	}
-
-	for (int i = 1; i < MapSize - 1; i++)
-	{
-		for (int j = 1; j < MapSize - 1; j++)
-		{
-			for (int k = 0; k < 16; k++)
-			{
-				chunk* NearChunk[4]{ &Map[i + 1 + j * MapSize] ,&Map[i - 1 + j * MapSize],&Map[i + (j + 1) * MapSize] ,&Map[i + (j - 1) * MapSize] };
-
-				Map[i + j * MapSize].refreshVAO(k, NearChunk);
-			}
-		}
-	}
+	//std::vector<chunk> Map(50 * 50);
 
 	while (IsRenderThreadStart)
 	{
@@ -192,15 +143,6 @@ int main(int argc, char *argv[])
 		std::cout << camera::Loc.x() << std::endl;
 		std::cout << camera::Loc.z() << std::endl;
 
-		for (int i = 0; i < 256; i++)
-		{
-			if (Map[i].ChunkX == camera::Loc.chunkX() && Map[i].ChunkZ == camera::Loc.chunkZ())
-			{
-				std::cout << Map[i].getBlockData(camera::Loc.inX(), camera::Loc.inY(), camera::Loc.inZ()) << std::endl;
-
-				break;
-			}
-		}
 
 		Sleep(1000);
 	}
