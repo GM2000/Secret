@@ -9,6 +9,12 @@ typedef struct
 	GLuint       Shader;
 } shaderInfo;
 
+namespace ShadowShader
+{
+	extern GLuint ShadowShaderID;
+
+	extern GLuint LocProject;
+}
 namespace NormalShader
 {
 	extern GLuint NormalShaderID;

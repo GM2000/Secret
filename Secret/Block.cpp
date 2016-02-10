@@ -53,10 +53,10 @@ std::vector<GLfloat> block::renderBlock(unsigned short Brocken, unsigned char Fa
 	blockTextureRenderer(&blockRenderData, BlockData, Face);
 
 	//…Ë÷√—’…´
-	blockRenderData.push_back(0.0); blockRenderData.push_back(0.0); blockRenderData.push_back(0.0);
-	blockRenderData.push_back(0.0); blockRenderData.push_back(0.0); blockRenderData.push_back(0.0);
-	blockRenderData.push_back(0.0); blockRenderData.push_back(0.0); blockRenderData.push_back(0.0);
-	blockRenderData.push_back(0.0); blockRenderData.push_back(0.0); blockRenderData.push_back(0.0);
+	blockRenderData.push_back(1.0); blockRenderData.push_back(1.0); blockRenderData.push_back(1.0);
+	blockRenderData.push_back(1.0); blockRenderData.push_back(1.0); blockRenderData.push_back(1.0);
+	blockRenderData.push_back(1.0); blockRenderData.push_back(1.0); blockRenderData.push_back(1.0);
+	blockRenderData.push_back(1.0); blockRenderData.push_back(1.0); blockRenderData.push_back(1.0);
 
 	blockNormailRenderer(&blockRenderData, BlockData, Face);
 
