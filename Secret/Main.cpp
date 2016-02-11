@@ -38,7 +38,20 @@ int main(int argc, char *argv[])
 	unsigned int i = -1;
 
 	map NewMap;
-	NewMap.~map();
+
+	int NowLoadChunkID = 0;
+
+	for (int x = 0; x < 32; x++)
+	{
+		for (int y = 0; y < 32; y++)
+		{
+			(*NewMap.Chunks)[NowLoadChunkID].ChunkX = x - 16;
+			(*NewMap.Chunks)[NowLoadChunkID].ChunkZ = y - 16;
+			(*NewMap.Chunks)[NowLoadChunkID].buildMap();
+
+			NowLoadChunkID++;
+		}
+	}
 
 	while (IsRenderThreadStart)
 	{

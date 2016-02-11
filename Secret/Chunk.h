@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Render.h"
+#include "Block.h"
 
 //支持多线程！但是需要注意只能有两个个线程负责刷新渲染数据、构建地形
 class chunk
@@ -19,13 +20,14 @@ class chunk
 	//是否是临时的
 	bool IsTmp = false;
 
-	//构建地形
-	void buildMap();
+	
 
 	//加载地形
 	void loadMap();
 
 public:
+	//构建地形
+	void buildMap();
 	//Chunk坐标
 	int ChunkX = 0;
 	int ChunkZ = 0;

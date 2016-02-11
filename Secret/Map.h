@@ -6,15 +6,15 @@ class map
 {
 	friend chunk;
 
-	//储存所有Chunk
-	std::vector<chunk>* Chunks;
+	
 
 	//排序
 	void sort();
 
 public:
 	//寻找Chunk，若存在返回Chunk，若不存在返回临时Chunk
-
+	//储存所有Chunk
+	std::vector<chunk>* Chunks;
 	chunk* findChunk();
 
 	map();

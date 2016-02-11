@@ -13,10 +13,11 @@ map::map()
 
 void map::sort()
 {
-	std::sort(Chunks->begin(), Chunks->end());
+	//std::sort((*Chunks).begin(), (*Chunks).end());
 }
+
 chunk* findChunk()
 {
-	chunk* i;
+	chunk* i = new chunk;
 	return i;
 }
