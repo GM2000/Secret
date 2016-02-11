@@ -9,6 +9,11 @@ class chunk
 	//获取Block
 	unsigned int getBlockData(short BlockX, short BlockY, short BlockZ,chunk *NearChunk[4]);
 
+	//锁
+	std::mutex VAORefreshLock;
+
+	//二分查找比较大小
+	bool operator < (const chunk& Chunk);
 public:
 	//构造函数
 	chunk();
@@ -18,7 +23,7 @@ public:
 	int ChunkZ = 0;
 
 	//block数据
-	unsigned int BlockData[16][256][16]{0};
+	unsigned int BlockData[16][256][16];
 
 	//渲染,为了加速渲染我把每个chunk的渲染数据分成了16份，Y的范围为0-15,后边的那个是用来储存她四周的Chunk的，这是为了让程序结构更加清晰
 	void refreshVAO(unsigned char Y, chunk* GetNearChunk[4]);

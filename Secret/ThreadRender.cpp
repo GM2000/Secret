@@ -1,9 +1,9 @@
 
 #include "Init.h"
 #include "Render.h"
-#include "Shader.h"
-#include "Refresh.h"
 #include "Camera.h"
+
+void freeBlock();
 
 std::mutex RenderThreadInitLock;
 
@@ -56,6 +56,8 @@ void threadRender(int Width,int Height,bool FullScreen)
 
 	//ÍË³ö
 	glfwTerminate();
+
+	freeBlock();
 
 	IsRenderThreadStart = false;
 }

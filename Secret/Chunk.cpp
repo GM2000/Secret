@@ -2,6 +2,19 @@
 #include "Chunk.h"
 #include "Block.h"
 
+//二分查找比较大小（先比ChunkX在比ChunkZ）
+bool chunk::operator < (const chunk& Chunk)
+{
+	if (ChunkX < Chunk.ChunkX)
+		return true;
+
+	if (ChunkX = Chunk.ChunkX && ChunkZ < Chunk.ChunkZ)
+		return true;
+
+	return false;
+}
+
+//构造函数分配chunk数据数组
 chunk::chunk()
 {
 	for (int i = 0; i < 16; i++)
@@ -20,7 +33,7 @@ unsigned int chunk::getBlockData(unsigned char BlockX, unsigned char BlockY, uns
 {
 	return BlockData[BlockX][BlockY][BlockZ];
 }
-
+//获取Block数据（渲染Chunk时使用）
 unsigned int chunk::getBlockData(short BlockX, short BlockY, short BlockZ, chunk *NearChunk[4])
 {
 	chunk *BlockInChunk = this;
@@ -59,14 +72,19 @@ unsigned int chunk::getBlockData(short BlockX, short BlockY, short BlockZ, chunk
 
 	return BlockInChunk->BlockData[BlockX][BlockY][BlockZ];
 }
-
+//刷新VAO
 void chunk::refreshVAO(unsigned char Y,chunk* GetNearChunk[4])
 {
-	renderGroup TmpRenderGroup;
-
 	if (Y > 15)
 		return;
 
+	//加锁
+	std::lock_guard<std::mutex> VAORefreshLockGuard(VAORefreshLock);
+
+	//临时RenderGroup
+	renderGroup TmpRenderGroup;
+
+	//循环
 	for (unsigned char BlockX = 0; BlockX < 16; BlockX++)
 	{
 		for (unsigned short BlockY = Y * 16; BlockY < (Y + 1) * 16; BlockY++)
@@ -83,7 +101,7 @@ void chunk::refreshVAO(unsigned char Y,chunk* GetNearChunk[4])
 
 					if (GetNearBlock.IsHide || GetNearBlock.HasAlpha)
 					{
-						std::vector<GLfloat> BlockRenderData = GetBlock.renderBlock(0, TEXTURE_UP);
+						std::vector<GLfloat> BlockRenderData = GetBlock.renderBlock(0, TEXTURE_UP, new unsigned char[16]{ 1,1,1,1, 1,1,1, 1,1,1, 1,1,1 });
 
 						TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(( - ChunkX) * 16 - BlockX - 1, BlockY, ( - ChunkZ) * 16 - BlockZ - 1));
 					}
@@ -92,7 +110,7 @@ void chunk::refreshVAO(unsigned char Y,chunk* GetNearChunk[4])
 
 					if (GetNearBlock.IsHide || GetNearBlock.HasAlpha)
 					{
-						std::vector<GLfloat> BlockRenderData = GetBlock.renderBlock(0, TEXTURE_DOWN);
+						std::vector<GLfloat> BlockRenderData = GetBlock.renderBlock(0, TEXTURE_DOWN, new unsigned char[16]{ 1,1,1,1, 1,1,1, 1,1,1, 1,1,1 });
 
 						TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(( - ChunkX) * 16 - BlockX - 1, BlockY, ( - ChunkZ) * 16 - BlockZ - 1));
 					}
@@ -102,7 +120,7 @@ void chunk::refreshVAO(unsigned char Y,chunk* GetNearChunk[4])
 
 					if (GetNearBlock.IsHide || GetNearBlock.HasAlpha)
 					{
-						std::vector<GLfloat> BlockRenderData = GetBlock.renderBlock(0, TEXTURE_LEFT);
+						std::vector<GLfloat> BlockRenderData = GetBlock.renderBlock(0, TEXTURE_LEFT, new unsigned char[16]{ 1,1,1,1, 1,1,1, 1,1,1, 1,1,1 });
 
 						TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(( - ChunkX) * 16 - BlockX - 1, BlockY, ( - ChunkZ) * 16 - BlockZ - 1));
 					}
@@ -112,7 +130,7 @@ void chunk::refreshVAO(unsigned char Y,chunk* GetNearChunk[4])
 
 					if (GetNearBlock.IsHide || GetNearBlock.HasAlpha)
 					{
-						std::vector<GLfloat> BlockRenderData = GetBlock.renderBlock(0, TEXTURE_RIGHT);
+						std::vector<GLfloat> BlockRenderData = GetBlock.renderBlock(0, TEXTURE_RIGHT, new unsigned char[16]{ 1,1,1,1, 1,1,1, 1,1,1, 1,1,1 });
 
 						TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(( - ChunkX) * 16 - BlockX - 1, BlockY, ( - ChunkZ) * 16 - BlockZ - 1));
 					}
@@ -122,8 +140,8 @@ void chunk::refreshVAO(unsigned char Y,chunk* GetNearChunk[4])
 
 					if (GetNearBlock.IsHide || GetNearBlock.HasAlpha)
 					{
-						std::vector<GLfloat> BlockRenderData = GetBlock.renderBlock(0, TEXTURE_FROUNT);
-
+						std::vector<GLfloat> BlockRenderData = GetBlock.renderBlock(0, TEXTURE_FROUNT, new unsigned char[16]{ 1,1,1,1, 1,1,1, 1,1,1, 1,1,1 });
+						
 						TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(( - ChunkX) * 16 - BlockX - 1, BlockY, ( - ChunkZ) * 16 - BlockZ - 1));
 					}
 
@@ -132,7 +150,7 @@ void chunk::refreshVAO(unsigned char Y,chunk* GetNearChunk[4])
 
 					if (GetNearBlock.IsHide || GetNearBlock.HasAlpha)
 					{
-						std::vector<GLfloat> BlockRenderData = GetBlock.renderBlock(0, TEXTURE_BACK);
+						std::vector<GLfloat> BlockRenderData = GetBlock.renderBlock(0, TEXTURE_BACK, new unsigned char[16]{ 1,1,1,1, 1,1,1, 1,1,1, 1,1,1 });
 
 						TmpRenderGroup.addQuads(&BlockRenderData.at(0), BlockRenderData.size() / 32, location(( - ChunkX) * 16 - BlockX - 1, BlockY, ( - ChunkZ) * 16 - BlockZ - 1));
 					}

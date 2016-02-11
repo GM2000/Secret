@@ -26,7 +26,7 @@ struct block
 	//清空内存分配
 	void freeAlloc();
 
-	std::vector<GLfloat> renderBlock(unsigned short, unsigned char);
+	std::vector<GLfloat> renderBlock(unsigned short, unsigned char, unsigned char* Lights);
 
 	//方块属性
 	unsigned short* Textures = NULL;

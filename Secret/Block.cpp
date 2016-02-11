@@ -42,8 +42,8 @@ unsigned short addBlock(block AddBlock)
 
 	return (unsigned short)Block.size() - 1;
 }
-//渲染方块，方块破损值，方块方向
-std::vector<GLfloat> block::renderBlock(unsigned short Brocken, unsigned char Face)
+//渲染方块，方块破损值，方块方向，16个顶点亮度（请用new）
+std::vector<GLfloat> block::renderBlock(unsigned short Brocken, unsigned char Face, unsigned char* Lights)
 {
 	std::vector<GLfloat> blockRenderData;
 
@@ -59,6 +59,8 @@ std::vector<GLfloat> block::renderBlock(unsigned short Brocken, unsigned char Fa
 	blockRenderData.push_back(1.0); blockRenderData.push_back(1.0); blockRenderData.push_back(1.0);
 
 	blockNormailRenderer(&blockRenderData, BlockData, Face);
+
+	delete[] Lights;
 
 	return blockRenderData;
 }

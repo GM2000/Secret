@@ -11,7 +11,7 @@ void refreshRenderData()
 	double StartTime = glfwGetTime();
 
 	//循环直到超时
-	while (glfwGetTime() - StartTime < 0.02)
+	while (glfwGetTime() - StartTime < 0.01)
 	{
 		//获取一个需要刷新的渲染组指针
 		if (RefreshRenderGroupLock.try_lock())
