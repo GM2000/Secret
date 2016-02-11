@@ -1,10 +1,10 @@
 
-#include "Shader.h"
+#include "Secret.h"
 #include "Callback.h"
 #include <math.h>
 #include "Camera.h"
 
-const double PI = 3.141592653589793238462;
+static const double PI = 3.141592653589793238462;
 
 int MouseSpeed = 100;
 

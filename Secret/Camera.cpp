@@ -1,5 +1,4 @@
 
-#include "Secret.h"
 #include "Camera.h"
 #include "Shader.h"
 

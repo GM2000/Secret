@@ -1,6 +1,4 @@
 
-#include "Secret.h"
-#include "Render.h"
 #include "Shader.h"
 
 void windowsResizeCallback(GLFWwindow* Window, int Width, int Height)

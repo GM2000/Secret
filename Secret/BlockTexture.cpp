@@ -1,6 +1,5 @@
 
 #include "Block.h"
-#include <vector>
 
 void blockTextureNormal(std::vector<GLfloat> *GetVector,int BlockData, unsigned char Face)
 {

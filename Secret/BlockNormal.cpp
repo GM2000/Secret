@@ -1,6 +1,5 @@
 
 #include "Block.h"
-#include <vector>
 
 //∆’Õ®∑®œﬂ
 void blockNormalNormal(std::vector<GLfloat> *GetVector, int BlockData, unsigned char Face)

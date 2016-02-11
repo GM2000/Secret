@@ -15,11 +15,12 @@ void threadRefresh()
 		double NowTime = glfwGetTime();
 
 		while (NowTime - LastTime < 0.1)
+		{
 			NowTime = glfwGetTime();
+			Sleep(1);
+		}
 
 		//Ë¢ÐÂÓÎÏ·
 		gameRefresh();
-
-		Sleep(1);
 	}
 }
