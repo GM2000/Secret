@@ -13,6 +13,23 @@ bool chunk::operator < (const chunk& Chunk)
 
 	return false;
 }
+bool chunk::operator > (const chunk& Chunk)
+{
+	if (ChunkX > Chunk.ChunkX)
+		return true;
+
+	if (ChunkX = Chunk.ChunkX && ChunkZ > Chunk.ChunkZ)
+		return true;
+
+	return false;
+}
+bool chunk::operator == (const chunk& Chunk)
+{
+	if (ChunkX == Chunk.ChunkX && ChunkZ == Chunk.ChunkZ)
+		return true;
+
+	return false;
+}
 //请确认在范围内
 unsigned int chunk::getBlockData(unsigned char BlockX, unsigned char BlockY, unsigned char BlockZ)
 {

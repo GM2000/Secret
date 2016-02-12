@@ -2,6 +2,14 @@
 #include "Chunk.h"
 #include "Block.h"
 
+//刷新整个VAO
+void chunk::refreshVAO(chunk* GetNearChunk[4])
+{
+	for (int i = 0; i < 16; i++)
+	{
+		refreshVAO(i, GetNearChunk);
+	}
+}
 //刷新VAO
 void chunk::refreshVAO(unsigned char Y, chunk* GetNearChunk[4])
 {

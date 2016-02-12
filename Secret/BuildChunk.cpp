@@ -108,7 +108,7 @@ float PerlinNoise_2D(int X, int Y)
 void chunk::buildMap()
 {
 	//¼ÓËø
-	//std::lock_guard<std::mutex> VAORefreshLockGuard(VAORefreshLock);
+	std::lock_guard<std::mutex> VAORefreshLockGuard(VAORefreshLock);
 
 	if (ChunkX == 0 && ChunkZ == 0)
 		return;
@@ -138,8 +138,4 @@ void chunk::buildMap()
 			}
 		}
 	}
-	chunk* Test[4]{ this,this,this,this };
-
-	for (int i = 0; i < 16; i++)
-		refreshVAO(i, Test);
 }

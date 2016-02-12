@@ -10,6 +10,13 @@ void initRefreshThread()
 	//创建线程并开启
 	RefreshThread.detach();
 }
+void initChunkRefresherThread()
+{
+	std::thread ChunkRefresherThread(threadChunkRefresher);
+
+	//创建线程并开启
+	ChunkRefresherThread.detach();
+}
 void initRenderThread(int Width,int Height,int FullScreen)
 {
 	//创建线程
@@ -49,6 +56,8 @@ bool initThread(int argc, char *argv[])
 		initRenderThread(0, 0, 0);
 	}
 	initRefreshThread();
+
+	initChunkRefresherThread();
 
 	return true;
 }
