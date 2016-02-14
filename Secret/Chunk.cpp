@@ -8,7 +8,7 @@ bool chunk::operator < (const chunk& Chunk)
 	if (ChunkX < Chunk.ChunkX)
 		return true;
 
-	if (ChunkX = Chunk.ChunkX && ChunkZ < Chunk.ChunkZ)
+	if (ChunkX == Chunk.ChunkX && ChunkZ < Chunk.ChunkZ)
 		return true;
 
 	return false;
@@ -18,7 +18,7 @@ bool chunk::operator > (const chunk& Chunk)
 	if (ChunkX > Chunk.ChunkX)
 		return true;
 
-	if (ChunkX = Chunk.ChunkX && ChunkZ > Chunk.ChunkZ)
+	if (ChunkX == Chunk.ChunkX && ChunkZ > Chunk.ChunkZ)
 		return true;
 
 	return false;
