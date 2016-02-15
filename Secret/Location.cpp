@@ -57,23 +57,6 @@ void location::move(double X, double Y, double Z)
 	location::X += X;
 	location::Y += Y;
 	location::Z += Z;
-
-	if (chunkX() > 14)
-	{
-		location::X = 16 * 15;
-	}
-	else if (chunkX() < -15)
-	{
-		location::X = -16 * 15;
-	}
-	if (chunkZ() > 14)
-	{
-		location::Z = 16 * 15;
-	}
-	else if (chunkZ() < -15)
-	{
-		location::Z = -16 * 15;
-	}
 }
 void location::moveTo(double X, double Y, double Z)
 {

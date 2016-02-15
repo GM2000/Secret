@@ -76,7 +76,7 @@ void map::addFreeChunk(unsigned int ChunkID)
 }
 int map::popFreeChunk()
 {
-	if (FreeChunkID.size == 0)
+	if (FreeChunkID.size() == 0)
 		return -1;
 	
 	unsigned int GetFreeChunkID = FreeChunkID[FreeChunkID.size() - 1];
@@ -109,7 +109,7 @@ void map::changeChunk(int ChunkX, int ChunkZ, int ChunkID)
 	OldChunk.ChunkZ = Chunks[ChunkID]->ChunkZ;
 
 	//上锁
-	std::lock_guard<std::mutex> ChunkProtectLockGuard(Chunks[ChunkID]->VAORefreshLock);
+	Chunks[ChunkID]->VAORefreshLock.lock();
 
 	//设置新的Chunk
 	Chunks[ChunkID]->ChunkX = ChunkX;
@@ -147,10 +147,15 @@ void map::changeChunk(int ChunkX, int ChunkZ, int ChunkID)
 		}
 	}
 
+	for (int i = 0; i < 16; i++)
+		Chunks[ChunkID]->IsChange[i] = true;
+
 	//解锁开始构建地形
 	Lock.unlock();
 
 	Chunks[ChunkID]->buildMap();
+
+	Chunks[ChunkID]->VAORefreshLock.unlock();
 }
 
 void map::initMap()
@@ -170,9 +175,18 @@ void map::initMap()
 		for (int x = 0; x < 32; x++)
 		{
 			Chunks[x * 32 + y]->loadMap(x - 16, y - 16);
+
+			for (int i = 0; i < 16; i++)
+				Chunks[x * 32 + y]->IsChange[i] = true;
 		}
 	}
+	//伪代码结束，以上代码将会出现在world中
 
+	HasInit = true;
+}
+
+void map::refreshVAO()
+{
 	for (int x = 1; x < 31; x++)
 	{
 		for (int y = 1; y < 31; y++)
@@ -182,11 +196,7 @@ void map::initMap()
 			Chunks[x * 32 + y]->refreshVAO(Tmp);
 		}
 	}
-	//伪代码结束，以上代码将会出现在world中
-
-	HasInit = true;
 }
-
 void map::unloadMap()
 {
 	if (!HasInit)

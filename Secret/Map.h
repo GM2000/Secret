@@ -8,6 +8,7 @@ class map
 	//地图访问锁
 	std::mutex Lock;
 
+	//是否初始化过了
 	bool HasInit = false;
 
 	//储存所有Chunk
@@ -26,6 +27,7 @@ public:
 	//重新加载Chunk（即初始化Chunk并重新设置Chunk）
 	void changeChunk(int ChunkX, int ChunkZ, int ChunkID);
 
+	//重新加载Chunk，自动寻找空闲ChunkID
 	void changeChunk(int ChunkX, int ChunkZ);
 
 	//寻找空闲的ChunkID
@@ -39,4 +41,7 @@ public:
 
 	//卸载Map
 	void unloadMap();
+
+	//刷新Chunk的渲染数据
+	void refreshVAO();
 };

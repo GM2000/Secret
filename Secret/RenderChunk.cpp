@@ -13,11 +13,13 @@ void chunk::refreshVAO(chunk* GetNearChunk[4])
 //Ë¢ĞÂVAO
 void chunk::refreshVAO(unsigned char Y, chunk* GetNearChunk[4])
 {
-	if (Y > 15)
-		return;
-
 	//¼ÓËø
 	std::lock_guard<std::mutex> VAORefreshLockGuard(VAORefreshLock);
+
+	if (Y > 15 || !IsChange[Y])
+		return;
+
+	IsChange[Y] = false;
 
 	//ÁÙÊ±RenderGroup
 	renderGroup TmpRenderGroup;

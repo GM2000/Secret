@@ -19,6 +19,9 @@ class chunk
 	//是否是临时的
 	bool IsTmp = false;
 
+	//是否真的需要刷新VAO，在map中操作
+	bool IsChange[16]{ false };
+
 	//构建地形，需要上锁
 	void buildMap();
 

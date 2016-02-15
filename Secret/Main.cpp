@@ -41,6 +41,9 @@ int main(int argc, char *argv[])
 
 	while (IsRenderThreadStart)
 	{
+		//‰÷»æ
+		NewMap.refreshVAO();
+
 		std::cout << camera::Loc.chunkX() << std::endl;
 		std::cout << camera::Loc.chunkZ() << std::endl;
 		std::cout << camera::Loc.x() << std::endl;
