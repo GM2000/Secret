@@ -19,11 +19,11 @@ class chunk
 	//是否是临时的
 	bool IsTmp = false;
 
-	//构建地形
+	//构建地形，需要上锁
 	void buildMap();
 
-	//加载地形
-	void loadMap();
+	//加载地形，不用上锁
+	void loadMap(int ChunkX, int ChunkZ);
 
 public:
 	//排序比较大小

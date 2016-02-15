@@ -33,8 +33,6 @@ int main(int argc, char *argv[])
 	renderGroup VAO;
 	location TTT(0, 0, 0);
 
-	//std::vector<chunk> Map(50 * 50);
-
 	unsigned int i = -1;
 
 	map NewMap;

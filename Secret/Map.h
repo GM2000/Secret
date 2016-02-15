@@ -5,6 +5,7 @@
 //Map负责储存地图的数据，并且储存附近的Chunk数据，支持多线程
 class map
 {
+	//地图访问锁
 	std::mutex Lock;
 
 	bool HasInit = false;
@@ -15,11 +16,23 @@ class map
 	//寻找Chunk，若存在返回Chunk，若不存在返回-1
 	int findChunk(const chunk *FindChunk);
 
+	//空闲ChunkID列表
+	std::vector<unsigned int> FreeChunkID;
+
 public:
-	int findMap(int ChunkX, int ChunkZ);
+	chunk* findChunk(int ChunkX, int ChunkZ);
+	int findChunkID(int ChunkX, int ChunkZ);
 
 	//重新加载Chunk（即初始化Chunk并重新设置Chunk）
-	void reloadChunk(int ChunkX, int ChunkZ, int ChunkID);
+	void changeChunk(int ChunkX, int ChunkZ, int ChunkID);
+
+	void changeChunk(int ChunkX, int ChunkZ);
+
+	//寻找空闲的ChunkID
+	void addFreeChunk(unsigned int ChunkID);
+
+	//弹出一个空闲的ChunkID
+	int map::popFreeChunk();
 
 	//初始化Map
 	void initMap();

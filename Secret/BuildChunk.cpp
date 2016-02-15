@@ -20,30 +20,6 @@ float Noise1(int x, int y)
 	return (1.0f - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0f);
 }
 
-bool NoiseTree(int x, int y)
-{
-	if (seed<0)
-	{
-		seed = -seed;
-	}
-	int n = x + y * 57;
-	n = n + ((n + seed)*n - seed) * (seed + n);
-	n = (n << 13) ^ n;
-	if ((1.0f - ((n * (n * n * 15731 + 789221) + 23456432245) & 0x7fffffff) / 1073741824.0f>0.994))
-	{
-		if (50 - PerlinNoise_2D(x, y)>50)
-		{
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	else {
-		return false;
-	}
-}
-
 float SmoothNoise_1(int x, int y)
 {
 	float corners = (Noise1(x - 1, y - 1) + Noise1(x + 1, y - 1) + Noise1(x - 1, y + 1) + Noise1(x + 1, y + 1)) / 16.0f;
@@ -83,10 +59,8 @@ float InterpolatedNoise_1(float x, float y)
 
 float PerlinNoise_2D(int X, int Y)
 {
-	float x = (X + 2197483647) / 50.0;
-	float y = (Y + 2197483647) / 50.0;
-
-
+	float x = (X + 15000000) / 50.0;
+	float y = (Y + 15000000) / 50.0;
 
 	float total = 0.0f;
 	float p = persistence;
@@ -107,9 +81,7 @@ float PerlinNoise_2D(int X, int Y)
 
 void chunk::buildMap()
 {
-	//加锁
-	std::lock_guard<std::mutex> VAORefreshLockGuard(VAORefreshLock);
-
+	//不用加锁
 	if (ChunkX == 0 && ChunkZ == 0)
 		return;
 
