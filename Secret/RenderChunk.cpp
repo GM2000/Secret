@@ -5,6 +5,10 @@
 //Ë¢ĞÂÕû¸öVAO
 void chunk::refreshVAO(chunk* GetNearChunk[4])
 {
+	for (int i = 0; i < 4; i++)
+		if (GetNearChunk[i] == NULL)
+			return;
+
 	for (int i = 0; i < 16; i++)
 	{
 		refreshVAO(i, GetNearChunk);

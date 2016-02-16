@@ -1,5 +1,6 @@
 
 #include "Map.h"
+#include "Camera.h"
 
 int map::findChunk(const chunk *FindChunk)
 {
@@ -34,7 +35,7 @@ int map::findChunk(const chunk *FindChunk)
 chunk* map::findChunk(int ChunkX, int ChunkZ)
 {
 	if (!HasInit)
-		return 0;
+		return NULL;
 
 	//需要查找的Chunk
 	chunk FindChunk;
@@ -56,6 +57,13 @@ chunk* map::findChunk(int ChunkX, int ChunkZ)
 		//返回
 		return Chunks[FindChunkID];
 	}
+}
+chunk* map::findChunk(int ChunkID)
+{
+	if (ChunkID < 0 || ChunkID > MAX_MAP_CHUNK_TMP - 1)
+		return NULL;
+
+	return Chunks[ChunkID];
 }
 int map::findChunkID(int ChunkX, int ChunkZ)
 {
@@ -85,8 +93,11 @@ int map::popFreeChunk()
 
 	return GetFreeChunkID;
 }
-void map::changeChunk(int ChunkX, int ChunkZ)
+void map::addChunk(int ChunkX, int ChunkZ)
 {
+	if (findChunkID(ChunkX, ChunkZ) == -1)
+		return;
+
 	int GetFreeChunkID = popFreeChunk();
 
 	if (GetFreeChunkID == -1)
@@ -147,13 +158,13 @@ void map::changeChunk(int ChunkX, int ChunkZ, int ChunkID)
 		}
 	}
 
-	for (int i = 0; i < 16; i++)
-		Chunks[ChunkID]->IsChange[i] = true;
-
 	//解锁开始构建地形
 	Lock.unlock();
 
 	Chunks[ChunkID]->buildMap();
+
+	for (int i = 0; i < 16; i++)
+		Chunks[ChunkID]->IsChange[i] = true;
 
 	Chunks[ChunkID]->VAORefreshLock.unlock();
 }
@@ -169,7 +180,6 @@ void map::initMap()
 		Chunks[i] = new chunk;
 	}
 
-	//测试伪代码（注意！在初始化Chunk时要排好序！）
 	for (int y = 0; y < 32; y++)
 	{
 		for (int x = 0; x < 32; x++)
@@ -180,20 +190,22 @@ void map::initMap()
 				Chunks[x * 32 + y]->IsChange[i] = true;
 		}
 	}
-	//伪代码结束，以上代码将会出现在world中
 
 	HasInit = true;
 }
 
 void map::refreshVAO()
 {
-	for (int x = 1; x < 31; x++)
-	{
-		for (int y = 1; y < 31; y++)
-		{
-			chunk* Tmp[4]{ Chunks[(x + 1) * 32 + y] ,Chunks[(x - 1) * 32 + y] ,Chunks[x * 32 + (y + 1)] ,Chunks[x * 32 + (y - 1)] };
+	int CameraChunkX = camera::Loc.chunkX();
+	int CameraChunkZ = camera::Loc.chunkZ();
 
-			Chunks[x * 32 + y]->refreshVAO(Tmp);
+	for (int x = CameraChunkX - 15; x < CameraChunkX + 15; x++)
+	{
+		for (int y = CameraChunkZ - 15; y < CameraChunkZ + 15; y++)
+		{
+			chunk* Tmp[4]{ findChunk((x + 1), y) , findChunk((x - 1), y) , findChunk(x, (y + 1)) , findChunk(x,(y - 1)) };
+
+			findChunk(x, y)->refreshVAO(Tmp);
 		}
 	}
 }

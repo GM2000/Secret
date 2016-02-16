@@ -7,7 +7,7 @@
 
 #include <Windows.h>
 
-#include "map.h"
+#include "world.h"
 #include "Init.h"
 #include "Block.h"
 #include "Location.h"
@@ -35,14 +35,17 @@ int main(int argc, char *argv[])
 
 	unsigned int i = -1;
 
-	map NewMap;
+	world NewWorld;
 
-	NewMap.initMap();
+	NewWorld.loadWorld(NULL);
 
 	while (IsRenderThreadStart)
 	{
 		//‰÷»æ
-		NewMap.refreshVAO();
+		NewWorld.refreshVAO();
+
+		//À¢–¬ ¿ΩÁ
+		NewWorld.refreshMap();
 
 		std::cout << camera::Loc.chunkX() << std::endl;
 		std::cout << camera::Loc.chunkZ() << std::endl;

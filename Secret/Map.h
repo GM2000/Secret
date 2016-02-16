@@ -22,13 +22,15 @@ class map
 
 public:
 	chunk* findChunk(int ChunkX, int ChunkZ);
+	chunk* findChunk(int ChunkID);
+
 	int findChunkID(int ChunkX, int ChunkZ);
 
 	//重新加载Chunk（即初始化Chunk并重新设置Chunk）
 	void changeChunk(int ChunkX, int ChunkZ, int ChunkID);
 
 	//重新加载Chunk，自动寻找空闲ChunkID
-	void changeChunk(int ChunkX, int ChunkZ);
+	void addChunk(int ChunkX, int ChunkZ);
 
 	//寻找空闲的ChunkID
 	void addFreeChunk(unsigned int ChunkID);
