@@ -110,7 +110,7 @@ void map::addChunk(int ChunkX, int ChunkZ)
 }
 void map::changeChunk(int ChunkX, int ChunkZ, int ChunkID)
 {
-	if (!HasInit || findChunkID(ChunkX,ChunkZ) != -1 || (Chunks[ChunkID]->ChunkX == ChunkX && ChunkZ == Chunks[ChunkID]->ChunkZ))
+	if (!HasInit || findChunkID(ChunkX,ChunkZ) != -1)
 		return;
 
 	//¼ÓËø·ÀÖ¹Ó°ÏìÑ°ÕÒChunk
