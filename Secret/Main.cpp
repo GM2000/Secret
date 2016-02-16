@@ -16,9 +16,13 @@
 
 extern bool IsRenderThreadStart;
 
+world NewWorld;
+
 int main(int argc, char *argv[])
 {
 	camera::Loc.moveTo(2, 200, 2);
+
+	NewWorld.loadWorld(NULL);
 
 	//初始化渲染线程
 	if (!initThread(argc, argv))
@@ -35,23 +39,10 @@ int main(int argc, char *argv[])
 
 	unsigned int i = -1;
 
-	world NewWorld;
-
-	NewWorld.loadWorld(NULL);
-
 	while (IsRenderThreadStart)
 	{
 		//渲染
 		NewWorld.refreshVAO();
-
-		//刷新世界
-		NewWorld.refreshMap();
-
-		std::cout << camera::Loc.chunkX() << std::endl;
-		std::cout << camera::Loc.chunkZ() << std::endl;
-		std::cout << camera::Loc.x() << std::endl;
-		std::cout << camera::Loc.z() << std::endl;
-
 
 		Sleep(1000);
 	}

@@ -95,7 +95,10 @@ int map::popFreeChunk()
 }
 void map::addChunk(int ChunkX, int ChunkZ)
 {
-	if (findChunkID(ChunkX, ChunkZ) == -1)
+	if (!HasInit)
+		return;
+
+	if (findChunkID(ChunkX, ChunkZ) != -1)
 		return;
 
 	int GetFreeChunkID = popFreeChunk();
@@ -107,7 +110,7 @@ void map::addChunk(int ChunkX, int ChunkZ)
 }
 void map::changeChunk(int ChunkX, int ChunkZ, int ChunkID)
 {
-	if (!HasInit || findChunkID(ChunkX,ChunkZ) == -1 || (Chunks[ChunkID]->ChunkX == ChunkX && ChunkZ == Chunks[ChunkID]->ChunkZ))
+	if (!HasInit || findChunkID(ChunkX,ChunkZ) != -1 || (Chunks[ChunkID]->ChunkX == ChunkX && ChunkZ == Chunks[ChunkID]->ChunkZ))
 		return;
 
 	//加锁防止影响寻找Chunk
@@ -120,7 +123,7 @@ void map::changeChunk(int ChunkX, int ChunkZ, int ChunkID)
 	OldChunk.ChunkZ = Chunks[ChunkID]->ChunkZ;
 
 	//上锁
-	Chunks[ChunkID]->VAORefreshLock.lock();
+	std::lock_guard<std::mutex> ChunkLockGuard(Chunks[ChunkID]->VAORefreshLock);
 
 	//设置新的Chunk
 	Chunks[ChunkID]->ChunkX = ChunkX;
@@ -147,7 +150,7 @@ void map::changeChunk(int ChunkX, int ChunkZ, int ChunkID)
 		//向右移动
 		int NowPos = ChunkID + 1;
 
-		while (NowPos >= 0 && !(*Chunks[NowPos] > *Chunks[NowPos - 1]))
+		while (NowPos < MAX_MAP_CHUNK_TMP && !(*Chunks[NowPos] > *Chunks[NowPos - 1]))
 		{
 			//交换
 			chunk* Tmp = Chunks[NowPos];
@@ -165,8 +168,6 @@ void map::changeChunk(int ChunkX, int ChunkZ, int ChunkID)
 
 	for (int i = 0; i < 16; i++)
 		Chunks[ChunkID]->IsChange[i] = true;
-
-	Chunks[ChunkID]->VAORefreshLock.unlock();
 }
 
 void map::initMap()
@@ -184,6 +185,8 @@ void map::initMap()
 	{
 		for (int x = 0; x < 32; x++)
 		{
+			std::lock_guard<std::mutex> ChunkLockGuard(Chunks[x * 32 + y]->VAORefreshLock);
+
 			Chunks[x * 32 + y]->loadMap(x - 16, y - 16);
 
 			for (int i = 0; i < 16; i++)
@@ -205,7 +208,13 @@ void map::refreshVAO()
 		{
 			chunk* Tmp[4]{ findChunk((x + 1), y) , findChunk((x - 1), y) , findChunk(x, (y + 1)) , findChunk(x,(y - 1)) };
 
-			findChunk(x, y)->refreshVAO(Tmp);
+			if (Tmp[0] != NULL && Tmp[1] != NULL && Tmp[2] != NULL && Tmp[3] != NULL)
+			{
+				chunk* RefreshChunk = findChunk(x, y);
+
+				if (RefreshChunk != NULL)
+					RefreshChunk->refreshVAO(Tmp);
+			}
 		}
 	}
 }

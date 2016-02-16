@@ -96,16 +96,20 @@ void chunk::buildMap()
 			if (m > 255)
 				m = 255;
 
-			for (m; m > 0; m--)
+			for (int m3 = m + 1; m3 < 256; m3++)
+			{
+				BlockData[i][m3][j] = blockData::createBlockData(0, 0, 1);
+			}
+			for (int m2 = m; m2 > 0; m2--)
 			{
 				if (!HasSetGrass)
 				{
-					BlockData[i][m][j] = blockData::createBlockData(3, 0, 1);
+					BlockData[i][m2][j] = blockData::createBlockData(3, 0, 1);
 					HasSetGrass = true;
 				}
 				else
 				{
-					BlockData[i][m][j] = blockData::createBlockData(2, 0, 1);
+					BlockData[i][m2][j] = blockData::createBlockData(2, 0, 1);
 				}
 			}
 		}

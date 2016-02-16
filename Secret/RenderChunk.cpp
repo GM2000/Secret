@@ -5,9 +5,8 @@
 //刷新整个VAO
 void chunk::refreshVAO(chunk* GetNearChunk[4])
 {
-	for (int i = 0; i < 4; i++)
-		if (GetNearChunk[i] == NULL)
-			return;
+	//加锁
+	std::lock_guard<std::mutex> VAORefreshLockGuard(VAORefreshLock);
 
 	for (int i = 0; i < 16; i++)
 	{
@@ -17,9 +16,6 @@ void chunk::refreshVAO(chunk* GetNearChunk[4])
 //刷新VAO
 void chunk::refreshVAO(unsigned char Y, chunk* GetNearChunk[4])
 {
-	//加锁
-	std::lock_guard<std::mutex> VAORefreshLockGuard(VAORefreshLock);
-
 	if (Y > 15 || !IsChange[Y])
 		return;
 

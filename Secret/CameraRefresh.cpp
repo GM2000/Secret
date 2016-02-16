@@ -13,6 +13,8 @@ void gameRefresh()
 	//Па»ъ
 	if (camera::CameraLock.try_lock())
 	{
+		//camera::Loc.move(1, 0, 0);
+
 		double MouseXMove;
 		double MouseYMove;
 

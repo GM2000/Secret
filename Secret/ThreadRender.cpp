@@ -5,8 +5,6 @@
 
 void freeBlock();
 
-std::mutex RenderThreadInitLock;
-
 bool IsRenderThreadStart = false;
 
 void threadRender(int Width,int Height,bool FullScreen)
@@ -23,11 +21,7 @@ void threadRender(int Width,int Height,bool FullScreen)
 	initShader();
 
 	//…Ë÷√◊¥Ã¨
-	RenderThreadInitLock.lock();
-
 	IsRenderThreadStart = true;
-
-	RenderThreadInitLock.unlock();
 
 	//…Ë÷√Callback
 	initCallback();

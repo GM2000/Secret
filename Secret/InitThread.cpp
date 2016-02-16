@@ -40,9 +40,7 @@ void initRenderThread(int Width,int Height,int FullScreen)
 	//等待初始化完成
 	while (!IsOK)
 	{
-		RenderThreadInitLock.lock();
 		IsOK = IsRenderThreadStart;
-		RenderThreadInitLock.unlock();
 	}
 }
 bool initThread(int argc, char *argv[])

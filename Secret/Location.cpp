@@ -47,7 +47,6 @@ double location::inZ()
 {
 	return  Z - (chunkZ() << 4);
 }
-
 location::location(double X, double Y, double Z)
 {
 	moveTo(X, Y, Z);

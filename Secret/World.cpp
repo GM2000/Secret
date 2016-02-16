@@ -16,6 +16,14 @@ void world::refreshMap()
 	//是否用刷新空闲Chunk列表？
 	if (!HasInit || camera::Loc.chunkX() != LastChunkX || camera::Loc.chunkZ() != LastChunkZ)
 	{
+		if (!HasInit)
+		{
+			HasInit = true;
+			LastChunkX = camera::Loc.chunkX();
+			LastChunkZ = camera::Loc.chunkZ();
+
+			return;
+		}
 		LastChunkX = camera::Loc.chunkX();
 		LastChunkZ = camera::Loc.chunkZ();
 
@@ -25,21 +33,23 @@ void world::refreshMap()
 			chunk* FindChunk = Map.findChunk(i);
 
 			if (
-				FindChunk->ChunkX > LastChunkX + 16 ||
+				FindChunk->ChunkX > LastChunkX + 15 ||
 				FindChunk->ChunkX < LastChunkX - 16 ||
-				FindChunk->ChunkZ > LastChunkZ + 16 ||
-				FindChunk->ChunkZ > LastChunkZ + 16
+				FindChunk->ChunkZ > LastChunkZ + 15 ||
+				FindChunk->ChunkZ < LastChunkZ - 16
 				)
 				Map.addFreeChunk(i);
 		}
-		HasInit = true;
-
+		
 		//加载Chunk
-		for (int i = 1; i < LastChunkX; i++)
+		int CameraChunkX = camera::Loc.chunkX();
+		int CameraChunkZ = camera::Loc.chunkZ();
+
+		for (int x = CameraChunkX - 16; x < CameraChunkX + 16; x++)
 		{
-			for (int j = -LastChunkZ; j < LastChunkZ; j++)
+			for (int y = CameraChunkZ - 16; y < CameraChunkZ + 16; y++)
 			{
-				Map.addChunk(i, j);
+				Map.addChunk(x, y);
 			}
 		}
 	}

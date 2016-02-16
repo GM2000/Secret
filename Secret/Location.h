@@ -1,14 +1,19 @@
 #pragma once
 
+#include <mutex>
+
 struct location
 {
-	//构造函数
-	location(double X, double Y, double Z);
-
+private:
 	//记录坐标
 	double X = 0;
 	double Y = 0;
 	double Z = 0;
+public:
+
+	//构造函数
+	location(double X, double Y, double Z);
+	location(const location &);
 
 	int chunkX();
 	int chunkZ();

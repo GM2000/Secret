@@ -25,7 +25,7 @@ class chunk
 	//构建地形，需要上锁
 	void buildMap();
 
-	//加载地形，不用上锁
+	//加载地形，需要上锁
 	void loadMap(int ChunkX, int ChunkZ);
 
 public:
