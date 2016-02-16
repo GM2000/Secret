@@ -16,16 +16,15 @@ void world::refreshMap()
 	//是否用刷新空闲Chunk列表？
 	if (!HasInit || camera::Loc.chunkX() != LastChunkX || camera::Loc.chunkZ() != LastChunkZ)
 	{
+		LastChunkX = camera::Loc.chunkX();
+		LastChunkZ = camera::Loc.chunkZ();
+
 		if (!HasInit)
 		{
 			HasInit = true;
-			LastChunkX = camera::Loc.chunkX();
-			LastChunkZ = camera::Loc.chunkZ();
 
 			return;
 		}
-		LastChunkX = camera::Loc.chunkX();
-		LastChunkZ = camera::Loc.chunkZ();
 
 		//刷新空闲Chunk
 		for (int i = 0; i < MAX_MAP_CHUNK_TMP; i++)
@@ -40,14 +39,10 @@ void world::refreshMap()
 				)
 				Map.addFreeChunk(i);
 		}
-		
-		//加载Chunk
-		int CameraChunkX = camera::Loc.chunkX();
-		int CameraChunkZ = camera::Loc.chunkZ();
 
-		for (int x = CameraChunkX - 16; x < CameraChunkX + 16; x++)
+		for (int x = LastChunkX - 16; x < LastChunkX + 16; x++)
 		{
-			for (int y = CameraChunkZ - 16; y < CameraChunkZ + 16; y++)
+			for (int y = LastChunkZ - 16; y < LastChunkZ + 16; y++)
 			{
 				Map.addChunk(x, y);
 			}

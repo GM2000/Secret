@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 		//‰÷»æ
 		NewWorld.refreshVAO();
 
-		Sleep(1000);
+		Sleep(1);
 	}
 
 #ifdef _DEBUG

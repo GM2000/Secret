@@ -199,21 +199,17 @@ void map::initMap()
 
 void map::refreshVAO()
 {
-	int CameraChunkX = camera::Loc.chunkX();
-	int CameraChunkZ = camera::Loc.chunkZ();
-
-	for (int x = CameraChunkX - 15; x < CameraChunkX + 15; x++)
+	for (int i = 0; i < MAX_MAP_CHUNK_TMP; i++)
 	{
-		for (int y = CameraChunkZ - 15; y < CameraChunkZ + 15; y++)
+		chunk* RefreshChunk = findChunk(i);
+
+		if (RefreshChunk != NULL)
 		{
-			chunk* Tmp[4]{ findChunk((x + 1), y) , findChunk((x - 1), y) , findChunk(x, (y + 1)) , findChunk(x,(y - 1)) };
+			chunk* Tmp[4]{ findChunk((RefreshChunk->ChunkX + 1), RefreshChunk->ChunkZ) , findChunk((RefreshChunk->ChunkX - 1), RefreshChunk->ChunkZ) , findChunk(RefreshChunk->ChunkX, (RefreshChunk->ChunkZ + 1)) , findChunk(RefreshChunk->ChunkX,(RefreshChunk->ChunkZ - 1)) };
 
 			if (Tmp[0] != NULL && Tmp[1] != NULL && Tmp[2] != NULL && Tmp[3] != NULL)
 			{
-				chunk* RefreshChunk = findChunk(x, y);
-
-				if (RefreshChunk != NULL)
-					RefreshChunk->refreshVAO(Tmp);
+				RefreshChunk->refreshVAO(Tmp);
 			}
 		}
 	}
