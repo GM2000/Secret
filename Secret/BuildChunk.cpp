@@ -3,7 +3,7 @@
 
 //临时地形算法
 int seed = (rand() % 1000000);
-float persistence = 0.1f;
+float persistence = 1.4f;
 int Number_Of_Octaves = 3;
 
 float PerlinNoise_2D(int X, int Y);

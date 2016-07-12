@@ -22,7 +22,10 @@ void render()
 
 	for (unsigned int i = 0; i < VertexArrayObjectCopy.size(); i++)
 	{
-		glBindVertexArray(VertexArrayObjectCopy[i].VAOArray);
-		glDrawArrays(GL_QUADS, 0, VertexArrayObjectCopy[i].VAOSize);
+		if (VertexArrayObjectCopy[i].VAOSize > 0)
+		{
+			glBindVertexArray(VertexArrayObjectCopy[i].VAOArray);
+			glDrawArrays(GL_QUADS, 0, VertexArrayObjectCopy[i].VAOSize);
+		}
 	}
 }

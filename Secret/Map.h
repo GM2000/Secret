@@ -1,13 +1,9 @@
 
-#define MAX_MAP_CHUNK_TMP 1024
 #include "Chunk.h"
 
 //Map负责储存地图的数据，并且储存附近的Chunk数据，支持多线程
 class map
 {
-	//地图访问锁
-	std::mutex Lock;
-
 	//是否初始化过了
 	bool HasInit = false;
 
@@ -21,6 +17,9 @@ class map
 	std::vector<chunk*> FreeChunk;
 
 public:
+	//地图访问锁
+	std::mutex Lock;
+
 	chunk* findChunk(int ChunkX, int ChunkZ);
 	chunk* findChunk(int ChunkID);
 

@@ -13,9 +13,6 @@ class chunk
 	//获取Block
 	unsigned int getBlockData(short BlockX, short BlockY, short BlockZ,chunk *NearChunk[4]);
 
-	//锁
-	std::mutex VAORefreshLock;
-
 	//是否是临时的
 	bool IsTmp = false;
 	//ChunkID

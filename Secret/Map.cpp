@@ -7,9 +7,6 @@ int map::findChunk(const chunk *FindChunk)
 	if (!HasInit)
 		return -1;
 
-	//加锁防止寻找时受到修改的Chunk的影响
-	std::lock_guard<std::mutex> MapLockGuard(Lock);
-
 	//二分查找
 	int NowRight = 0;
 	int NowMid = 0;
@@ -80,8 +77,6 @@ int map::findChunkID(int ChunkX, int ChunkZ)
 }
 void map::addFreeChunk(chunk* Chunk)
 {
-	std::cout << "Clear Chunk:" << Chunk->ChunkX << "_" << Chunk->ChunkZ << std::endl;
-
 	FreeChunk.push_back(Chunk);
 }
 chunk* map::popFreeChunk()
@@ -101,31 +96,35 @@ void map::addChunk(int ChunkX, int ChunkZ)
 		return;
 
 	if (findChunkID(ChunkX, ChunkZ) != -1)
+	{
 		return;
+	}
+	for (int i = 0; i < MAX_MAP_CHUNK_TMP; i++)
+	{
+		if (Chunks[i]->ChunkX == ChunkX && Chunks[i]->ChunkZ == ChunkZ)
+			std::cout << "Error" << std::endl;
+	}
+
+	std::cout << "Load Chunk:" << ChunkX << ChunkZ << std::endl;
 
 	chunk* GetFreeChunk = popFreeChunk();
 
 	if (GetFreeChunk == nullptr)
+	{
+		std::cout << "Fault" << std::endl;
+
 		return;
+	}
 
 	changeChunk(ChunkX, ChunkZ, GetFreeChunk);
 }
 void map::changeChunk(int ChunkX, int ChunkZ, chunk* Chunk)
 {
-	if (!HasInit || findChunkID(ChunkX,ChunkZ) != -1)
-		return;
-
-	//加锁防止影响寻找Chunk
-	Lock.lock();
-
 	//保存旧的Chunk位置
 	chunk OldChunk;
 
 	OldChunk.ChunkX = Chunk->ChunkX;
 	OldChunk.ChunkZ = Chunk->ChunkZ;
-
-	//上锁
-	std::lock_guard<std::mutex> ChunkLockGuard(Chunk->VAORefreshLock);
 
 	//设置新的Chunk
 	Chunk->ChunkX = ChunkX;
@@ -163,14 +162,11 @@ void map::changeChunk(int ChunkX, int ChunkZ, chunk* Chunk)
 			Chunks[NowPos - 1] = Tmp;
 
 			Chunks[NowPos]->ChunkID = NowPos;
-			Chunks[NowPos + 1]->ChunkID = NowPos + 1;
+			Chunks[NowPos - 1]->ChunkID = NowPos - 1;
 
 			NowPos++;
 		}
 	}
-
-	//解锁开始构建地形
-	Lock.unlock();
 
 	Chunk->buildMap();
 
@@ -190,16 +186,14 @@ void map::initMap()
 		Chunks[i]->ChunkID = i;
 	}
 
-	for (int y = 0; y < 32; y++)
+	for (int y = 0; y < SIGNT; y++)
 	{
-		for (int x = 0; x < 32; x++)
+		for (int x = 0; x < SIGNT; x++)
 		{
-			std::lock_guard<std::mutex> ChunkLockGuard(Chunks[x * 32 + y]->VAORefreshLock);
+			Chunks[x * SIGNT + y]->loadMap(x - SIGNT / 2, y - SIGNT / 2);
 
-			Chunks[x * 32 + y]->loadMap(x - 16, y - 16);
-
-			for (int i = 0; i < 16; i++)
-				Chunks[x * 32 + y]->IsChange[i] = true;
+			for (int i = 0; i < SIGNT / 2; i++)
+				Chunks[x * SIGNT + y]->IsChange[i] = true;
 		}
 	}
 

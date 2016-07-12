@@ -9,7 +9,11 @@ int LastChunkZ = 0;
 
 void world::refreshVAO()
 {
+	Map.Lock.lock();
+
 	Map.refreshVAO();
+
+	Map.Lock.unlock();
 }
 void world::refreshMap()
 {
@@ -23,27 +27,30 @@ void world::refreshMap()
 		return;
 	}
 
+	Map.Lock.lock();
+
 	//Ë¢ÐÂ¿ÕÏÐChunk
 	for (int i = 0; i < MAX_MAP_CHUNK_TMP; i++)
 	{
 		chunk* FindChunk = Map.findChunk(i);
 
 		if (
-			FindChunk->ChunkX > LastChunkX + 15 ||
-			FindChunk->ChunkX < LastChunkX - 16 ||
-			FindChunk->ChunkZ > LastChunkZ + 15 ||
-			FindChunk->ChunkZ < LastChunkZ - 16
+			FindChunk->ChunkX > LastChunkX + SIGNT / 2 ||
+			FindChunk->ChunkX < LastChunkX - SIGNT / 2 ||
+			FindChunk->ChunkZ > LastChunkZ + SIGNT / 2 ||
+			FindChunk->ChunkZ < LastChunkZ - SIGNT / 2
 			)
 			Map.addFreeChunk(FindChunk);
 	}
 
-	for (int x = LastChunkX - 16; x < LastChunkX + 16; x++)
+	for (int x = LastChunkX - SIGNT / 2; x < LastChunkX + SIGNT / 2; x++)
 	{
-		for (int y = LastChunkZ - 16; y < LastChunkZ + 16; y++)
+		for (int y = LastChunkZ - SIGNT / 2; y < LastChunkZ + SIGNT / 2; y++)
 		{
 			Map.addChunk(x, y);
 		}
 	}
+	Map.Lock.unlock();
 }
 void world::loadWorld(const char*)
 {
