@@ -82,9 +82,6 @@ double PerlinNoise_2D(int X, int Y)
 void chunk::buildMap()
 {
 	//²»ÓÃ¼ÓËø
-	if (ChunkX == 0 && ChunkZ == 0)
-		return;
-
 	for (int i = 0; i < 16; i++)
 	{
 		for (int j = 0; j < 16; j++)

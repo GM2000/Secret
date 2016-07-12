@@ -8,15 +8,8 @@ extern bool IsRenderThreadStart;
 
 void threadRefresh()
 {
-	double LastTime = glfwGetTime();
-
 	while (IsRenderThreadStart)
 	{
-		double NowTime = glfwGetTime();
-
-		while (NowTime - LastTime < 0.1)
-			NowTime = glfwGetTime();
-
 		//Ë¢ÐÂÓÎÏ·
 		gameRefresh();
 

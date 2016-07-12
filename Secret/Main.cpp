@@ -20,7 +20,7 @@ world NewWorld;
 
 int main(int argc, char *argv[])
 {
-	camera::Loc.moveTo(2, 200, 2);
+	camera::Loc.moveTo(0, 200, 0);
 
 	NewWorld.loadWorld(NULL);
 
