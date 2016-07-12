@@ -1,7 +1,7 @@
 #pragma once
 
-#define MAX_MAP_CHUNK_TMP 2500
-#define SIGNT 50
+#define MAX_MAP_CHUNK_TMP 1024
+#define SIGNT 32
 
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>

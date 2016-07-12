@@ -3,12 +3,12 @@
 
 //临时地形算法
 int seed = (rand() % 1000000);
-float persistence = 1.4f;
+double persistence = 1.4f;
 int Number_Of_Octaves = 3;
 
-float PerlinNoise_2D(int X, int Y);
+double PerlinNoise_2D(unsigned int X, unsigned int Y);
 
-float Noise1(int x, int y)
+double Noise1(unsigned int x, unsigned int y)
 {
 	if (seed<0)
 	{
@@ -20,15 +20,15 @@ float Noise1(int x, int y)
 	return (1.0f - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0f);
 }
 
-float SmoothNoise_1(int x, int y)
+double SmoothNoise_1(unsigned int x, unsigned int y)
 {
-	float corners = (Noise1(x - 1, y - 1) + Noise1(x + 1, y - 1) + Noise1(x - 1, y + 1) + Noise1(x + 1, y + 1)) / 16.0f;
-	float sides = (Noise1(x - 1, y) + Noise1(x + 1, y) + Noise1(x, y - 1) + Noise1(x, y + 1)) / 8.0f;
-	float center = Noise1(x, y) / 4.0f;
+	double corners = (Noise1(x - 1, y - 1) + Noise1(x + 1, y - 1) + Noise1(x - 1, y + 1) + Noise1(x + 1, y + 1)) / 16.0f;
+	double sides = (Noise1(x - 1, y) + Noise1(x + 1, y) + Noise1(x, y - 1) + Noise1(x, y + 1)) / 8.0f;
+	double center = Noise1(x, y) / 4.0f;
 	return corners + sides + center;
 }
 
-float Cosine_Interpolate(float a, float b, float x)
+double Cosine_Interpolate(double a, double b, double x)
 {
 	double ft = x * 3.1415927;
 	double f = (1 - cos(ft)) * 0.5f;
@@ -37,39 +37,39 @@ float Cosine_Interpolate(float a, float b, float x)
 
 }
 
-float InterpolatedNoise_1(float x, float y)
+double InterpolatedNoise_1(double x, double y)
 {
 
 	int integer_X = int(x);
-	float fractional_X = x - integer_X;
+	double fractional_X = x - integer_X;
 
 	int integer_Y = int(y);
-	float fractional_Y = y - integer_Y;
+	double fractional_Y = y - integer_Y;
 
-	float v1 = SmoothNoise_1(integer_X, integer_Y);
-	float v2 = SmoothNoise_1(integer_X + 1, integer_Y);
-	float v3 = SmoothNoise_1(integer_X, integer_Y + 1);
-	float v4 = SmoothNoise_1(integer_X + 1, integer_Y + 1);
+	double v1 = SmoothNoise_1(integer_X, integer_Y);
+	double v2 = SmoothNoise_1(integer_X + 1, integer_Y);
+	double v3 = SmoothNoise_1(integer_X, integer_Y + 1);
+	double v4 = SmoothNoise_1(integer_X + 1, integer_Y + 1);
 
-	float i1 = Cosine_Interpolate(v1, v2, fractional_X);
-	float i2 = Cosine_Interpolate(v3, v4, fractional_X);
+	double i1 = Cosine_Interpolate(v1, v2, fractional_X);
+	double i2 = Cosine_Interpolate(v3, v4, fractional_X);
 
 	return Cosine_Interpolate(i1, i2, fractional_Y);
 }
 
-float PerlinNoise_2D(int X, int Y)
+double PerlinNoise_2D(int X, int Y)
 {
-	float x = (X + 15000000) / 50.0;
-	float y = (Y + 15000000) / 50.0;
+	double x = (X + 2147483648) / 50.0;
+	double y = (Y + 2147483648) / 50.0;
 
-	float total = 0.0f;
-	float p = persistence;
+	double total = 0.0f;
+	double p = persistence;
 	int n = Number_Of_Octaves - 1;
 
 	for (int i = 0; i <= n; i++)
 	{
-		float frequency = pow((float)2, i);
-		float amplitude = pow(p, i);
+		double frequency = pow((double)2, i);
+		double amplitude = pow(p, i);
 
 		total = total + InterpolatedNoise_1(x * frequency, y * frequency) * amplitude;
 	}

@@ -17,8 +17,12 @@ void world::refreshVAO()
 }
 void world::refreshMap()
 {
+	camera::CameraLock.lock();
+
 	LastChunkX = camera::Loc.chunkX();
 	LastChunkZ = camera::Loc.chunkZ();
+
+	camera::CameraLock.unlock();
 
 	if (!HasInit)
 	{
@@ -43,11 +47,15 @@ void world::refreshMap()
 			Map.addFreeChunk(FindChunk);
 	}
 
-	for (int x = LastChunkX - SIGNT / 2; x < LastChunkX + SIGNT / 2; x++)
+	for (int x = 0; x < SIGNT / 2; x++)
 	{
-		for (int y = LastChunkZ - SIGNT / 2; y < LastChunkZ + SIGNT / 2; y++)
+		for (int y = 0; y <SIGNT / 2; y++)
 		{
-			Map.addChunk(x, y);
+			Map.addChunk(LastChunkX + x, LastChunkZ + y);
+			Map.addChunk(LastChunkX + x, LastChunkZ - y);
+
+			Map.addChunk(LastChunkX - x, LastChunkZ + y);
+			Map.addChunk(LastChunkX - x, LastChunkZ - y);
 		}
 	}
 	Map.Lock.unlock();
