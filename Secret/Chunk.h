@@ -18,6 +18,8 @@ class chunk
 
 	//是否是临时的
 	bool IsTmp = false;
+	//ChunkID
+	unsigned int ChunkID = 0;
 
 	//是否真的需要刷新VAO，在map中操作
 	bool IsChange[16]{ false };

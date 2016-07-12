@@ -78,20 +78,22 @@ int map::findChunkID(int ChunkX, int ChunkZ)
 
 	return findChunk(&FindChunk);
 }
-void map::addFreeChunk(unsigned int ChunkID)
+void map::addFreeChunk(chunk* Chunk)
 {
-	FreeChunkID.push_back(ChunkID);
+	std::cout << "Clear Chunk:" << Chunk->ChunkX << "_" << Chunk->ChunkZ << std::endl;
+
+	FreeChunk.push_back(Chunk);
 }
-int map::popFreeChunk()
+chunk* map::popFreeChunk()
 {
-	if (FreeChunkID.size() == 0)
-		return -1;
+	if (FreeChunk.size() == 0)
+		return nullptr;
 	
-	unsigned int GetFreeChunkID = FreeChunkID[FreeChunkID.size() - 1];
+	chunk* GetFreeChunk = FreeChunk[FreeChunk.size() - 1];
 
-	FreeChunkID.pop_back();
+	FreeChunk.pop_back();
 
-	return GetFreeChunkID;
+	return GetFreeChunk;
 }
 void map::addChunk(int ChunkX, int ChunkZ)
 {
@@ -101,14 +103,14 @@ void map::addChunk(int ChunkX, int ChunkZ)
 	if (findChunkID(ChunkX, ChunkZ) != -1)
 		return;
 
-	int GetFreeChunkID = popFreeChunk();
+	chunk* GetFreeChunk = popFreeChunk();
 
-	if (GetFreeChunkID == -1)
+	if (GetFreeChunk == nullptr)
 		return;
 
-	changeChunk(ChunkX, ChunkZ, GetFreeChunkID);
+	changeChunk(ChunkX, ChunkZ, GetFreeChunk);
 }
-void map::changeChunk(int ChunkX, int ChunkZ, int ChunkID)
+void map::changeChunk(int ChunkX, int ChunkZ, chunk* Chunk)
 {
 	if (!HasInit || findChunkID(ChunkX,ChunkZ) != -1)
 		return;
@@ -119,21 +121,21 @@ void map::changeChunk(int ChunkX, int ChunkZ, int ChunkID)
 	//保存旧的Chunk位置
 	chunk OldChunk;
 
-	OldChunk.ChunkX = Chunks[ChunkID]->ChunkX;
-	OldChunk.ChunkZ = Chunks[ChunkID]->ChunkZ;
+	OldChunk.ChunkX = Chunk->ChunkX;
+	OldChunk.ChunkZ = Chunk->ChunkZ;
 
 	//上锁
-	std::lock_guard<std::mutex> ChunkLockGuard(Chunks[ChunkID]->VAORefreshLock);
+	std::lock_guard<std::mutex> ChunkLockGuard(Chunk->VAORefreshLock);
 
 	//设置新的Chunk
-	Chunks[ChunkID]->ChunkX = ChunkX;
-	Chunks[ChunkID]->ChunkZ = ChunkZ;
+	Chunk->ChunkX = ChunkX;
+	Chunk->ChunkZ = ChunkZ;
 
 	//判断新的坐标与旧的坐标大小关系
-	if (OldChunk > *Chunks[ChunkID])
+	if (OldChunk > *Chunk)
 	{
 		//向左移动
-		int NowPos = ChunkID - 1;
+		int NowPos = Chunk->ChunkID - 1;
 
 		while (NowPos >= 0 && !(*Chunks[NowPos] < *Chunks[NowPos + 1]))
 		{
@@ -142,13 +144,16 @@ void map::changeChunk(int ChunkX, int ChunkZ, int ChunkID)
 			Chunks[NowPos] = Chunks[NowPos + 1];
 			Chunks[NowPos + 1] = Tmp;
 
+			Chunks[NowPos]->ChunkID = NowPos;
+			Chunks[NowPos + 1]->ChunkID = NowPos + 1;
+
 			NowPos--;
 		}
 	}
-	else if (OldChunk < *Chunks[ChunkID])
+	else if (OldChunk < *Chunk)
 	{
 		//向右移动
-		int NowPos = ChunkID + 1;
+		int NowPos = Chunk->ChunkID + 1;
 
 		while (NowPos < MAX_MAP_CHUNK_TMP && !(*Chunks[NowPos] > *Chunks[NowPos - 1]))
 		{
@@ -157,6 +162,9 @@ void map::changeChunk(int ChunkX, int ChunkZ, int ChunkID)
 			Chunks[NowPos] = Chunks[NowPos - 1];
 			Chunks[NowPos - 1] = Tmp;
 
+			Chunks[NowPos]->ChunkID = NowPos;
+			Chunks[NowPos + 1]->ChunkID = NowPos + 1;
+
 			NowPos++;
 		}
 	}
@@ -164,10 +172,10 @@ void map::changeChunk(int ChunkX, int ChunkZ, int ChunkID)
 	//解锁开始构建地形
 	Lock.unlock();
 
-	Chunks[ChunkID]->buildMap();
+	Chunk->buildMap();
 
 	for (int i = 0; i < 16; i++)
-		Chunks[ChunkID]->IsChange[i] = true;
+		Chunk->IsChange[i] = true;
 }
 
 void map::initMap()
@@ -179,6 +187,7 @@ void map::initMap()
 	for (int i = 0; i < MAX_MAP_CHUNK_TMP; i++)
 	{
 		Chunks[i] = new chunk;
+		Chunks[i]->ChunkID = i;
 	}
 
 	for (int y = 0; y < 32; y++)

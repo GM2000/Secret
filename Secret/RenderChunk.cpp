@@ -19,6 +19,8 @@ void chunk::refreshVAO(unsigned char Y, chunk* GetNearChunk[4])
 	if (Y > 15 || !IsChange[Y])
 		return;
 
+	std::cout << "refresh Chunk at:" << ChunkX << "_" << ChunkZ << std::endl;
+
 	IsChange[Y] = false;
 
 	//ÁÙÊ±RenderGroup

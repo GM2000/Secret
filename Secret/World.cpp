@@ -34,7 +34,7 @@ void world::refreshMap()
 			FindChunk->ChunkZ > LastChunkZ + 15 ||
 			FindChunk->ChunkZ < LastChunkZ - 16
 			)
-			Map.addFreeChunk(i);
+			Map.addFreeChunk(FindChunk);
 	}
 
 	for (int x = LastChunkX - 16; x < LastChunkX + 16; x++)

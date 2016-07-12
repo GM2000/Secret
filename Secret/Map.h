@@ -18,7 +18,7 @@ class map
 	int findChunk(const chunk *FindChunk);
 
 	//空闲ChunkID列表
-	std::vector<unsigned int> FreeChunkID;
+	std::vector<chunk*> FreeChunk;
 
 public:
 	chunk* findChunk(int ChunkX, int ChunkZ);
@@ -27,16 +27,16 @@ public:
 	int findChunkID(int ChunkX, int ChunkZ);
 
 	//重新加载Chunk（即初始化Chunk并重新设置Chunk）
-	void changeChunk(int ChunkX, int ChunkZ, int ChunkID);
+	void changeChunk(int ChunkX, int ChunkZ, chunk* Chunk);
 
 	//重新加载Chunk，自动寻找空闲ChunkID
 	void addChunk(int ChunkX, int ChunkZ);
 
 	//寻找空闲的ChunkID
-	void addFreeChunk(unsigned int ChunkID);
+	void addFreeChunk(chunk* Chunk);
 
 	//弹出一个空闲的ChunkID
-	int map::popFreeChunk();
+	chunk* map::popFreeChunk();
 
 	//初始化Map
 	void initMap();
